@@ -15,34 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="luatable.cpp">
+    <ClCompile Include="luacpp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="luareference.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="luafunction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="luacppinterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="luacppinterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="luafunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="luatable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="luareference.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="luatype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
