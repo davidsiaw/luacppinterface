@@ -7,7 +7,13 @@ LuaFunction::LuaFunction(std::tr1::shared_ptr<lua_State> state, int index) : Lua
 	assert(GetType() == LuaType::function);
 }
 
-LuaTable LuaFunction::Invoke(LuaTable args)
+LuaTableFunction::LuaTableFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunction(state, index)
+{
+	auto a = GetType();
+	assert(GetType() == LuaType::function);
+}
+
+LuaTable LuaTableFunction::Invoke(LuaTable args)
 {
 	PushToStack();
 	args.PushToStack();

@@ -150,25 +150,25 @@ std::string LuaTable::GetString(int key) const
 	return res;
 }
 
-LuaFunction LuaTable::GetFunction(std::string key) const
+LuaTableFunction LuaTable::GetFunction(std::string key) const
 {
 	PushToStack();
 	lua_pushlstring(state.get(), key.c_str(), key.size());
 	lua_gettable(state.get(), -2);
 
-	LuaFunction res = LuaFunction(state, -1);
+	LuaTableFunction res = LuaTableFunction(state, -1);
 
 	lua_pop(state.get(), 2);
 	return res;
 }
 
-LuaFunction LuaTable::GetFunction(int key) const
+LuaTableFunction LuaTable::GetFunction(int key) const
 {
 	PushToStack();
 	lua_pushinteger(state.get(), key);
 	lua_gettable(state.get(), -2);
 
-	LuaFunction res = LuaFunction(state, -1);
+	LuaTableFunction res = LuaTableFunction(state, -1);
 
 	lua_pop(state.get(), 2);
 	return res;

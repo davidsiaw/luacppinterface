@@ -25,7 +25,7 @@ LuaTable Lua::CreateTable()
 	return table;
 }
 
-int Lua::staticFunction(lua_State* state)
+int staticFunction(lua_State* state)
 {
 	std::tr1::function<LuaTable(LuaTable)>* func = (std::tr1::function<LuaTable(LuaTable)>*)lua_touserdata(state, lua_upvalueindex(1));
 	LuaTable table(std::tr1::shared_ptr<lua_State>(state, [&](lua_State*){}), -1);
@@ -40,15 +40,6 @@ struct closure
 	void* object;
 	std::tr1::function<void(void*)> cleanup;
 };
-
-LuaFunction Lua::CreateFunction(const std::tr1::function<LuaTable(LuaTable)>* func)
-{
-	lua_pushlightuserdata(state.get(), (void*)func);
-	lua_pushcclosure(state.get(), staticFunction, 1);
-	LuaFunction function = LuaFunction(state, -1);
-	lua_pop(state.get(), 1);
-	return function;
-}
 
 std::string Lua::RunScript(std::string script)
 {
