@@ -46,25 +46,39 @@ int main()
 		std::cout << "momo" << std::endl;
 		return table;
 	});
+	
+	auto add2 = lua.CreateFunction(new std::tr1::function<int(int)>([&](int a) -> int
+	{
+		return a + 2;
+	}));
+
+	t.Invoke(5);
 
 	auto frunc = lua.CreateFunction(thefunc);
 	global.SetFunction("thefunc", frunc);
 
+	global.SetFunction("add2", add2);
+
 	lua.RunScript(
-		"x = thefunc({a=10})\n"
+		"x = thefunc({a=add2(10)})\n"
 		""
 		"function meow (a) \n"
 		"  a.big = a.big + x.a\n"
 		"  return a\n"
 		"end\n"
 
-		""
+		"function onetwofour() \n"
+		"  return 124\n"
+		"end\n"
 		);
 	
 	auto meow = global.GetFunction("meow");
 
 	auto result = meow.Invoke(params);
 	int big = result.GetInteger("big");
+
+	auto onetwofour = global.GetFunction("onetwofour", std::tr1::function<int()>());
+	int res = onetwofour.Invoke();
 
 	return 0;
 }

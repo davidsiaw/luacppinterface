@@ -35,20 +35,33 @@ public:
 	{
 		static int staticGenFunction(lua_State* state)
 		{
-			// todo pull parameters
-
 			std::tr1::function<SIG>* func = (std::tr1::function<SIG>*)lua_touserdata(state, lua_upvalueindex(1));
 			
 			T1 arg1 = popretval<T1>(state);
 			T2 arg2 = popretval<T2>(state);
 
-			// causes errors when T is void
 			T retval = func->operator()(arg1,arg2);
 			pushparam(state, retval);
 			return 1;
 		}
 	};
 	
+	template<typename SIG, typename T, typename T1>
+	struct sgf<SIG, T, T1, nothing>
+	{
+		static int staticGenFunction(lua_State* state)
+		{
+			std::tr1::function<SIG>* func = (std::tr1::function<SIG>*)lua_touserdata(state, lua_upvalueindex(1));
+
+			T1 arg1 = popretval<T1>(state);
+
+			T retval = func->operator()(arg1);
+			pushparam(state, retval);
+
+			return 1;
+		}
+	};
+
 	template<typename SIG, typename T>
 	struct sgf<SIG, T, nothing, nothing>
 	{
@@ -66,23 +79,6 @@ public:
 		}
 	};
 
-	template<typename SIG, typename T, typename T1>
-	struct sgf<SIG, T, T1, nothing>
-	{
-		static int staticGenFunction(lua_State* state)
-		{
-			// todo pull parameters
-
-			std::tr1::function<SIG>* func = (std::tr1::function<SIG>*)lua_touserdata(state, lua_upvalueindex(1));
-
-			T1 arg1 = popretval<T1>(state);
-			// causes errors when T is void
-			T retval = func->operator()(arg1);
-			pushparam(state, retval);
-
-			return 1;
-		}
-	};
 
 	template<typename SIG, typename T1, typename T2>
 	struct sgf<SIG, void, T1, T2>
