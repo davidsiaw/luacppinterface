@@ -3,7 +3,6 @@
 #include "luacppinterface.h"
 
 
-
 int main()
 {
 	Lua lua;
@@ -14,40 +13,39 @@ int main()
 	//omg<int()>::callfunc();
 	//omg<int(std::string)>::callfunc();
 
-
-
-	auto t = lua.CreateFunction(new std::tr1::function<void(int)>([&](int a)
+	
+	auto t = lua.CreateFunction(MAKELUAFUNC(void(int), ([&](int a)
 	{
-	}));
+	})));
 
 	t.Invoke(5);
 	
-	auto t1 = lua.CreateFunction(new std::tr1::function<void(std::string)>([&](std::string a)
+	auto t1 = lua.CreateFunction(MAKELUAFUNC(void(std::string), [&](std::string a)
 	{
 	}));
 
 	t1.Invoke("meow");
 
-	auto t2 = lua.CreateFunction(new std::tr1::function<void(int,std::string)>([&](int a, std::string)
+	auto t2 = lua.CreateFunction(MAKELUAFUNC(void(int,std::string), [&](int a, std::string)
 	{
 	}));
 
 	t2.Invoke(5,"a");
 
-	auto t3 = lua.CreateFunction(new std::tr1::function<int(int,std::string)>([&](int a, std::string)->int
+	auto t3 = lua.CreateFunction(MAKELUAFUNC(int(int,std::string), [&](int a, std::string)->int
 	{
 		return 10;
 	}));
 
 	t3.Invoke(5,"a");
 
-	auto thefunc = new std::tr1::function<LuaTable(LuaTable)>([&](LuaTable table) -> LuaTable
+	auto thefunc = MAKELUAFUNC(LuaTable(LuaTable), [&](LuaTable table) -> LuaTable
 	{ 
 		std::cout << "momo" << std::endl;
 		return table;
 	});
 	
-	auto add2 = lua.CreateFunction(new std::tr1::function<int(int)>([&](int a) -> int
+	auto add2 = lua.CreateFunction(MAKELUAFUNC(int(int), [&](int a) -> int
 	{
 		return a + 2;
 	}));
@@ -56,6 +54,13 @@ int main()
 
 	auto frunc = lua.CreateFunction(thefunc);
 	global.SetFunction("thefunc", frunc);
+		
+	global.SetFunction("attack", lua.CreateFunction(
+		MAKELUAFUNC(int(int,int) , [&](int a, int b) -> int
+		{
+			return a + b;
+		})
+	));
 
 	global.SetFunction("add2", add2);
 
@@ -70,15 +75,28 @@ int main()
 		"function onetwofour() \n"
 		"  return 124\n"
 		"end\n"
+		""
+		"function getmeow()\n"
+		"  return meow\n"
+		"end\n"
+		""
+		"attack(1,2)"
+
 		);
 	
-	auto meow = global.GetFunction("meow");
+	auto meow = global.GetFunction<LuaTable(LuaTable)>("meow");
 
 	auto result = meow.Invoke(params);
 	int big = result.GetInteger("big");
 
-	auto onetwofour = global.GetFunction("onetwofour", std::tr1::function<int()>());
+	auto onetwofour = global.GetFunction<int()>("onetwofour");
 	int res = onetwofour.Invoke();
+	
+	auto getmeow = global.GetFunction< LuaFunction<LuaTable(LuaTable)>() >("getmeow");
+	auto fmeow = getmeow.Invoke();
+	auto fres = fmeow.Invoke(params);
+
+	auto number = fres.GetInteger("big");
 
 	return 0;
 }

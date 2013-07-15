@@ -5,6 +5,7 @@
 #include <functional>
 #include "luatable.h"
 #include "luafunction.h"
+#include "luatypetemplates.h"
 
 class Lua
 {
@@ -29,119 +30,45 @@ public:
 	// run a Lua script
 	std::string RunScript(std::string script);
 
-	
-	template<typename SIG, typename T, typename T1, typename T2>
-	struct sgf
-	{
-		static int staticGenFunction(lua_State* state)
-		{
-			std::tr1::function<SIG>* func = (std::tr1::function<SIG>*)lua_touserdata(state, lua_upvalueindex(1));
-			
-			T1 arg1 = popretval<T1>(state);
-			T2 arg2 = popretval<T2>(state);
-
-			T retval = func->operator()(arg1,arg2);
-			pushparam(state, retval);
-			return 1;
-		}
-	};
-	
-	template<typename SIG, typename T, typename T1>
-	struct sgf<SIG, T, T1, nothing>
-	{
-		static int staticGenFunction(lua_State* state)
-		{
-			std::tr1::function<SIG>* func = (std::tr1::function<SIG>*)lua_touserdata(state, lua_upvalueindex(1));
-
-			T1 arg1 = popretval<T1>(state);
-
-			T retval = func->operator()(arg1);
-			pushparam(state, retval);
-
-			return 1;
-		}
-	};
-
-	template<typename SIG, typename T>
-	struct sgf<SIG, T, nothing, nothing>
-	{
-		static int staticGenFunction(lua_State* state)
-		{
-			// todo pull parameters
-
-			std::tr1::function<SIG>* func = (std::tr1::function<SIG>*)lua_touserdata(state, lua_upvalueindex(1));
-			
-			// causes errors when T is void
-			T retval = func->operator()();
-			pushparam(state, retval);
-			
-			return 1;
-		}
-	};
-
-
-	template<typename SIG, typename T1, typename T2>
-	struct sgf<SIG, void, T1, T2>
-	{
-		static int staticGenFunction(lua_State* state)
-		{
-			// todo pull parameters
-
-			std::tr1::function<SIG>* func = (std::tr1::function<SIG>*)lua_touserdata(state, lua_upvalueindex(1));
-			return 0;
-		}
-	};
-	
-	template<typename SIG, typename T1>
-	struct sgf<SIG, void, T1, nothing>
-	{
-		static int staticGenFunction(lua_State* state)
-		{
-			// todo pull parameters
-
-			std::tr1::function<SIG>* func = (std::tr1::function<SIG>*)lua_touserdata(state, lua_upvalueindex(1));
-			return 0;
-		}
-	};
-	
 	template<typename SIG>
-	struct sgf<SIG, void, nothing, nothing>
+	static int lua_finalizer(lua_State* state)
 	{
-		static int staticGenFunction(lua_State* state)
-		{
-			// todo pull parameters
-
-			std::tr1::function<SIG>* func = (std::tr1::function<SIG>*)lua_touserdata(state, lua_upvalueindex(1));
-			return 0;
-		}
+		LuaFunction<SIG>** func = (LuaFunction<SIG>**)lua_touserdata(state, lua_upvalueindex(1));
+		delete *func;
+		return 0;
 	};
 
-	template<typename T>
-	LuaGenFunction<T(), T> CreateFunction(std::tr1::function<T()>* func)
+	template<typename SIG>
+	LuaFunction<SIG> CreateFunction( std::tr1::shared_ptr< std::tr1::function<SIG> > func)
 	{
-		lua_pushlightuserdata(state.get(), (void*)func);
-		lua_pushcclosure(state.get(), sgf<T(), T, nothing, nothing>::staticGenFunction, 1);
-		LuaGenFunction<T(), T> function = LuaGenFunction<T(), T>(state, -1);
-		lua_pop(state.get(), 1);
-		return function;
-	}
+		LuaFunction<SIG>** ptr = (LuaFunction<SIG>**)lua_newuserdata(state.get(), sizeof(LuaFunction<SIG>**));
 
-	template<typename T, typename T1>
-	LuaGenFunction<T(T1), T,T1> CreateFunction(std::tr1::function<T(T1)>* func)
-	{
-		lua_pushlightuserdata(state.get(), (void*)func);
-		lua_pushcclosure(state.get(), sgf<T(T1), T, T1, nothing>::staticGenFunction, 1);
-		LuaGenFunction<T(T1), T,T1> function = LuaGenFunction<T(T1), T,T1>(state, -1);
-		lua_pop(state.get(), 1);
-		return function;
-	}
+		lua_newtable(state.get());
+		
+		// make the finalizer
+		lua_pushstring(state.get(), "__gc");
 
-	template<typename T, typename T1, typename T2>
-	LuaGenFunction<T(T1,T2), T,T1,T2> CreateFunction(std::tr1::function<T(T1,T2)>* func)
-	{
-		lua_pushlightuserdata(state.get(), (void*)func);
-		lua_pushcclosure(state.get(), sgf<T(T1,T2), T,T1,T2>::staticGenFunction, 1);
-		LuaGenFunction<T(T1,T2), T,T1,T2> function = LuaGenFunction<T(T1,T2), T,T1,T2>(state, -1);
+		lua_pushlightuserdata(state.get(), (void*)ptr);
+		lua_pushcclosure(state.get(), lua_finalizer<SIG>, 1);
+
+		lua_rawset(state.get(), -3);
+		
+		// make the caller
+		lua_pushstring(state.get(), "__call");
+		
+		lua_pushlightuserdata(state.get(), (void*)func.get());
+		lua_pushcclosure(state.get(), LuaFunction<SIG>::staticFunction, 1);
+
+		lua_rawset(state.get(), -3);
+
+		// set the metatable
+		lua_setmetatable(state.get(), -2);
+		LuaFunction<SIG> function = LuaFunction<SIG>(state, -1, func);
+
+		// instantiate a luafunction that has a weak reference to the state
+		// that the lua garbage collector will collect.
+		*ptr = new LuaFunction<SIG>(LuaFunction<SIG>(LuaNoDestructor(state.get()), -1, func));
+
 		lua_pop(state.get(), 1);
 		return function;
 	}

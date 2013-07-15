@@ -26,8 +26,8 @@ public:
 	void SetString(int key, const std::string value);	
 
 	// Associate the given key to a specified function
-	void SetFunction(std::string key, const LuaFunction value);
-	void SetFunction(int key, const LuaFunction value);
+	void SetFunction(std::string key, const LuaFunctionBase value);
+	void SetFunction(int key, const LuaFunctionBase value);
 
 	// Get the table associated with the specified key
 	LuaTable GetTable(std::string key) const;
@@ -42,61 +42,35 @@ public:
 	std::string GetString(int key) const;
 
 	// Get the function associated with the specified key
-	LuaTableFunction GetFunction(std::string key) const;
-	LuaTableFunction GetFunction(int key) const;
-
-	
-
-	template<typename T>
-	LuaGenFunction<T(), T> GetFunction(std::string key, std::tr1::function<T()> a)
+	template<typename SIG>
+	LuaFunction<SIG> GetFunction(std::string key) const
 	{
 		PushToStack();
 		lua_pushlstring(state.get(), key.c_str(), key.size());
 		lua_gettable(state.get(), -2);
 
-		LuaGenFunction<T(), T> res = LuaGenFunction<T(), T>(state, -1);
-
+		LuaFunction<SIG> res = LuaFunction<SIG>(state, -1);
+		
 		lua_pop(state.get(), 2);
 		return res;
 	}
 
-	template<typename T, typename T1>
-	LuaGenFunction<T(T1), T,T1> GetFunction(std::string key, std::tr1::function<T(T1)> a)
+	template<typename SIG>
+	LuaFunction<SIG> GetFunction(int key) const
 	{
 		PushToStack();
-		lua_pushlstring(state.get(), key.c_str(), key.size());
+		lua_pushinteger(state.get(), key);
 		lua_gettable(state.get(), -2);
 
-		LuaGenFunction<T(T1), T, T1> res = LuaGenFunction<T(T1), T, T1>(state, -1);
-
+		LuaFunction<SIG> res = LuaFunction<SIG>(state, -1);
+		
 		lua_pop(state.get(), 2);
 		return res;
 	}
 
-	template<typename T, typename T1, typename T2>
-	LuaGenFunction<T(T1,T2), T,T1,T2> GetFunction(std::string key, std::tr1::function<T(T1,T2)> a)
-	{
-		PushToStack();
-		lua_pushlstring(state.get(), key.c_str(), key.size());
-		lua_gettable(state.get(), -2);
-
-		LuaGenFunction<T(T1,T2), T, T1, T2> res = LuaGenFunction<T(T1,T2), T, T1, T2>(state, -1);
-
-		lua_pop(state.get(), 2);
-		return res;
-	}
+	// Get the type of value at a specified key
+	LuaType::Value GetTypeOfValueAt(std::string key) const;
+	LuaType::Value GetTypeOfValueAt(int key) const;
 };
-
-template<>
-static void pushparam<LuaTable>(lua_State* state, LuaTable param)
-{
-	param.PushToStack();
-}
-
-template<>
-static LuaTable popretval<LuaTable>(lua_State* state)
-{
-	return LuaTable(std::tr1::shared_ptr<lua_State>(state, [&](lua_State*){}), -1);
-}
 
 #endif // LUATABLE_H

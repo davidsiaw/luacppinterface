@@ -25,22 +25,6 @@ LuaTable Lua::CreateTable()
 	return table;
 }
 
-int staticFunction(lua_State* state)
-{
-	std::tr1::function<LuaTable(LuaTable)>* func = (std::tr1::function<LuaTable(LuaTable)>*)lua_touserdata(state, lua_upvalueindex(1));
-	LuaTable table(std::tr1::shared_ptr<lua_State>(state, [&](lua_State*){}), -1);
-	LuaTable result = func->operator()(table);
-	result.PushToStack();
-	return 1;
-}
-
-struct closure
-{
-	std::tr1::function<LuaTable(void*, LuaTable)> func;
-	void* object;
-	std::tr1::function<void(void*)> cleanup;
-};
-
 std::string Lua::RunScript(std::string script)
 {
 	int err = luaL_dostring(state.get(), script.c_str());
