@@ -1,0 +1,9 @@
+language: cpp
+compiler:
+  - gcc
+  - clang
+
+before_install:
+  - sudo apt-get install libboost-dev
+
+script: autoreconf --install --force && ./configure && make && make check
