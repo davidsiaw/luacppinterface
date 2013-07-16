@@ -3,9 +3,13 @@
 
 #include <cassert>
 #include <string>
-#include <memory>
+#include <boost/tr1/memory.hpp>
 #include "luareference.h"
-#include "luafunction.h"
+
+template<typename SIG>
+class LuaFunction;
+
+class LuaFunctionBase;
 
 class LuaTable : public LuaReference
 {

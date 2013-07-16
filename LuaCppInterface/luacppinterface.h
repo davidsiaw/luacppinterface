@@ -1,11 +1,11 @@
 #ifndef LUACPPINTERFACE_H
 #define LUACPPINTERFACE_H
 
-#include <memory>
-#include <functional>
+#include <boost/tr1/memory.hpp>
+#include <boost/tr1/functional.hpp>
 #include "luatable.h"
-#include "luafunction.h"
 #include "luatypetemplates.h"
+#include "luafunction.h"
 
 class Lua
 {

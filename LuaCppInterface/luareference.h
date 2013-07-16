@@ -1,7 +1,7 @@
 #ifndef LUAREFERENCE_H
 #define LUAREFERENCE_H
 
-#include <memory>
+#include <boost/tr1/memory.hpp>
 #include "luatype.h"
 #include "lua.hpp"
 

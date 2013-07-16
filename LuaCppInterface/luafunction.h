@@ -10,11 +10,11 @@ class LuaFunction : public LuaGenericFunction<SIG>
 	funcPtr func;
 
 public:
-	LuaFunction(std::tr1::shared_ptr<lua_State> state, int index, funcPtr func = funcPtr()) : LuaGenericFunction(state, index), func(func)
+	LuaFunction(std::tr1::shared_ptr<lua_State> state, int index, funcPtr func = funcPtr()) : LuaGenericFunction<SIG>(state, index), func(func)
 	{
 	}
 };
 
 #define MAKELUAFUNC(functype, func) std::tr1::shared_ptr< std::tr1::function<functype> >(new std::tr1::function<functype>(func))
 
-#endif LUAFUNCTION_H
+#endif // LUAFUNCTION_H

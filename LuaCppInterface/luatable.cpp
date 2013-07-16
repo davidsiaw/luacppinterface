@@ -1,5 +1,6 @@
 #include "luatable.h"
-
+#include "luatypetemplates.h"
+#include "luafunction.h"
 
 LuaTable::LuaTable(std::tr1::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {

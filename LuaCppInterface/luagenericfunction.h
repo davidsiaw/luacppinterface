@@ -1,7 +1,7 @@
 #ifndef LUAGENERICFUNCTION_H
 #define LUAGENERICFUNCTION_H
 
-#include <functional>
+#include <boost/tr1/functional.hpp>
 #include "luafunctionbase.h"
 
 template<typename T>

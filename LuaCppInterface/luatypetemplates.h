@@ -6,7 +6,7 @@ struct pusher
 {
 	static void push(std::tr1::shared_ptr<lua_State> state, T param)
 	{
-		static_assert(false, "parameter types other than string, int, LuaTable or LuaFunction<R(...)> not available");
+		static_assert(sizeof(T) == 0, "parameter types other than string, int, LuaTable or LuaFunction<R(...)> not available");
 	}
 };
 
@@ -15,7 +15,7 @@ struct popper
 {
 	static T pop(std::tr1::shared_ptr<lua_State> state)
 	{
-		static_assert(false, "returns types other than string, int, void, LuaTable or LuaFunction<R(...)> not available" );
+		static_assert(sizeof(T) == 0, "returns types other than string, int, void, LuaTable or LuaFunction<R(...)> not available" );
 	}
 };
 

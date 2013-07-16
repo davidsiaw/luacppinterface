@@ -31,7 +31,7 @@ class LuaGenericFunction<void(T1)> : public LuaFunctionBase
 {
 public:
 	
-	typedef typename T1 arg1type;
+	typedef T1 arg1type;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -60,8 +60,8 @@ class LuaGenericFunction<void(T1,T2)> : public LuaFunctionBase
 {
 public:
 	
-	typedef typename T1 arg1type;
-	typedef typename T2 arg2type;
+	typedef T1 arg1type;
+	typedef T2 arg2type;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -92,9 +92,9 @@ class LuaGenericFunction<void(T1,T2,T3)> : public LuaFunctionBase
 {
 public:
 	
-	typedef typename T1 arg1type;
-	typedef typename T2 arg2type;
-	typedef typename T3 arg3type;
+	typedef T1 arg1type;
+	typedef T2 arg2type;
+	typedef T3 arg3type;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -127,16 +127,16 @@ class LuaGenericFunction<void(T1,T2,T3,T4)> : public LuaFunctionBase
 {
 public:
 	
-	typedef typename T1 arg1type;
-	typedef typename T2 arg2type;
-	typedef typename T3 arg3type;
-	typedef typename T4 arg4type;
+	typedef T1 arg1type;
+	typedef T2 arg2type;
+	typedef T3 arg3type;
+	typedef T4 arg4type;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
-	void Invoke(arg1type arg1, arg2type arg2)
+	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4)
 	{
 		PushToStack();
 		pusher<arg1type>::push(state, arg1);
@@ -165,17 +165,17 @@ class LuaGenericFunction<void(T1,T2,T3,T4,T5)> : public LuaFunctionBase
 {
 public:
 	
-	typedef typename T1 arg1type;
-	typedef typename T2 arg2type;
-	typedef typename T3 arg3type;
-	typedef typename T4 arg4type;
-	typedef typename T5 arg5type;
+	typedef T1 arg1type;
+	typedef T2 arg2type;
+	typedef T3 arg3type;
+	typedef T4 arg4type;
+	typedef T5 arg5type;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
-	void Invoke(arg1type arg1, arg2type arg2)
+	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5)
 	{
 		PushToStack();
 		pusher<arg1type>::push(state, arg1);
@@ -206,18 +206,18 @@ class LuaGenericFunction<void(T1,T2,T3,T4,T5,T6)> : public LuaFunctionBase
 {
 public:
 	
-	typedef typename T1 arg1type;
-	typedef typename T2 arg2type;
-	typedef typename T3 arg3type;
-	typedef typename T4 arg4type;
-	typedef typename T5 arg5type;
-	typedef typename T6 arg6type;
+	typedef T1 arg1type;
+	typedef T2 arg2type;
+	typedef T3 arg3type;
+	typedef T4 arg4type;
+	typedef T5 arg5type;
+	typedef T6 arg6type;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
-	void Invoke(arg1type arg1, arg2type arg2)
+	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5, arg6type arg6)
 	{
 		PushToStack();
 		pusher<arg1type>::push(state, arg1);
@@ -250,19 +250,19 @@ class LuaGenericFunction<void(T1,T2,T3,T4,T5,T6,T7)> : public LuaFunctionBase
 {
 public:
 	
-	typedef typename T1 arg1type;
-	typedef typename T2 arg2type;
-	typedef typename T3 arg3type;
-	typedef typename T4 arg4type;
-	typedef typename T5 arg5type;
-	typedef typename T6 arg6type;
-	typedef typename T7 arg7type;
+	typedef T1 arg1type;
+	typedef T2 arg2type;
+	typedef T3 arg3type;
+	typedef T4 arg4type;
+	typedef T5 arg5type;
+	typedef T6 arg6type;
+	typedef T7 arg7type;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
-	void Invoke(arg1type arg1, arg2type arg2)
+	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5, arg6type arg6, arg7type arg7)
 	{
 		PushToStack();
 		pusher<arg1type>::push(state, arg1);
@@ -297,14 +297,14 @@ class LuaGenericFunction<void(T1,T2,T3,T4,T5,T6,T7,T8)> : public LuaFunctionBase
 {
 public:
 	
-	typedef typename T1 arg1type;
-	typedef typename T2 arg2type;
-	typedef typename T3 arg3type;
-	typedef typename T4 arg4type;
-	typedef typename T5 arg5type;
-	typedef typename T6 arg6type;
-	typedef typename T7 arg7type;
-	typedef typename T8 arg8type;
+	typedef T1 arg1type;
+	typedef T2 arg2type;
+	typedef T3 arg3type;
+	typedef T4 arg4type;
+	typedef T5 arg5type;
+	typedef T6 arg6type;
+	typedef T7 arg7type;
+	typedef T8 arg8type;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
