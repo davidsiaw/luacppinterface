@@ -4,4 +4,4 @@ compiler:
   - clang
 
 before_install:
-script: autoreconf --install --force && ./configure --with-boost=boost && make && make check
+script: autoreconf --install --force && ./configure --with-boost=~/luacppinterface/boost && make && make check
