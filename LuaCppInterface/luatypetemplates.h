@@ -1,6 +1,10 @@
 #ifndef LUATYPETEMPLATES_H
 #define LUATYPETEMPLATES_H
 
+#include <lua.h>
+
+class LuaTable;
+
 template<typename T>
 struct pusher
 {
