@@ -2,7 +2,6 @@
 
 #include "luacppinterface.h"
 
-
 int main()
 {
 	Lua lua;

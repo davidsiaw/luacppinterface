@@ -4,8 +4,8 @@
 #include <boost/tr1/memory.hpp>
 #include <boost/tr1/functional.hpp>
 #include "luatable.h"
-#include "luatypetemplates.h"
 #include "luafunction.h"
+#include "luatypetemplates.h"
 
 class Lua
 {

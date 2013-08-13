@@ -1,3 +1,6 @@
 [submodule "lua"]
 	path = lua
 	url = https://github.com/davidsiaw/lua.git
+[submodule "boost"]
+	path = boost
+	url = https://github.com/davidsiaw/boost

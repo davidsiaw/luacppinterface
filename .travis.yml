@@ -4,8 +4,4 @@ compiler:
   - clang
 
 before_install:
-  - echo 'yes' | sudo add-apt-repository ppa:mapnik/boost
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq libboost-dev
-
-script: autoreconf --install --force && ./configure && make && make check
+script: autoreconf --install --force && ./configure --with-boost=boost && make && make check
