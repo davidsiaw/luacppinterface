@@ -1,6 +1,8 @@
 #ifndef LUAGENERALGENERICFUNCTION_H
 #define LUAGENERALGENERICFUNCTION_H
 
+#include "luatypetemplates.h"
+
 template<typename SIG> class LuaGenericFunction;
 
 template<typename R>
