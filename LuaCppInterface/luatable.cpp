@@ -1,5 +1,6 @@
 #include "luatable.h"
-
+#include "luatypetemplates.h"
+#include "luafunction.h"
 
 LuaTable::LuaTable(std::tr1::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
@@ -60,7 +61,7 @@ void LuaTable::SetString(int key, const std::string value)
 	lua_pop(state.get(), 1);
 }
 
-void LuaTable::SetFunction(std::string key, const LuaFunction value)
+void LuaTable::SetFunction(std::string key, const LuaFunctionBase value)
 {
 	PushToStack();
 	lua_pushlstring(state.get(), key.c_str(), key.size());
@@ -69,7 +70,7 @@ void LuaTable::SetFunction(std::string key, const LuaFunction value)
 	lua_pop(state.get(), 1);
 }
 
-void LuaTable::SetFunction(int key, const LuaFunction value)
+void LuaTable::SetFunction(int key, const LuaFunctionBase value)
 {
 	PushToStack();
 	lua_pushinteger(state.get(), key);
@@ -150,26 +151,22 @@ std::string LuaTable::GetString(int key) const
 	return res;
 }
 
-LuaFunction LuaTable::GetFunction(std::string key) const
+LuaType::Value LuaTable::GetTypeOfValueAt(std::string key) const
 {
 	PushToStack();
 	lua_pushlstring(state.get(), key.c_str(), key.size());
 	lua_gettable(state.get(), -2);
-
-	LuaFunction res = LuaFunction(state, -1);
-
+	LuaType::Value res = (LuaType::Value)lua_type(state.get(), -1);
 	lua_pop(state.get(), 2);
 	return res;
 }
 
-LuaFunction LuaTable::GetFunction(int key) const
+LuaType::Value LuaTable::GetTypeOfValueAt(int key) const
 {
 	PushToStack();
 	lua_pushinteger(state.get(), key);
 	lua_gettable(state.get(), -2);
-
-	LuaFunction res = LuaFunction(state, -1);
-
+	LuaType::Value res = (LuaType::Value)lua_type(state.get(), -1);
 	lua_pop(state.get(), 2);
 	return res;
 }
