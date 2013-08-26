@@ -15,6 +15,4 @@ public:
 	}
 };
 
-#define MAKELUAFUNC(functype, func) std::tr1::shared_ptr< std::tr1::function<functype> >(new std::tr1::function<functype>(func))
-
 #endif // LUAFUNCTION_H

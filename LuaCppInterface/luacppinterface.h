@@ -37,6 +37,12 @@ public:
 		delete *func;
 		return 0;
 	};
+	
+	template<typename SIG>
+	LuaFunction<SIG> CreateFunction(std::tr1::function<SIG> func)
+	{
+		return CreateFunction(std::tr1::make_shared<std::tr1::function<SIG>>(func));
+	}
 
 	template<typename SIG>
 	LuaFunction<SIG> CreateFunction( std::tr1::shared_ptr< std::tr1::function<SIG> > func)
