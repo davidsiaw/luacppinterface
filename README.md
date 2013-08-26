@@ -3,6 +3,8 @@ luacppinterface
 
 A Simple C++ Interface to Lua 5.2 and above.
 
+[![Build Status](https://travis-ci.org/davidsiaw/luacppinterface.png)](https://travis-ci.org/davidsiaw/luacppinterface)
+
 This small static library offers a very simple method of interfacing with Lua from C++ using conventions (only string and integer keys are allowed on LuaTable, a limited set of types available for functions callable from both Lua and C++) and general methods to reduce the number of surprises by as much as possible.
 
 In order to use the library, simply link in lua and luacppinterface statically. Lua depends on Boost C++. Boost is provided as a submodule. You may also use a different version of Boost by adding the --with-boost=~/myownboost/ parameter to the configure script for building luacppinterface.
