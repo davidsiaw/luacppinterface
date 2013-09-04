@@ -1,6 +1,7 @@
 #include "luatable.h"
 #include "luatypetemplates.h"
 #include "luafunction.h"
+#include "luacoroutine.h"
 
 LuaTable::LuaTable(std::tr1::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
@@ -57,6 +58,24 @@ void LuaTable::SetString(int key, const std::string value)
 	PushToStack();
 	lua_pushinteger(state.get(), key);
 	lua_pushlstring(state.get(), value.c_str(), value.length());
+	lua_settable(state.get(), -3);
+	lua_pop(state.get(), 1);
+}
+
+void LuaTable::SetCoroutine(std::string key, const LuaCoroutine value)
+{
+	PushToStack();
+	lua_pushlstring(state.get(), key.c_str(), key.size());
+	value.PushToStack();
+	lua_settable(state.get(), -3);
+	lua_pop(state.get(), 1);
+}
+
+void LuaTable::SetCoroutine(int key, const LuaCoroutine value)
+{
+	PushToStack();
+	lua_pushinteger(state.get(), key);
+	value.PushToStack();
 	lua_settable(state.get(), -3);
 	lua_pop(state.get(), 1);
 }
@@ -151,6 +170,30 @@ std::string LuaTable::GetString(int key) const
 	return res;
 }
 
+LuaCoroutine LuaTable::GetCoroutine(std::string key) const
+{
+	PushToStack();
+	lua_pushlstring(state.get(), key.c_str(), key.size());
+	lua_gettable(state.get(), -2);
+	
+	LuaCoroutine res = LuaCoroutine(state, -1);
+
+	lua_pop(state.get(), 2);
+	return res;
+}
+
+LuaCoroutine LuaTable::GetCoroutine(int key) const
+{
+	PushToStack();
+	lua_pushinteger(state.get(), key);
+	lua_gettable(state.get(), -2);
+
+	LuaCoroutine res = LuaCoroutine(state, -1);
+
+	lua_pop(state.get(), 2);
+	return res;
+}
+
 LuaType::Value LuaTable::GetTypeOfValueAt(std::string key) const
 {
 	PushToStack();
@@ -170,3 +213,4 @@ LuaType::Value LuaTable::GetTypeOfValueAt(int key) const
 	lua_pop(state.get(), 2);
 	return res;
 }
+

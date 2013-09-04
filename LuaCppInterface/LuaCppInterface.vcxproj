@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="luacoroutine.cpp" />
     <ClCompile Include="luacppinterface.cpp" />
     <ClCompile Include="luafunction.cpp" />
     <ClCompile Include="luareference.cpp" />
     <ClCompile Include="luatable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="luacoroutine.h" />
     <ClInclude Include="luacppinterface.h" />
     <ClInclude Include="luafunction.h" />
     <ClInclude Include="luafunctionbase.h" />

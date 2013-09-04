@@ -6,6 +6,11 @@ Lua::Lua() :
 	globals(registry.GetTable(LUA_RIDX_GLOBALS))
 {
 }
+	
+void Lua::LoadStandardLibraries()
+{
+	luaL_openlibs(state.get());
+}
 
 LuaTable Lua::GetRegistry()
 {
@@ -23,6 +28,14 @@ LuaTable Lua::CreateTable()
 	LuaTable table = LuaTable(state, -1);
 	lua_pop(state.get(), 1);
 	return table;
+}
+
+LuaCoroutine Lua::CreateCoroutine()
+{
+	lua_newthread(state.get());
+	LuaCoroutine thread(state, -1);
+	lua_pop(state.get(), 1);
+	return thread;
 }
 
 std::string Lua::RunScript(std::string script)

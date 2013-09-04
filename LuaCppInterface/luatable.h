@@ -10,6 +10,7 @@ template<typename SIG>
 class LuaFunction;
 
 class LuaFunctionBase;
+class LuaCoroutine;
 
 class LuaTable : public LuaReference
 {
@@ -27,7 +28,11 @@ public:
 
 	// Associate the given key to a specified string
 	void SetString(std::string key, const std::string value);
-	void SetString(int key, const std::string value);	
+	void SetString(int key, const std::string value);
+	
+	// Associate the given key to a specified coroutine
+	void SetCoroutine(std::string key, const LuaCoroutine value);
+	void SetCoroutine(int key, const LuaCoroutine value);
 
 	// Associate the given key to a specified function
 	void SetFunction(std::string key, const LuaFunctionBase value);
@@ -44,6 +49,10 @@ public:
 	// Get the string associated with the specified key
 	std::string GetString(std::string key) const;
 	std::string GetString(int key) const;
+
+	// Get the coroutine associated with the specified key
+	LuaCoroutine GetCoroutine(std::string key) const;
+	LuaCoroutine GetCoroutine(int key) const;
 
 	// Get the function associated with the specified key
 	template<typename SIG>

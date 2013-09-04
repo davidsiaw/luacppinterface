@@ -198,6 +198,5 @@ There are many other interesting things you can do with LuaFunction<T> and hopef
 TODO
 ====
 - support other types: bool, double, wstring
-- support lua threads
 - support userdata
 - improve api docs

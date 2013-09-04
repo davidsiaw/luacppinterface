@@ -126,5 +126,36 @@ int main()
 
 	auto number = fres.GetInteger("big");
 
+	Lua l2;
+	l2.GetGlobalEnvironment().SetFunction("myownprint", 
+		l2.CreateYieldingFunction<void(std::string)>
+			([](std::string str)
+			{
+				std::cout << str << std::endl;
+			}));
+
+	l2.LoadStandardLibraries();
+
+	auto cr = l2.CreateCoroutine();
+
+
+	auto err = cr.RunScript(
+		"	myownprint 'hello'\n"
+		"	myownprint 'hello2'\n"
+		"	myownprint 'hello3'\n"
+		);
+	
+	if (cr.CanResume())
+	{
+		std::cout << "yield" << std::endl;
+		auto err = cr.Resume();
+	}
+	
+	if (cr.CanResume())
+	{
+		std::cout << "yield" << std::endl;
+		auto err = cr.Resume();
+	}
+
 	return 0;
 }

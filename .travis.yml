@@ -4,4 +4,4 @@ compiler:
   - clang
 
 before_install:
-script: autoreconf --install --force && ./configure --with-boost=`pwd`/boost && make && make check
+script: ./build.sh
