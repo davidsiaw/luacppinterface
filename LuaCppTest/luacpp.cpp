@@ -126,17 +126,21 @@ int main()
 
 	auto number = fres.GetInteger("big");
 
-	Lua l2;
-	l2.GetGlobalEnvironment().SetFunction("myownprint", 
-		l2.CreateYieldingFunction<void(std::string)>
-			([](std::string str)
+	Lua luaInstance;
+	auto globalTable = luaInstance.GetGlobalEnvironment();
+	auto myOwnPrint = luaInstance.CreateYieldingFunction<void(std::string)>
+		(
+			[](std::string str)
 			{
 				std::cout << str << std::endl;
-			}));
+			}
+		);
 
-	l2.LoadStandardLibraries();
+	globalTable.SetFunction("myownprint", myOwnPrint);
 
-	auto cr = l2.CreateCoroutine();
+	luaInstance.LoadStandardLibraries();
+
+	auto cr = luaInstance.CreateCoroutine();
 
 
 	auto err = cr.RunScript(
@@ -145,13 +149,7 @@ int main()
 		"	myownprint 'hello3'\n"
 		);
 	
-	if (cr.CanResume())
-	{
-		std::cout << "yield" << std::endl;
-		auto err = cr.Resume();
-	}
-	
-	if (cr.CanResume())
+	while (cr.CanResume())
 	{
 		std::cout << "yield" << std::endl;
 		auto err = cr.Resume();
