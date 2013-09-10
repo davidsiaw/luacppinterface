@@ -17,7 +17,9 @@ int main()
 	Lua lua;
 	auto global = lua.GetGlobalEnvironment();
 	auto params = lua.CreateTable();
-	params.SetInteger("big", 15);
+	params.Set("big", 15);
+	
+	global.Set("name", "astrobunny");
 
 	typedef void(*func_t)();
 
@@ -81,16 +83,16 @@ int main()
 	t.Invoke(5);
 
 	auto frunc = lua.CreateFunction<LuaTable(LuaTable)>(thefunc);
-	global.SetFunction("thefunc", frunc);
+	global.Set("thefunc", frunc);
 		
-	global.SetFunction("attack", lua.CreateFunction<int(int,int)>(
+	global.Set("attack", lua.CreateFunction<int(int,int)>(
 		[&](int a, int b) -> int
 		{
 			return a + b;
 		}
 	));
 
-	global.SetFunction("add2", add2);
+	global.Set("add2", add2);
 
 	lua.RunScript(
 		"x = thefunc({a=add2(10)})\n"
@@ -112,19 +114,19 @@ int main()
 
 		);
 	
-	auto meow = global.GetFunction<LuaTable(LuaTable)>("meow");
+	auto meow = global.Get< LuaFunction<LuaTable(LuaTable)> >("meow");
 
 	auto result = meow.Invoke(params);
-	int big = result.GetInteger("big");
+	int big = result.Get<int>("big");
 
-	auto onetwofour = global.GetFunction<int()>("onetwofour");
+	auto onetwofour = global.Get< LuaFunction<int()> >("onetwofour");
 	int res = onetwofour.Invoke();
 	
-	auto getmeow = global.GetFunction<LuaFunction<LuaTable(LuaTable)>()>("getmeow");
+	auto getmeow = global.Get< LuaFunction<LuaFunction< LuaTable(LuaTable) >() > >("getmeow");
 	auto fmeow = getmeow.Invoke();
 	auto fres = fmeow.Invoke(params);
 
-	auto number = fres.GetInteger("big");
+	auto number = fres.Get<int>("big");
 
 	Lua luaInstance;
 	auto globalTable = luaInstance.GetGlobalEnvironment();
@@ -136,7 +138,7 @@ int main()
 			}
 		);
 
-	globalTable.SetFunction("myownprint", myOwnPrint);
+	globalTable.Set("myownprint", myOwnPrint);
 
 	luaInstance.LoadStandardLibraries();
 
@@ -178,19 +180,19 @@ int main()
 				else if (n + 1 >= format.size())
 				{
 					// percent at end
-					ss<< "%";
+					ss << "%";
 					return;
 				}
 				else if (format[offset+n+1] == 's')
 				{
 					// string
-					ss << objects.GetString(token);
+					ss << objects.Get<std::string>(token);
 					token++;
 				}
 				else if (format[offset+n+1] == 'd')
 				{
 					// integer
-					ss << objects.GetInteger(token);
+					ss << objects.Get<int>(token);
 					token++;
 				}
 				else
@@ -203,11 +205,11 @@ int main()
 			while (offset < format.length());
 			
 			// remaining
-			std::cout << format.substr(offset) << std::endl;
+			ss << format.substr(offset) << std::endl;
 		}
 	);
 	
-	glob3.SetFunction("print", formattedPrint);
+	glob3.Set("print", formattedPrint);
 	auto error = l3.RunScript("print('This is %s %s %s %s %d %d %d!', {'hello', 'kitty', 'island', 'adventure', 1, 2, 3});");
 	//l3.RunScript("a = {'ss', 'bb'}");
 

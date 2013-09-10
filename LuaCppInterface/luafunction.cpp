@@ -1,4 +1,5 @@
 #include <cassert>
+#include "luacoroutine.h"
 #include "luatable.h"
 #include "luatypetemplates.h"
 #include "luafunction.h"

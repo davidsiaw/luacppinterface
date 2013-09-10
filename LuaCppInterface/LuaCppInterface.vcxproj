@@ -152,6 +152,7 @@
     <ClInclude Include="luafunctionbase.h" />
     <ClInclude Include="luageneralgenericfunctions.h" />
     <ClInclude Include="luagenericfunction.h" />
+    <ClInclude Include="luapusherpopperinterface.h" />
     <ClInclude Include="luareference.h" />
     <ClInclude Include="luatable.h" />
     <ClInclude Include="luatype.h" />

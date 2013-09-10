@@ -3,7 +3,7 @@
 Lua::Lua() : 
 	state(luaL_newstate(), lua_close),
 	registry(LuaTable(state, LUA_REGISTRYINDEX)),
-	globals(registry.GetTable(LUA_RIDX_GLOBALS))
+	globals(registry.Get<LuaTable>(LUA_RIDX_GLOBALS))
 {
 }
 	

@@ -8,76 +8,61 @@
 
 template<typename SIG>
 class LuaFunction;
-
 class LuaFunctionBase;
-class LuaCoroutine;
+
+template<typename T>
+struct pusher;
+
+template<typename T>
+struct popper;
 
 class LuaTable : public LuaReference
 {
 
 public:
 	LuaTable(std::tr1::shared_ptr<lua_State> state, int index);
-
-	// Associate the given key to a specified table
-	void SetTable(std::string key, const LuaTable& value);	
-	void SetTable(int key, const LuaTable& value);
-
-	// Associate the given key to a specified integer
-	void SetInteger(std::string key, const int value);
-	void SetInteger(int key, const int value);
-
-	// Associate the given key to a specified string
-	void SetString(std::string key, const std::string value);
-	void SetString(int key, const std::string value);
 	
-	// Associate the given key to a specified coroutine
-	void SetCoroutine(std::string key, const LuaCoroutine value);
-	void SetCoroutine(int key, const LuaCoroutine value);
-
-	// Associate the given key to a specified function
-	void SetFunction(std::string key, const LuaFunctionBase value);
-	void SetFunction(int key, const LuaFunctionBase value);
-
-	// Get the table associated with the specified key
-	LuaTable GetTable(std::string key) const;
-	LuaTable GetTable(int key) const;
-
-	// Get the integer associated with the specified key
-	int GetInteger(std::string key) const;
-	int GetInteger(int key) const;
-
-	// Get the string associated with the specified key
-	std::string GetString(std::string key) const;
-	std::string GetString(int key) const;
-
-	// Get the coroutine associated with the specified key
-	LuaCoroutine GetCoroutine(std::string key) const;
-	LuaCoroutine GetCoroutine(int key) const;
-
-	// Get the function associated with the specified key
-	template<typename SIG>
-	LuaFunction<SIG> GetFunction(std::string key) const
+	template<typename OBJ>
+	void Set(std::string key, const OBJ& value)
+	{
+		PushToStack();
+		lua_pushlstring(state.get(), key.c_str(), key.size());
+		pusher<OBJ>::push(state, value);
+		lua_settable(state.get(), -3);
+		lua_pop(state.get(), 1);
+	}
+	
+	template<typename OBJ>
+	void Set(int key, const OBJ& value)
+	{
+		PushToStack();
+		lua_pushinteger(state.get(), key);
+		pusher<OBJ>::push(state, value);
+		lua_settable(state.get(), -3);
+		lua_pop(state.get(), 1);
+	}
+	
+	template<typename OBJ>
+	OBJ Get(std::string key) const
 	{
 		PushToStack();
 		lua_pushlstring(state.get(), key.c_str(), key.size());
 		lua_gettable(state.get(), -2);
 
-		LuaFunction<SIG> res = LuaFunction<SIG>(state, -1);
-		
-		lua_pop(state.get(), 2);
+		OBJ res = popper<OBJ>::pop(state);
+		lua_pop(state.get(), 1);
 		return res;
 	}
-
-	template<typename SIG>
-	LuaFunction<SIG> GetFunction(int key) const
+	
+	template<typename OBJ>
+	OBJ Get(int key) const
 	{
 		PushToStack();
 		lua_pushinteger(state.get(), key);
 		lua_gettable(state.get(), -2);
-
-		LuaFunction<SIG> res = LuaFunction<SIG>(state, -1);
 		
-		lua_pop(state.get(), 2);
+		OBJ res = popper<OBJ>::pop(state);
+		lua_pop(state.get(), 1);
 		return res;
 	}
 

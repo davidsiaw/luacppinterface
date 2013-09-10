@@ -15,7 +15,7 @@ int main()
 			}
 		);
 
-	globalTable.SetFunction("myownprint", myOwnPrint);
+	globalTable.Set("myownprint", myOwnPrint);
 
 	luaInstance.LoadStandardLibraries();
 

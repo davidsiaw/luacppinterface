@@ -19,7 +19,7 @@ int main()
 	Lua lua;
 	auto global = lua.GetGlobalEnvironment();
 	auto params = lua.CreateTable();
-	params.SetInteger("big", 15);
+	params.Set("big", 15);
 
 	typedef void(*func_t)();
 
@@ -83,16 +83,16 @@ int main()
 	t.Invoke(5);
 
 	auto frunc = lua.CreateFunction<LuaTable(LuaTable)>(thefunc);
-	global.SetFunction("thefunc", frunc);
+	global.Set("thefunc", frunc);
 		
-	global.SetFunction("attack", lua.CreateFunction<int(int,int)>(
+	global.Set("attack", lua.CreateFunction<int(int,int)>(
 		[&](int a, int b) -> int
 		{
 			return a + b;
 		}
 	));
 
-	global.SetFunction("add2", add2);
+	global.Set("add2", add2);
 
 	lua.RunScript(
 		"x = thefunc({a=add2(10)})\n"
@@ -114,19 +114,19 @@ int main()
 
 		);
 	
-	auto meow = global.GetFunction<LuaTable(LuaTable)>("meow");
+	auto meow = global.Get< LuaFunction<LuaTable(LuaTable)> >("meow");
 
 	auto result = meow.Invoke(params);
-	int big = result.GetInteger("big");
+	int big = result.Get<int>("big");
 
-	auto onetwofour = global.GetFunction<int()>("onetwofour");
+	auto onetwofour = global.Get< LuaFunction<int()> >("onetwofour");
 	int res = onetwofour.Invoke();
 	
-	auto getmeow = global.GetFunction<LuaFunction<LuaTable(LuaTable)>()>("getmeow");
+	auto getmeow = global.Get< LuaFunction<LuaFunction<LuaTable(LuaTable)>()> >("getmeow");
 	auto fmeow = getmeow.Invoke();
 	auto fres = fmeow.Invoke(params);
 
-	auto number = fres.GetInteger("big");
+	auto number = fres.Get<int>("big");
 	
 	if (number == 39 && 
 		res == 124 &&

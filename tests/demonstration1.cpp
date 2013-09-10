@@ -33,13 +33,13 @@ int main()
 				else if (format[offset+n+1] == 's')
 				{
 					// string
-					ss << objects.GetString(token);
+					ss << objects.Get<std::string>(token);
 					token++;
 				}
 				else if (format[offset+n+1] == 'd')
 				{
 					// integer
-					ss << objects.GetInteger(token);
+					ss << objects.Get<int>(token);
 					token++;
 				}
 				else
@@ -56,7 +56,7 @@ int main()
 		}
 	);
 	
-	glob3.SetFunction("print", formattedPrint);
+	glob3.Set("print", formattedPrint);
 	auto error = l3.RunScript("print('This is %s %s %s %s %d %d %d!', {'hello', 'kitty', 'island', 'adventure', 1, 2, 3});");
 	
 	auto resstr = ss.str();
