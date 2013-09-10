@@ -19,6 +19,61 @@ make check
 
 For more information about building, please refer to .travis.yml
 
+The examples here are not at all extensive. You might want to refer to the [tests](https://github.com/davidsiaw/luacppinterface/tree/master/tests) for more examples.
+
+API Changes
+===========
+
+*API Changes on 11 September 2013*:
+The following methods on LuaTable have been replaced by nicer template methods that allow you to specify more precisely the type you want to use. Here are some find/replace transformations that you will find helpful.
+```
+* SetTable -> Set<LuaTable>
+* SetInteger -> Set<int>
+* SetString -> Set<std::string>
+* SetCoroutine -> Set<LuaCoroutine>
+* SetFunction -> Set< LuaFunction<rettype(signature)> >
+* GetTable -> Get<LuaTable>
+* GetInteger -> Get<int>
+* GetCoroutine -> Get<LuaCoroutine>
+* GetString -> Get<std::string>
+* GetFunction -> Get< LuaFunction<rettype(signature)> >
+```
+Thanks to C++'s new type inferencing, if your compiler supports it you can just go:
+```C++
+LuaFunction<void(int,int)> theFunction;
+table.Set(theFunction);
+```
+Thanks to this change, LuaCppInterface now supports Get and Set with the *PrimitiveTypes*:
+Note: Key types available on the table are still only std::string and int. This does not change
+
+PrimitiveTypes
+==============
+
+LuaCppInterface defines a set of primitive types that can freely be passed between Lua and C++ via functions, Get/Set, etc... You must use these types to communicate with a Lua Script.
+
+```
+LuaTable
+LuaCoroutine
+LuaFunction
+float
+double
+bool
+signed char
+unsigned char
+short
+unsigned short
+int
+unsigned int
+long
+unsigned long
+long long
+unsigned long long
+char*
+const char*
+std::string
+std::wstring
+```
+
 API
 ===
 
@@ -44,7 +99,7 @@ int main()
 	auto print = lua.CreateFunction<void(std::string)>(printfunc);
 	
 	// Set the variable "print" in the global state to the function
-	global.SetFunction("print", print);
+	global.Set("print", print);
 	
 	// Call the function!
 	lua.RunScript("print({str = 'hello world!'})");
@@ -78,7 +133,7 @@ LuaTable CreateTable();
 LuaCoroutine CreateCoroutine();
 
 // create a function that can be used in Lua
-LuaFunction CreateFunction(const std::tr1::function<LuaTable(LuaTable)>* func);
+LuaFunction<SIGNATURE> CreateFunction<SIGNATURE>(const std::tr1::function<SIGNATURE>* func);
 
 // run a lua script
 std::string RunScript(std::string script);
@@ -109,55 +164,29 @@ In order to create a new table you need to call lua.CreateTable(), or retrieve a
 
 LuaCppInterface only allows you to use strings or integers to index a table. This is because these two data structures are the most primitive data types that can be used as a key and is general among every language. Other data structures suffer from IdentityCrisis. It is also easier to think of a table that holds keys of only string or integer types.
 
+Values can only be one of the *PrimitiveTypes*
+
 ```C++
-// Associate the given key to a specified table
-void SetTable(std::string key, const LuaTable& value);	
-void SetTable(int key, const LuaTable& value);
+// Set the key to map to a value
+void Set<TYPE>(std::string key, const TYPE& value);	
+void Set<TYPE>(int key, const TYPE& value);
 
-// Associate the given key to a specified integer
-void SetInteger(std::string key, const int value);
-void SetInteger(int key, const int value);
+// Get the value mapped to the key (TYPE says what type you expect the value to be)
+TYPE GetFunction<TYPE>(std::string key) const;
+TYPE GetFunction<TYPE>(int key) const;
 
-// Associate the given key to a specified string
-void SetString(std::string key, const std::string value);
-void SetString(int key, const std::string value);
-
-// Associate the given key to a specified coroutine
-void SetCoroutine(std::string key, const LuaCoroutine value);
-void SetCoroutine(int key, const LuaCoroutine value);
-
-// Associate the given key to a specified function
-void SetFunction(std::string key, const LuaFunctionBase value);
-void SetFunction(int key, const LuaFunctionBase value);
-
-// Get the table associated with the specified key
-LuaTable GetTable(std::string key) const;
-LuaTable GetTable(int key) const;
-
-// Get the integer associated with the specified key
-int GetInteger(std::string key) const;
-int GetInteger(int key) const;
-
-// Get the string associated with the specified key
-std::string GetString(std::string key) const;
-std::string GetString(int key) const;
-
-// Get the coroutine associated with the specified key
-LuaCoroutine GetCoroutine(std::string key) const;
-LuaCoroutine GetCoroutine(int key) const;
-
-// Get the function associated with the specified key
-LuaFunction<Signature> GetFunction<Signature>(std::string key) const;
-LuaFunction<Signature> GetFunction<Signature>(int key) const;
+// Get the type of value at a specified key
+LuaType::Value GetTypeOfValueAt(std::string key) const;
+LuaType::Value GetTypeOfValueAt(int key) const;
 ```
-    
+
+You can also perform some error checking by using GetTypeOfValueAt to determine if the script performed correctly and has provided the correct value at the key you are interested in.
+
 Basically, a Set function is equivalent to table[key] = value and a Get function is equivalent to value = table[key].
 
 LuaFunction<T> object
 ---------------------
-The LuaFunction<T> object represents a function in Lua. However, not all functions can be represented. Valid function signatures are signatures that contain the following types:
-
-    int, std::string, LuaTable, LuaFunction<T>
+The LuaFunction<T> object represents a function in Lua. However, not all functions can be represented. Valid function signatures are signatures that contain the *PrimitiveTypes*
 
 In addition, the return type is allowed to be void. These to be used for passing functions from C++ to Lua and Lua to C++.
 
@@ -182,8 +211,8 @@ int shouldBePositiveFive = absolute.Invoke(-5);
 lambdaFunc.Invoke();
 
 // ... or set them up in a script
-lua.GetGlobalEnvironment().SetFunction("absolute", absolute);
-lua.GetGlobalEnvironment().SetFunction("lambdaFunc", lambdaFunc);
+lua.GetGlobalEnvironment().Set("absolute", absolute);
+lua.GetGlobalEnvironment().Set("lambdaFunc", lambdaFunc);
 
 // and invoke them in a script.
 lua.RunScript(
@@ -204,7 +233,7 @@ lua.RunScript(
 );
 
 // Call the function set up by the script.
-auto addTwo = global.GetFunction<int(int)>("addTwo");
+auto addTwo = global.Get< LuaFunction<int(int)> >("addTwo");
 int shouldBeSix = addTwo.Invoke(4);
 ```
 	
@@ -214,22 +243,22 @@ It is also possible to write a function that returns a function
 auto add = lua.CreateFunction<int(int,int)>([&](int a, int b) -> int { return a + b; });
 auto multiply = lua.CreateFunction<int(int,int)>([&](int a, int b) -> int { return a * b; });
 
-lua.GetGlobalEnvironment().SetFunction("add", add);
-lua.GetGlobalEnvironment().SetFunction("multiply", multiply);
+lua.GetGlobalEnvironment().Set("add", add);
+lua.GetGlobalEnvironment().Set("multiply", multiply);
 
 // Run the script that chooses a function to return
 lua.RunScript(
 	"function subtract(a,b)\n"
-	"  return a - b"
+	"  return a - b\n"
 	"end\n"
 	""
 	"function returnAnOperator()\n"
-	"  return multiply"		// this can be either add, multiply or subtract
+	"  return multiply\n"				// this can be either add, multiply or subtract
 							// change it to see what happens!
 	"end\n"
 );
 
-auto returnAnOperator = global.GetFunction< LuaFunction<int(int,int)>() >("returnAnOperator");
+auto returnAnOperator = global.Get< LuaFunction< LuaFunction<int(int,int)>() > >("returnAnOperator");
 auto anOperator = returnAnOperator.Invoke();
 auto result = anOperator.Invoke(10,10);		// if we returned add result would be 20
 						// if we returned multiply result would be 100
@@ -279,7 +308,7 @@ auto myOwnPrint = luaInstance.CreateYieldingFunction<void(std::string)>
 		}
 	);
 
-globalTable.SetFunction("myownprint", myOwnPrint);
+globalTable.Set("myownprint", myOwnPrint);
 
 luaInstance.LoadStandardLibraries();
 
@@ -316,6 +345,5 @@ Due to the script returning from RunScript and Resume 3 times from paused execut
 
 TODO
 ====
-- support other types: bool, double, wstring
 - support userdata
 - improve api docs
