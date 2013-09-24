@@ -12,12 +12,12 @@ void Lua::LoadStandardLibraries()
 	luaL_openlibs(state.get());
 }
 
-LuaTable Lua::GetRegistry()
+LuaTable Lua::GetRegistry() const
 {
 	return registry;
 }
 
-LuaTable Lua::GetGlobalEnvironment()
+LuaTable Lua::GetGlobalEnvironment() const
 {
 	return globals;
 }

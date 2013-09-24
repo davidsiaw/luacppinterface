@@ -60,10 +60,10 @@ public:
 	void LoadStandardLibraries();
 
 	// get the registry table
-	LuaTable GetRegistry();
+	LuaTable GetRegistry() const;
 
 	// get the global table
-	LuaTable GetGlobalEnvironment();
+	LuaTable GetGlobalEnvironment() const;
 
 	// create a table
 	LuaTable CreateTable();
