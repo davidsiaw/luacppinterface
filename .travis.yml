@@ -4,4 +4,10 @@ compiler:
   - clang
 
 before_install:
+  - sudo pip install cpp-coveralls --use-mirrors
+
 script: ./build.sh
+
+after_success:
+  - coveralls
+
