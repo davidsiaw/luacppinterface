@@ -2,7 +2,7 @@ ACLOCAL_AMFLAGS = -I build-aux
 SUBDIRS = LuaCppInterface
 
 if COND_GCOV
-   MAYBE_COVERAGE=--coverage --no-inline
+   MAYBE_COVERAGE=--coverage
 endif
 
 TESTS = luainterfacetest \
