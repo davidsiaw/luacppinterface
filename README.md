@@ -4,6 +4,7 @@ luacppinterface
 A Simple C++ Interface to Lua 5.2 and above.
 
 [![Build Status](https://travis-ci.org/davidsiaw/luacppinterface.png)](https://travis-ci.org/davidsiaw/luacppinterface)
+[![Coverage Status](https://coveralls.io/repos/davidsiaw/luacppinterface/badge.png?branch=master)](https://coveralls.io/r/davidsiaw/luacppinterface?branch=master)
 
 This small static library offers a very simple method of interfacing with Lua from C++ using conventions (only string and integer keys are allowed on LuaTable, a limited set of types available for functions callable from both Lua and C++) and general methods to reduce the number of surprises by as much as possible.
 
