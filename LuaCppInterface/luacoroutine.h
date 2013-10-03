@@ -7,8 +7,6 @@
 
 class LuaCoroutine : public LuaReference
 {
-	int status;
-
 public:
 	LuaCoroutine(std::tr1::shared_ptr<lua_State> state, int index);
 
@@ -17,9 +15,6 @@ public:
 
 	// resume the yielded coroutine
 	std::string Resume();
-
-	// check if the coroutine was yielded
-	bool CanResume() const;
 };
 
 #endif // LUACOROUTINE_H
