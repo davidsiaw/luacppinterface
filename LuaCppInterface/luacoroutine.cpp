@@ -33,3 +33,15 @@ std::string LuaCoroutine::Resume()
 	}
 	return "No errors";
 }
+
+bool LuaCoroutine::CanResume() const
+{
+	PushToStack();
+	lua_State* thread = lua_tothread(state.get(), -1);
+	lua_pop(state.get(), 1);
+	if (lua_status(thread) == LUA_YIELD)
+	{
+		return true;
+	}
+	return false;
+}

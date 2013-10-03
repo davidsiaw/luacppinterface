@@ -15,6 +15,8 @@ public:
 
 	// resume the yielded coroutine
 	std::string Resume();
+
+	bool CanResume() const;
 };
 
 #endif // LUACOROUTINE_H
