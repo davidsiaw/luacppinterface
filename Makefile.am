@@ -1,6 +1,10 @@
 ACLOCAL_AMFLAGS = -I build-aux
 SUBDIRS = LuaCppInterface
 
+if COND_GCOV
+   MAYBE_COVERAGE=--coverage
+endif
+
 TESTS = luainterfacetest \
 		testcreate \
 		testfunction \
@@ -28,7 +32,7 @@ TESTS = luainterfacetest \
 
 check_PROGRAMS = $(TESTS)
 		
-AM_CXXFLAGS = -ILuaCppInterface -Ilua/src $(BOOST_CPPFLAGS)
+AM_CXXFLAGS = $(MAYBE_COVERAGE) -ILuaCppInterface -Ilua/src $(BOOST_CPPFLAGS)
 
 luainterfacetest_SOURCES = LuaCppTest/luacpp.cpp lua
 luainterfacetest_LDADD = LuaCppInterface/libluacppinterface.a lua/src/liblua.a
