@@ -65,8 +65,11 @@ DEFINE_TYPE_TEMPLATE_FOR(std::wstring,, 									\
 		res.assign(ss.begin(), ss.end());									\
 	)
 
+template<typename TYPE>
+class LuaUserdata;
 
 // LuaCppInterface's types
+DEFINE_TYPE_TEMPLATE_FOR(LuaUserdata<TYPE>, typename TYPE, param.PushToStack(), LuaUserdata<TYPE> res(state,-1))
 DEFINE_TYPE_TEMPLATE_FOR(LuaFunction<SIG>, typename SIG, param.PushToStack(), LuaFunction<SIG> res(state, -1))
 DEFINE_TYPE_TEMPLATE_FOR(LuaTable,, param.PushToStack(), LuaTable res(state,-1))
 DEFINE_TYPE_TEMPLATE_FOR(LuaCoroutine,, param.PushToStack(), LuaCoroutine res(state,-1))

@@ -1,10 +1,6 @@
 ACLOCAL_AMFLAGS = -I build-aux
 SUBDIRS = LuaCppInterface
 
-if COND_GCOV
-   MAYBE_COVERAGE=--coverage
-endif
-
 TESTS = luainterfacetest \
 		testcreate \
 		testfunction \
@@ -21,33 +17,18 @@ TESTS = luainterfacetest \
 		testreturnfromscript \
 		testreturntablefromlua \
 		testreturntablefromnative \
+		testuserdata \
+		testuserdataconstructor \
+		testuserdatamethod \
+		testuserdatadispose \
 		testtable \
 		demonstration1 \
 		demonstration2 \
 		demonstration3
 
-check_PROGRAMS = luainterfacetest \
-		testcreate \
-		testfunction \
-		testfunctionparams \
-		testfunctionparamsreturn \
-		testfunctionreturn \
-		testgetsetfunction \
-		testgetsetinsidetable \
-		testgetsetinteger \
-		testgetsetstring \
-		testgetsettable \
-		testpassingfunction \
-		testreturnfromnative \
-		testreturnfromscript \
-		testreturntablefromlua \
-		testreturntablefromnative \
-		testtable \
-		demonstration1 \
-		demonstration2 \
-		demonstration3
+check_PROGRAMS = $(TESTS)
 		
-AM_CXXFLAGS = $(MAYBE_COVERAGE) -ILuaCppInterface -Ilua/src $(BOOST_CPPFLAGS)
+AM_CXXFLAGS = -ILuaCppInterface -Ilua/src $(BOOST_CPPFLAGS)
 
 luainterfacetest_SOURCES = LuaCppTest/luacpp.cpp lua
 luainterfacetest_LDADD = LuaCppInterface/libluacppinterface.a lua/src/liblua.a
@@ -97,6 +78,20 @@ testreturntablefromlua_LDADD = LuaCppInterface/libluacppinterface.a lua/src/libl
 
 testreturntablefromnative_SOURCES = tests/testreturntablefromnative.cpp lua
 testreturntablefromnative_LDADD = LuaCppInterface/libluacppinterface.a lua/src/liblua.a
+
+testuserdata_SOURCES = tests/testuserdata.cpp lua
+testuserdata_LDADD = LuaCppInterface/libluacppinterface.a lua/src/liblua.a
+
+testuserdataconstructor_SOURCES = tests/testuserdataconstructor.cpp lua
+testuserdataconstructor_LDADD = LuaCppInterface/libluacppinterface.a lua/src/liblua.a
+
+testuserdatamethod_SOURCES = tests/testuserdatamethod.cpp lua
+testuserdatamethod_LDADD = LuaCppInterface/libluacppinterface.a lua/src/liblua.a
+
+testuserdatadispose_SOURCES = tests/testuserdatadispose.cpp lua
+testuserdatadispose_LDADD = LuaCppInterface/libluacppinterface.a lua/src/liblua.a
+
+
 
 testtable_SOURCES = tests/testtable.cpp lua
 testtable_LDADD = LuaCppInterface/libluacppinterface.a lua/src/liblua.a

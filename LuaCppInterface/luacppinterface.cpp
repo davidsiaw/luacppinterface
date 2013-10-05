@@ -1,4 +1,5 @@
 #include "luacppinterface.h"
+#include "luauserdata.h"
 
 Lua::Lua() : 
 	state(luaL_newstate(), lua_close),
