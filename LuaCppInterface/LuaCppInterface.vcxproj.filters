@@ -65,9 +65,6 @@
     <ClInclude Include="luacoroutine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="luapusherpopperinterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="luauserdata.h">
       <Filter>Header Files</Filter>
     </ClInclude>

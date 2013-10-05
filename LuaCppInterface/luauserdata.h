@@ -18,14 +18,14 @@ public:
 	void Set(std::string key, const OBJ& value)
 	{
 		auto table = GetMetaTable();
-		table.Set<OBJ>(key, value);
+		table.template Set<OBJ>(key, value);
 	}
 	
 	template<typename OBJ>
 	OBJ Get(std::string key) const
 	{
 		auto table = GetMetaTable();
-		return table.Get<OBJ>(key);
+		return table.template Get<OBJ>(key);
 	}
 };
 
