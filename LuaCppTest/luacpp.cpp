@@ -42,17 +42,23 @@ int main()
 	lua.LoadStandardLibraries();
 	auto global = lua.GetGlobalEnvironment();
 
-	auto newFoo = lua.CreateFunction< LuaUserdata<Foo>(std::string) >(
+
+	auto newFoo = lua.CreateFunction< 
+
+		LuaUserdata<Foo>(std::string) 
+
+	>(
 	[&](std::string str) -> LuaUserdata<Foo>
 	{
 		auto foo = new Foo(str);
 		auto userData = lua.CreateUserdata<Foo>(foo);
-		
-		using namespace std::tr1::placeholders;
-		userData.Set("meow",  lua.CreateFunction< std::string(int, int) >( std::tr1::bind(&Foo::Add, foo, _1, _2) ) );
+
+		userData.Bind("meow", &Foo::Add);
 		
 		return userData;
 	});
+
+
 
 	auto footable = lua.CreateTable();
 	footable.Set("new", newFoo);

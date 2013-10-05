@@ -71,6 +71,8 @@ public:
 	// create a new Lua state
 	Lua();
 
+	Lua(std::tr1::shared_ptr<lua_State> state);
+	
 	~Lua();
 
 	// load standard lua libraries into this state
@@ -92,20 +94,6 @@ public:
 	std::string RunScript(std::string script);
 	
 	
-	template<typename TYPE>
-	struct UserdataWrapper
-	{
-		TYPE* actualData;
-		std::tr1::function< void(TYPE*) > destructor;
-	};
-	
-	template<typename TYPE>
-	static int lua_userdata_finalizer(lua_State* state)
-	{
-		UserdataWrapper<TYPE>* wrap = (UserdataWrapper<TYPE>*)lua_touserdata(state, lua_upvalueindex(1));
-		wrap->destructor(wrap->actualData);
-		return 0;
-	};
 	
 	template<typename TYPE>
 	LuaUserdata<TYPE> CreateUserdata(TYPE* data)
@@ -117,8 +105,8 @@ public:
 	template<typename TYPE>
 	LuaUserdata<TYPE> CreateUserdata(TYPE* data, std::tr1::function<void(TYPE*)> destructor)
 	{
-		UserdataWrapper<TYPE>* wrap = (UserdataWrapper<TYPE>*)lua_newuserdata(state.get(), sizeof(UserdataWrapper<TYPE>));
-		memset(wrap, 0, sizeof(UserdataWrapper<TYPE>));
+		typename LuaUserdata<TYPE>::UserdataWrapper* wrap = (typename LuaUserdata<TYPE>::UserdataWrapper*)lua_newuserdata(state.get(), sizeof(typename LuaUserdata<TYPE>::UserdataWrapper));
+		memset(wrap, 0, sizeof(typename LuaUserdata<TYPE>::UserdataWrapper));
 		wrap->actualData = data;
 		wrap->destructor = destructor;
 
@@ -129,14 +117,14 @@ public:
 		// make the finalizer
 		lua_pushstring(state.get(), "__gc");
 		lua_pushlightuserdata(state.get(), (void*)wrap);
-		lua_pushcclosure(state.get(), lua_userdata_finalizer<TYPE>, 1);
+		lua_pushcclosure(state.get(), LuaUserdata<TYPE>::lua_userdata_finalizer, 1);
 		lua_rawset(state.get(), -3);
 
 		// assign table to self
 		lua_pushstring(state.get(), "__index");
 		lua_pushvalue(state.get(), -2);
 		lua_rawset(state.get(), -3);
-		
+
 		lua_setmetatable(state.get(), -2);
 
 		lua_pop(state.get(), 1);
@@ -158,5 +146,7 @@ public:
 	}
 	
 };
+
+#include "luauserdatabindtemplates.h"
 
 #endif // LUACPPINTERFACE

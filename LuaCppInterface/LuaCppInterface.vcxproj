@@ -157,6 +157,8 @@
     <ClInclude Include="luatype.h" />
     <ClInclude Include="luatypetemplates.h" />
     <ClInclude Include="luauserdata.h" />
+    <ClInclude Include="luauserdatabindtemplates.h" />
+    <ClInclude Include="luauserdataforwards.h" />
     <ClInclude Include="luavoidgenericfunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

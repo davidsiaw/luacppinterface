@@ -7,6 +7,14 @@ Lua::Lua() :
 	globals(registry.Get<LuaTable>(LUA_RIDX_GLOBALS))
 {
 }
+
+Lua::Lua(std::tr1::shared_ptr<lua_State> state) :
+	state(state),
+	registry(LuaTable(state, LUA_REGISTRYINDEX)),
+	globals(registry.Get<LuaTable>(LUA_RIDX_GLOBALS))
+
+{
+}
 	
 void Lua::LoadStandardLibraries()
 {
