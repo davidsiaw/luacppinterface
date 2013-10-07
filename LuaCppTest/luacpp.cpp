@@ -65,7 +65,26 @@ private:
     std::string name;
 };
 
+LuaUserdata<Foo> fooConstructor(Lua lua, std::string str)
+{
+	auto foo = new Foo(str);
+	auto userData = lua.CreateUserdata<Foo>(foo);
 
+	userData.Bind("add", &Foo::Add);
+	userData.Bind("identify", &Foo::Identify);
+		
+	return userData;
+}
+
+LuaUserdata<Bar> barConstructor(Lua lua, int number)
+{
+	auto bar = new Bar(number);
+	auto userData = lua.CreateUserdata<Bar>(bar);
+
+	userData.Bind("getNumber", &Bar::GetNumber);
+		
+	return userData;
+}
 
 int main()
 {
@@ -73,43 +92,17 @@ int main()
 	lua.LoadStandardLibraries();
 	auto global = lua.GetGlobalEnvironment();
 
-
-
-	auto newFoo = lua.CreateFunction< 
-		LuaUserdata<Foo>(std::string)
-	>(
-	[&](std::string str) -> LuaUserdata<Foo>
-	{
-		auto foo = new Foo(str);
-		auto userData = lua.CreateUserdata<Foo>(foo);
-
-		userData.Bind("add", &Foo::Add);
-		userData.Bind("identify", &Foo::Identify);
-		
-		return userData;
-	});
+	
+	auto newFoo = lua.CreateFunction<LuaUserdata<Foo>(std::string)>(std::tr1::bind(&fooConstructor, lua, std::tr1::placeholders::_1));
 	auto footable = lua.CreateTable();
 	footable.Set("new", newFoo);
 	global.Set("Foo", footable);
 
-
-	auto newBar = lua.CreateFunction< 
-		LuaUserdata<Bar>(int)
-	>(
-	[&](int number) -> LuaUserdata<Bar>
-	{
-		auto bar = new Bar(number);
-		auto userData = lua.CreateUserdata<Bar>(bar);
-
-		userData.Bind("getNumber", &Bar::GetNumber);
-		
-		return userData;
-	});
+	
+	auto newBar = lua.CreateFunction<LuaUserdata<Bar>(int)>(std::tr1::bind(&barConstructor, lua, std::tr1::placeholders::_1));
 	auto bartable = lua.CreateTable();
 	bartable.Set("new", newBar);
 	global.Set("Bar", bartable);
-
-
 
 	auto ress = lua.RunScript(
 		"local foo1 = Foo:new('Hello')\n"
@@ -123,11 +116,6 @@ int main()
 		"foo1 = nil\n"
 		"collectgarbage()\n"
 		);
-
-
-
-
-
 
 	auto params = lua.CreateTable();
 	params.Set("big", 15);
