@@ -5,6 +5,7 @@
 #include <boost/tr1/memory.hpp>
 #include "luareference.h"
 #include "luatype.h"
+#include "luauserdata.h"
 
 template <typename T>
 class LuaLightUserdata : public LuaReference
@@ -22,7 +23,7 @@ public:
 		}
 		else if (GetType() == LuaType::userdata)
 		{
-			auto wrap = (LuaUserdata<T>::UserdataWrapper*)lua_touserdata(state.get(), index);
+			auto wrap = (typename LuaUserdata<T>::UserdataWrapper*)lua_touserdata(state.get(), index);
 			pointer = wrap->actualData;
 		}
 	}
