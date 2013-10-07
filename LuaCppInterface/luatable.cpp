@@ -10,7 +10,7 @@ LuaTable::LuaTable(std::tr1::shared_ptr<lua_State> state, int index) : LuaRefere
 
 LuaType::Value LuaTable::GetTypeOfValueAt(std::string key) const
 {
-	PushToStack();
+	PushToStack(state.get());
 	lua_pushlstring(state.get(), key.c_str(), key.size());
 	lua_gettable(state.get(), -2);
 	LuaType::Value res = (LuaType::Value)lua_type(state.get(), -1);
@@ -20,7 +20,7 @@ LuaType::Value LuaTable::GetTypeOfValueAt(std::string key) const
 
 LuaType::Value LuaTable::GetTypeOfValueAt(int key) const
 {
-	PushToStack();
+	PushToStack(state.get());
 	lua_pushinteger(state.get(), key);
 	lua_gettable(state.get(), -2);
 	LuaType::Value res = (LuaType::Value)lua_type(state.get(), -1);

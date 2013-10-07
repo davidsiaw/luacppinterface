@@ -19,7 +19,8 @@ public:
 	LuaReference& operator=(const LuaReference& other);
 	virtual ~LuaReference();
 
-	void PushToStack() const;
+	// push the object to the stack you are working on
+	void PushToStack(lua_State* currentState) const;
 	LuaType::Value GetType() const;
 	std::tr1::shared_ptr<lua_State> GetState();
 	LuaTable GetMetaTable() const;

@@ -13,7 +13,7 @@ public:
 
 	void Invoke()
 	{
-		PushToStack();
+		PushToStack(state.get());
 		lua_call(state.get(), 0, 1);
 		// return void
 	}

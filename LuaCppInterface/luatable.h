@@ -25,7 +25,7 @@ public:
 	template<typename OBJ>
 	void Set(std::string key, const OBJ& value)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		lua_pushlstring(state.get(), key.c_str(), key.size());
 		pusher<OBJ>::push(state, value);
 		lua_settable(state.get(), -3);
@@ -35,7 +35,7 @@ public:
 	template<typename OBJ>
 	void Set(int key, const OBJ& value)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		lua_pushinteger(state.get(), key);
 		pusher<OBJ>::push(state, value);
 		lua_settable(state.get(), -3);
@@ -45,7 +45,7 @@ public:
 	template<typename OBJ>
 	OBJ Get(std::string key) const
 	{
-		PushToStack();
+		PushToStack(state.get());
 		lua_pushlstring(state.get(), key.c_str(), key.size());
 		lua_gettable(state.get(), -2);
 
@@ -57,7 +57,7 @@ public:
 	template<typename OBJ>
 	OBJ Get(int key) const
 	{
-		PushToStack();
+		PushToStack(state.get());
 		lua_pushinteger(state.get(), key);
 		lua_gettable(state.get(), -2);
 		

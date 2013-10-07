@@ -7,7 +7,7 @@ LuaCoroutine::LuaCoroutine(std::tr1::shared_ptr<lua_State> state, int index) : L
 
 std::string LuaCoroutine::RunScript(std::string script)
 {
-	PushToStack();
+	PushToStack(state.get());
 	lua_State* thread = lua_tothread(state.get(), -1);
 	lua_pop(state.get(), 1);
 	int status = luaL_loadstring(thread, script.c_str());
@@ -22,7 +22,7 @@ std::string LuaCoroutine::RunScript(std::string script)
 
 std::string LuaCoroutine::Resume()
 {
-	PushToStack();
+	PushToStack(state.get());
 	lua_State* thread = lua_tothread(state.get(), -1);
 	lua_pop(state.get(), 1);
 	int status = lua_resume(thread, NULL, 0);
@@ -36,7 +36,7 @@ std::string LuaCoroutine::Resume()
 
 bool LuaCoroutine::CanResume() const
 {
-	PushToStack();
+	PushToStack(state.get());
 	lua_State* thread = lua_tothread(state.get(), -1);
 	lua_pop(state.get(), 1);
 	if (lua_status(thread) == LUA_YIELD)

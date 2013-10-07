@@ -118,11 +118,11 @@ DEFINE_TYPE_TEMPLATE_FOR(const char*,, lua_pushstring(state.get(), param), const
 DEFINE_TYPE_TEMPLATE_FOR(char*,, lua_pushstring(state.get(), param), char* res = (char*)lua_tostring(state.get(), -1))
 
 // LuaCppInterface's types
-DEFINE_TYPE_TEMPLATE_FOR(LuaLightUserdata<TYPE>, typename TYPE, param.PushToStack(), LuaLightUserdata<TYPE> res(state,-1))
-DEFINE_TYPE_TEMPLATE_FOR(LuaUserdata<TYPE>, typename TYPE, param.PushToStack(), LuaUserdata<TYPE> res(state,-1))
-DEFINE_TYPE_TEMPLATE_FOR(LuaFunction<SIG>, typename SIG, param.PushToStack(), LuaFunction<SIG> res(state, -1))
-DEFINE_TYPE_TEMPLATE_FOR(LuaTable,, param.PushToStack(), LuaTable res(state,-1))
-DEFINE_TYPE_TEMPLATE_FOR(LuaCoroutine,, param.PushToStack(), LuaCoroutine res(state,-1))
+DEFINE_TYPE_TEMPLATE_FOR(LuaLightUserdata<TYPE>, typename TYPE, param.PushToStack(state.get()), LuaLightUserdata<TYPE> res(state,-1))
+DEFINE_TYPE_TEMPLATE_FOR(LuaUserdata<TYPE>, typename TYPE, param.PushToStack(state.get()), LuaUserdata<TYPE> res(state,-1))
+DEFINE_TYPE_TEMPLATE_FOR(LuaFunction<SIG>, typename SIG, param.PushToStack(state.get()), LuaFunction<SIG> res(state, -1))
+DEFINE_TYPE_TEMPLATE_FOR(LuaTable,, param.PushToStack(state.get()), LuaTable res(state,-1))
+DEFINE_TYPE_TEMPLATE_FOR(LuaCoroutine,, param.PushToStack(state.get()), LuaCoroutine res(state,-1))
 
 // stdlib's types
 DEFINE_TYPE_TEMPLATE_FOR(std::string,, lua_pushlstring(state.get(), param.c_str(), param.length()), std::string res = lua_tostring(state.get(), -1))
