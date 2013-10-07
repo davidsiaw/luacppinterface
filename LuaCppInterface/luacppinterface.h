@@ -9,6 +9,7 @@
 #include "luatypetemplates.h"
 #include "luafunction.h"
 #include "luauserdata.h"
+#include "lualightuserdata.h"
 
 class Lua
 {
@@ -94,7 +95,7 @@ public:
 	std::string RunScript(std::string script);
 	
 	
-	
+	// create a userdata using a default operator delete destructor
 	template<typename TYPE>
 	LuaUserdata<TYPE> CreateUserdata(TYPE* data)
 	{
