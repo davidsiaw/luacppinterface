@@ -61,7 +61,7 @@ public:
 	
 	TYPE* RetrieveData() const
 	{
-		PushToStack();
+		PushToStack(state.get());
 		UserdataWrapper* wrap = (UserdataWrapper*)lua_touserdata(state.get(), -1);
 		lua_pop(state.get(), 1);
 		return wrap->actualData;
