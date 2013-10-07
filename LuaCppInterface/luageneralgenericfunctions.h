@@ -18,7 +18,7 @@ public:
 
 	rettype Invoke()
 	{
-		PushToStack();
+		PushToStack(state.get());
 		lua_call(state.get(), 0, 1);
 		return popper<rettype>::pop(state);
 	}
@@ -46,7 +46,7 @@ public:
 
 	rettype Invoke(arg1type arg1)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		lua_call(state.get(), 1, 1);
 		return popper<rettype>::pop(state);
@@ -77,7 +77,7 @@ public:
 
 	rettype Invoke(arg1type arg1, arg2type arg2)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		lua_call(state.get(), 2, 1);
@@ -111,7 +111,7 @@ public:
 
 	rettype Invoke(arg1type arg1, arg2type arg2, arg3type arg3)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -148,7 +148,7 @@ public:
 
 	rettype Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -188,7 +188,7 @@ public:
 
 	rettype Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -231,7 +231,7 @@ public:
 
 	rettype Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5, arg6type arg6)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -277,7 +277,7 @@ public:
 
 	rettype Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5, arg6type arg6, arg7type arg7)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -326,7 +326,7 @@ public:
 
 	rettype Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5, arg6type arg6, arg7type arg7, arg8type arg8)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
