@@ -5,6 +5,7 @@ template<>
 class LuaGenericFunction<void()> : public LuaFunctionBase
 {
 public:
+	static const int parameters = 0;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -12,7 +13,7 @@ public:
 
 	void Invoke()
 	{
-		PushToStack();
+		PushToStack(state.get());
 		lua_call(state.get(), 0, 1);
 		// return void
 	}
@@ -32,6 +33,7 @@ class LuaGenericFunction<void(T1)> : public LuaFunctionBase
 public:
 	
 	typedef T1 arg1type;
+	static const int parameters = 1;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -39,7 +41,7 @@ public:
 
 	void Invoke(arg1type arg1)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		lua_call(state.get(), 1, 1);
 		// return void
@@ -62,6 +64,7 @@ public:
 	
 	typedef T1 arg1type;
 	typedef T2 arg2type;
+	static const int parameters = 2;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -69,7 +72,7 @@ public:
 
 	void Invoke(arg1type arg1, arg2type arg2)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		lua_call(state.get(), 2, 1);
@@ -95,6 +98,7 @@ public:
 	typedef T1 arg1type;
 	typedef T2 arg2type;
 	typedef T3 arg3type;
+	static const int parameters = 3;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -102,7 +106,7 @@ public:
 
 	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -131,6 +135,7 @@ public:
 	typedef T2 arg2type;
 	typedef T3 arg3type;
 	typedef T4 arg4type;
+	static const int parameters = 4;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -138,7 +143,7 @@ public:
 
 	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -170,6 +175,7 @@ public:
 	typedef T3 arg3type;
 	typedef T4 arg4type;
 	typedef T5 arg5type;
+	static const int parameters = 5;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -177,7 +183,7 @@ public:
 
 	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -212,6 +218,7 @@ public:
 	typedef T4 arg4type;
 	typedef T5 arg5type;
 	typedef T6 arg6type;
+	static const int parameters = 6;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -219,7 +226,7 @@ public:
 
 	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5, arg6type arg6)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -257,6 +264,7 @@ public:
 	typedef T5 arg5type;
 	typedef T6 arg6type;
 	typedef T7 arg7type;
+	static const int parameters = 7;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -264,7 +272,7 @@ public:
 
 	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5, arg6type arg6, arg7type arg7)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);
@@ -305,6 +313,7 @@ public:
 	typedef T6 arg6type;
 	typedef T7 arg7type;
 	typedef T8 arg8type;
+	static const int parameters = 8;
 
 	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
@@ -312,7 +321,7 @@ public:
 
 	void Invoke(arg1type arg1, arg2type arg2, arg3type arg3, arg4type arg4, arg5type arg5, arg6type arg6, arg7type arg7, arg8type arg8)
 	{
-		PushToStack();
+		PushToStack(state.get());
 		pusher<arg1type>::push(state, arg1);
 		pusher<arg2type>::push(state, arg2);
 		pusher<arg3type>::push(state, arg3);

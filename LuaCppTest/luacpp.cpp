@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <initializer_list>
 #include "luacppinterface.h"
 
 void m()
@@ -12,6 +13,27 @@ void m2()
 	std::cout << "called function m2" << std::endl;
 }
 
+class Bar
+{
+	int number;
+public:
+	Bar(int number)
+	{
+        std::cout << "Bar" << number << " is created" << std::endl;
+		this->number = number;
+	}
+
+	int GetNumber()
+	{
+		return number;
+	}
+
+	~Bar()
+	{
+        std::cout << "Bar" << number << " is destroyed" << std::endl;
+	}
+};
+
 class Foo
 {
 public:
@@ -20,6 +42,13 @@ public:
         std::cout << name << " is born" << std::endl;
     }
  
+	std::string Identify(Bar* bar)
+	{
+        std::stringstream ss;
+		ss << name << " number is: " << bar->GetNumber();
+        return ss.str();
+	}
+
     std::string Add(int a, int b)
     {
         std::stringstream ss;
@@ -36,52 +65,57 @@ private:
     std::string name;
 };
 
+LuaUserdata<Foo> fooConstructor(Lua lua, std::string str)
+{
+	auto foo = new Foo(str);
+	auto userData = lua.CreateUserdata<Foo>(foo);
+
+	userData.Bind("add", &Foo::Add);
+	userData.Bind("identify", &Foo::Identify);
+		
+	return userData;
+}
+
+LuaUserdata<Bar> barConstructor(Lua lua, int number)
+{
+	auto bar = new Bar(number);
+	auto userData = lua.CreateUserdata<Bar>(bar);
+
+	userData.Bind("getNumber", &Bar::GetNumber);
+		
+	return userData;
+}
+
 int main()
 {
 	Lua lua;
 	lua.LoadStandardLibraries();
 	auto global = lua.GetGlobalEnvironment();
 
-
-	auto newFoo = lua.CreateFunction< 
-
-		LuaUserdata<Foo>(std::string) 
-
-	>(
-	[&](std::string str) -> LuaUserdata<Foo>
-	{
-		auto foo = new Foo(str);
-		auto userData = lua.CreateUserdata<Foo>(foo);
-
-		userData.Bind("meow", &Foo::Add);
-		
-		return userData;
-	});
-
-
-
+	
+	auto newFoo = lua.CreateFunction<LuaUserdata<Foo>(std::string)>(std::tr1::bind(&fooConstructor, lua, std::tr1::placeholders::_1));
 	auto footable = lua.CreateTable();
 	footable.Set("new", newFoo);
-
 	global.Set("Foo", footable);
 
+	
+	auto newBar = lua.CreateFunction<LuaUserdata<Bar>(int)>(std::tr1::bind(&barConstructor, lua, std::tr1::placeholders::_1));
+	auto bartable = lua.CreateTable();
+	bartable.Set("new", newBar);
+	global.Set("Bar", bartable);
 
 	auto ress = lua.RunScript(
 		"local foo1 = Foo:new('Hello')\n"
-		"print(foo1.meow(1,2))\n"
+		"print(foo1.add(1,2))\n"
 		"foo1 = Foo:new('paha1')\n"
+		"print(foo1.identify(Bar:new(100)))"
 		"foo1 = Foo:new('paha2')\n"
-		"print(foo1.meow(5,2))\n"
+		"print(foo1.add(5,2))\n"
 		"foo1 = Foo:new('paha3')\n"
 		"foo1 = Foo:new('paha4')\n"
 		"foo1 = nil\n"
 		"collectgarbage()\n"
 		);
-
-
-
-
-
 
 	auto params = lua.CreateTable();
 	params.Set("big", 15);

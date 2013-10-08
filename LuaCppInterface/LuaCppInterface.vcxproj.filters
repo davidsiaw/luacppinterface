@@ -74,5 +74,8 @@
     <ClInclude Include="luauserdataforwards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lualightuserdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
