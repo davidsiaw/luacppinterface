@@ -12,11 +12,17 @@ class LuaTable;
 template<typename TYPE>
 class LuaUserdata : public LuaReference
 {
+	TYPE* pointer;
+
 public:
 	LuaUserdata(std::tr1::shared_ptr<lua_State> state, int index) : 
 	  LuaReference(state, index)
 	{
 		assert(GetType() == LuaType::userdata);
+		assert(typeid(TYPE*) == typeid(RetrieveData()));
+		
+		auto wrap = (UserdataWrapper*)lua_touserdata(state.get(), index);
+		pointer = wrap->actualData;
 	}
 	
 	template<typename OBJ>
@@ -33,6 +39,11 @@ public:
 		return table.template Get<OBJ>(key);
 	}
 
+	TYPE* GetPointer() const
+	{
+		return pointer;
+	}
+
 #include "luauserdataforwards.h"
 	
 	struct UserdataWrapper
@@ -47,16 +58,14 @@ public:
 		wrap->destructor(wrap->actualData);
 		return 0;
 	};
-
-private:
 	
-	TYPE* retrieveType() const
+	TYPE* RetrieveData() const
 	{
-		PushToStack();
+		PushToStack(state.get());
 		UserdataWrapper* wrap = (UserdataWrapper*)lua_touserdata(state.get(), -1);
 		lua_pop(state.get(), 1);
 		return wrap->actualData;
-	}
+	}	
 };
 
 

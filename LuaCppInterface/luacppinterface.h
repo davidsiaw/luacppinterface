@@ -9,6 +9,7 @@
 #include "luatypetemplates.h"
 #include "luafunction.h"
 #include "luauserdata.h"
+#include "lualightuserdata.h"
 
 class Lua
 {
@@ -67,6 +68,13 @@ class Lua
 		return numVals;
 	};
 
+	template<typename SIG>
+	static int lua_normalFunction(lua_State* state)
+	{
+		int numVals = LuaFunction<SIG>::staticFunction(state);
+		return numVals;
+	};
+
 public:
 	// create a new Lua state
 	Lua();
@@ -94,7 +102,7 @@ public:
 	std::string RunScript(std::string script);
 	
 	
-	
+	// create a userdata using a default operator delete destructor
 	template<typename TYPE>
 	LuaUserdata<TYPE> CreateUserdata(TYPE* data)
 	{
@@ -135,7 +143,7 @@ public:
 	template<typename SIG>
 	LuaFunction<SIG> CreateFunction(std::tr1::function<SIG> func)
 	{
-		return internalCreateFunction(std::tr1::shared_ptr<std::tr1::function<SIG>>(new std::tr1::function<SIG>(func)), LuaFunction<SIG>::staticFunction);
+		return internalCreateFunction(std::tr1::shared_ptr<std::tr1::function<SIG>>(new std::tr1::function<SIG>(func)), lua_normalFunction<SIG>);
 	}
 
 	// create a lua-callable function that pauses execution once complete
