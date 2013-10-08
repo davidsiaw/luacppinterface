@@ -27,4 +27,3 @@ LuaType::Value LuaTable::GetTypeOfValueAt(int key) const
 	lua_pop(state.get(), 2);
 	return res;
 }
-

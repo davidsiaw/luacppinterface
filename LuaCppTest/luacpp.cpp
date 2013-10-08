@@ -12,10 +12,77 @@ void m2()
 	std::cout << "called function m2" << std::endl;
 }
 
+class Foo
+{
+public:
+    Foo(const std::string & name) : name(name)
+    {
+        std::cout << name << " is born" << std::endl;
+    }
+ 
+    std::string Add(int a, int b)
+    {
+        std::stringstream ss;
+        ss << name << ": " << a << " + " << b << " = " << (a+b);
+        return ss.str();
+    }
+ 
+    ~Foo()
+    {
+        std::cout << name << " is gone" << std::endl;
+    }
+ 
+private:
+    std::string name;
+};
+
 int main()
 {
 	Lua lua;
+	lua.LoadStandardLibraries();
 	auto global = lua.GetGlobalEnvironment();
+
+
+	auto newFoo = lua.CreateFunction< 
+
+		LuaUserdata<Foo>(std::string) 
+
+	>(
+	[&](std::string str) -> LuaUserdata<Foo>
+	{
+		auto foo = new Foo(str);
+		auto userData = lua.CreateUserdata<Foo>(foo);
+
+		userData.Bind("meow", &Foo::Add);
+		
+		return userData;
+	});
+
+
+
+	auto footable = lua.CreateTable();
+	footable.Set("new", newFoo);
+
+	global.Set("Foo", footable);
+
+
+	auto ress = lua.RunScript(
+		"local foo1 = Foo:new('Hello')\n"
+		"print(foo1.meow(1,2))\n"
+		"foo1 = Foo:new('paha1')\n"
+		"foo1 = Foo:new('paha2')\n"
+		"print(foo1.meow(5,2))\n"
+		"foo1 = Foo:new('paha3')\n"
+		"foo1 = Foo:new('paha4')\n"
+		"foo1 = nil\n"
+		"collectgarbage()\n"
+		);
+
+
+
+
+
+
 	auto params = lua.CreateTable();
 	params.Set("big", 15);
 	
@@ -222,6 +289,7 @@ int main()
 
 	//auto atable = glob3.GetTable("a");
 	//auto str = atable.GetString(1);
+
 
 	return 0;
 }

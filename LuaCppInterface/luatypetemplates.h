@@ -38,7 +38,7 @@ struct pusher
 {
 	static void push(std::tr1::shared_ptr<lua_State> state, T param)
 	{
-		static_assert(sizeof(T) == 0, "parameter types other than signed or unsigned char, short, int, long, LuaCoroutine, LuaTable or LuaFunction<R(...)> not available");
+		static_assert(sizeof(T) == 0, "parameter types other than signed or unsigned char, short, int, long, std::string, bool, LuaCoroutine, LuaUserdata, LuaTable or LuaFunction not available");
 	}
 };
 
@@ -47,7 +47,7 @@ struct popper
 {
 	static T pop(std::tr1::shared_ptr<lua_State> state)
 	{
-		static_assert(sizeof(T) == 0, "returns types other than signed or unsigned char, short, int, long, LuaCoroutine,, LuaTable or LuaFunction<R(...)> not available" );
+		static_assert(sizeof(T) == 0, "returns types other than signed or unsigned char, short, int, long, std::string, bool, LuaCoroutine, LuaUserdata, LuaTable or LuaFunction not available" );
 	}
 };
 
@@ -65,8 +65,11 @@ DEFINE_TYPE_TEMPLATE_FOR(std::wstring,, 									\
 		res.assign(ss.begin(), ss.end());									\
 	)
 
+template<typename TYPE>
+class LuaUserdata;
 
 // LuaCppInterface's types
+DEFINE_TYPE_TEMPLATE_FOR(LuaUserdata<TYPE>, typename TYPE, param.PushToStack(), LuaUserdata<TYPE> res(state,-1))
 DEFINE_TYPE_TEMPLATE_FOR(LuaFunction<SIG>, typename SIG, param.PushToStack(), LuaFunction<SIG> res(state, -1))
 DEFINE_TYPE_TEMPLATE_FOR(LuaTable,, param.PushToStack(), LuaTable res(state,-1))
 DEFINE_TYPE_TEMPLATE_FOR(LuaCoroutine,, param.PushToStack(), LuaCoroutine res(state,-1))

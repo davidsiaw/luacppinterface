@@ -1,9 +1,18 @@
 #include "luacppinterface.h"
+#include "luauserdata.h"
 
 Lua::Lua() : 
 	state(luaL_newstate(), lua_close),
 	registry(LuaTable(state, LUA_REGISTRYINDEX)),
 	globals(registry.Get<LuaTable>(LUA_RIDX_GLOBALS))
+{
+}
+
+Lua::Lua(std::tr1::shared_ptr<lua_State> state) :
+	state(state),
+	registry(LuaTable(state, LUA_REGISTRYINDEX)),
+	globals(registry.Get<LuaTable>(LUA_RIDX_GLOBALS))
+
 {
 }
 	

@@ -22,6 +22,19 @@ For more information about building, please refer to .travis.yml
 
 The examples here are not at all extensive. You might want to refer to the [tests](https://github.com/davidsiaw/luacppinterface/tree/master/tests) for more examples.
 
+Contents
+========
+
+* [PrimitiveTypes](#primitivetypes)
+* [API](#api)
+ * [Lua object](#lua-object)
+ * [LuaTable object](#luatable-object)
+ * [LuaFunction object](#luafunction-object)
+ * [LuaCoroutine object](#luacoroutine-object)
+ * [LuaUserdata object](#luauserdata-object)
+* [TODO](#todo)
+
+
 API Changes
 ===========
 
@@ -44,7 +57,7 @@ Thanks to C++'s new type inferencing, if your compiler supports it you can just 
 LuaFunction<void(int,int)> theFunction;
 table.Set(theFunction);
 ```
-Thanks to this change, LuaCppInterface now supports Get and Set with the *PrimitiveTypes*:
+Thanks to this change, LuaCppInterface now supports Get and Set with the *[PrimitiveTypes](#primitivetypes)*:
 Note: Key types available on the table are still only std::string and int. This does not change
 
 PrimitiveTypes
@@ -56,6 +69,7 @@ LuaCppInterface defines a set of primitive types that can freely be passed betwe
 LuaTable
 LuaCoroutine
 LuaFunction
+LuaUserdata
 float
 double
 bool
@@ -136,6 +150,9 @@ LuaCoroutine CreateCoroutine();
 // create a function that can be used in Lua
 LuaFunction<SIGNATURE> CreateFunction<SIGNATURE>(const std::tr1::function<SIGNATURE>* func);
 
+// create a userdata (the destructor parameter is optional and defaults to delete)
+LuaUserdata<TYPE> CreateUserdata(TYPE* data, std::tr1::function<void(TYPE*)> destructor = [](TYPE* data){ delete data; });
+
 // run a lua script
 std::string RunScript(std::string script);
 ```
@@ -145,7 +162,7 @@ Ownership
 
 As with any C++ library ownership is an important part of a library's functionality.
 
-All objects created by LuaCppInterface: Lua, LuaTable, LuaFunction and LuaCoroutine have a corresponding lua object in the Lua state. They maintain a reference to the main Lua instance and carry a reference of their corresponding object around with them (this is just an int). They register their reference with the lua garbage collector so that lua does not collect their corresponding object as long as they are alive, freeing consumers of the API from having to worry about "anchoring" objects that are created.
+All objects created by LuaCppInterface: Lua, LuaTable, LuaFunction, LuaUserdata and LuaCoroutine have a corresponding lua object in the Lua state. They maintain a reference to the main Lua instance and carry a reference of their corresponding object around with them (this is just an int). They register their reference with the lua garbage collector so that lua does not collect their corresponding object as long as they are alive, freeing consumers of the API from having to worry about "anchoring" objects that are created.
 
 Hence, every object you retrieve via the API is owned by you and you alone. When they go out of scope the objects automatically remove their own reference. If there are no more references, you can allow the lua garbage collector to collect the corresponding object in the Lua instance.
 
@@ -187,9 +204,9 @@ Basically, a Set function is equivalent to table[key] = value and a Get function
 
 LuaFunction<T> object
 ---------------------
-The LuaFunction<T> object represents a function in Lua. However, not all functions can be represented. Valid function signatures are signatures that contain the *PrimitiveTypes*
+The LuaFunction<T> object represents a function in Lua. However, not all functions can be represented. Valid function signatures are signatures that contain the *[PrimitiveTypes](#primitivetypes)*
 
-In addition, the return type is allowed to be void. These to be used for passing functions from C++ to Lua and Lua to C++.
+**In addition, the return type is allowed to be void**. These are meant be used for passing functions from C++ to Lua and Lua to C++.
 
 In order to create a function you need to either create one with lua.CreateFunction<>() or retrieve one from Lua. Here are some ways you can use CreateFunction:
 
@@ -344,7 +361,116 @@ The output will be
 Due to the script returning from RunScript and Resume 3 times from paused execution by the Yielding Function.
 
 
+LuaUserdata object
+------------------
+The LuaUserdata object represents an object that is not one of the [PrimitiveTypes](#primitivetypes) that you want to be able to pass around and use in a script. Such an object may be an Image object or a Window object for example. This class will allow you to treat the object as a value in Lua and bind the object's methods to it.
+
+```C++
+// Get or set a member on the Userdata that is accessible from Lua (same as a LuaTable)
+void Set<OBJ>(std::string key, const OBJ& value);
+OBJ Get<OBJ>(std::string key) const;
+
+// Bind a class's member function to the userdata with a name
+void Bind<MEMBERFUNCTION>(std::string name, MEMBERFUNCTION memberFunction );
+```
+
+First of all you will find that the Get and Set functions on the LuaUserdata object are similar to the LuaTable. This is because they perform the same function. There is no Get and Set for integer keys because a LuaUserdata is meant to be used with only string members. *However you can add things to its metatable directly to allow indexing numbers*.
+
+**Each userdata object has its own unique metatable**.
+
+The **Bind** function is a shortcut that allows you to bind a member function of a class to a Userdata, allowing easy exposure of a C++ class's member functions to the script.
+
+Examples:
+
+Given a class that you want to expose:
+
+```C++
+class Image
+{
+	char* bitmap;
+public:
+	Image(int width, int height);
+	void DrawCircle(int xcenter, int ycenter, int radius);
+	int GetWidth() const;
+	int GetHeight() const;
+	~Image();
+};
+```
+
+Here is how you create a LuaUserdata for it:
+
+```C++
+Lua lua;
+auto image = lua.CreateUserdata<Image>(new Image(100,100));
+lua.GetGlobalEnvironment().Set("image", image);
+```
+
+**The memory allocated is owned entirely by the Lua script**. This means once the object passed passed into lua.CreateUserdata, the lua garbage collector will decide when to delete it with the destructor provided. Keeping an instance of LuaUserdata<Image> in scope maintains a reference to the object, preventing it from being garbage collected.
+
+With this the image is available to the script on the variable "image". But it is useless. Here is how we can bind its functions to it:
+
+```C++
+Lua lua;
+
+// Create the userdata instance
+auto image = lua.CreateUserdata<Image>(new Image(100,100));
+
+// Bind the functions that we want to expose
+image.Bind("drawCircle", &Image::DrawCircle);
+image.Bind("getWidth", &Image::GetWidth);
+image.Bind("getHeight", &Image::GetHeight);
+
+// Set the global "image" to the instance of Image
+lua.GetGlobalEnvironment().Set("image", image);
+```
+
+**Bind can only work with up member functions that have 8 arguments or less**. This is because I do not intend to complicate the code to support an arbitrary number and I do not believe in functions with large numbers of arguments. It is important to restructure your code if you require more than 8 arguments. You may also pass a LuaTable or better yet, another LuaUserdata to the function.
+
+By doing this, now we can draw a circle with a Lua script:
+
+```lua
+image.drawCircle(50,50,10)
+print(image.getWidth(), image.getHeight())
+```
+
+However, this is still fairly useless because the Image has a hardcoded size. We need to be able to specify it in Lua. In order to do so, we must create a constructor. In Lua the convention is to have a table contained in the type name that contains a "new" function:
+
+```C++
+Lua lua;
+
+// Create the constructor
+auto imageConstructor = lua.CreateFunction< LuaUserdata<Image>(int, int) >(
+[&](int width, int height) -> LuaUserdata<Image>
+{
+	// Create the userdata instance
+	auto image = lua.CreateUserdata<Image>(new Image(width, height));
+	
+	// Bind the functions that we want to expose
+	image.Bind("drawCircle", &Image::DrawCircle);
+	image.Bind("getWidth", &Image::GetWidth);
+	image.Bind("getHeight", &Image::GetHeight);
+	
+	return image;
+}
+
+// Create the "type" table in Lua
+auto imageType = lua.CreateTable();
+imageType.Set("new", imageConstructor);
+
+// Make the Image "type" accessible to everyone
+lua.GetGlobalEnvironment().Set("Image", imageType);
+```
+
+With this now we can freely create Image objects in Lua and use them accordingly. All instances are automatically subject to lua's normal garbage collection rules. Like all other [PrimitiveTypes](#primitivetypes), it is possible to pass instances back and forth through functions and tables.
+
+```lua
+local image = Image:new(800, 600)
+image.drawCircle(100,100,50)
+print(image.getWidth(), image.getHeight())
+```
+
+
 TODO
 ====
-- support userdata
-- improve api docs
+- improve lua userdata to allow classes that take other objects to be independant of coupling with LuaUserdata or LuaTable
+- improve api docs (explain the LuaReference object and how to get the metatable to modify)

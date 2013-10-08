@@ -65,7 +65,13 @@
     <ClInclude Include="luacoroutine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="luapusherpopperinterface.h">
+    <ClInclude Include="luauserdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luauserdatabindtemplates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luauserdataforwards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
