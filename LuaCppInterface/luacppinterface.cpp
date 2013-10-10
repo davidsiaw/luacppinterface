@@ -1,6 +1,29 @@
 #include "luacppinterface.h"
 #include "luauserdata.h"
 
+#include <sstream>
+
+std::string LuaGetLastError(lua_State* state)
+{
+	std::stringstream ss;
+	for (int level = 1; level <= lua_gettop(state); level++)
+	{
+		const char* errorMessage = lua_tostring(state, level);
+		ss << "Error: " << errorMessage << std::endl;
+	}
+
+	lua_Debug debugInfo;
+	for (int level = 0; lua_getstack(state, level, &debugInfo); level++)
+	{
+		lua_getinfo(state, "nSlf", &debugInfo);
+		ss << "Line: " << debugInfo.currentline << std::endl;
+		ss << "Source: " << debugInfo.short_src << std::endl;
+		ss << "Function: " << lua_tostring(state, -1) << std::endl;
+	}
+
+	return ss.str();
+}
+
 Lua::Lua() : 
 	state(luaL_newstate(), lua_close),
 	registry(LuaTable(state, LUA_REGISTRYINDEX)),
@@ -52,8 +75,7 @@ std::string Lua::RunScript(std::string script)
 	int err = luaL_dostring(state.get(), script.c_str());
 	if (err != LUA_OK)
 	{
-		const char* r = lua_tostring(state.get(), -1);
-		return r;
+		return LuaGetLastError(state.get());
 	}
 	return "No errors";
 }
