@@ -9,7 +9,10 @@ std::string LuaGetLastError(lua_State* state)
 	for (int level = 1; level <= lua_gettop(state); level++)
 	{
 		const char* errorMessage = lua_tostring(state, level);
-		ss << "Error: " << errorMessage << std::endl;
+		if (errorMessage)
+		{
+			ss << "Error: " << errorMessage << std::endl;
+		}
 	}
 
 	lua_Debug debugInfo;
@@ -17,8 +20,13 @@ std::string LuaGetLastError(lua_State* state)
 	{
 		lua_getinfo(state, "nSlf", &debugInfo);
 		ss << "Line: " << debugInfo.currentline << std::endl;
-		ss << "Source: " << debugInfo.short_src << std::endl;
-		ss << "Function: " << lua_tostring(state, -1) << std::endl;
+		ss << "Source: " << debugInfo.source << std::endl;
+		
+		const char* function = lua_tostring(state, -1);
+		if (function)
+		{
+			ss << "Function: " << function << std::endl;
+		}
 	}
 
 	return ss.str();

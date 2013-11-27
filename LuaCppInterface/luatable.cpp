@@ -27,3 +27,37 @@ LuaType::Value LuaTable::GetTypeOfValueAt(int key) const
 	lua_pop(state.get(), 2);
 	return res;
 }
+
+void LuaTable::ForAllStringKeys(std::tr1::function<void(std::string, LuaType::Value)> stringKeys) const
+{
+	PushToStack(state.get());
+	lua_pushnil(state.get());  /* first key */
+
+	while (lua_next(state.get(), -2) != 0) {
+
+		if ((LuaType::Value)lua_type(state.get(), -2) == LuaType::string)
+		{
+			const char* key = lua_tostring(state.get(), -2);
+			auto valueType = (LuaType::Value)lua_type(state.get(), -1);
+			stringKeys(key, valueType);
+		}
+		lua_pop(state.get(), 1);
+	}
+}
+
+void LuaTable::ForAllIntegerKeys(std::tr1::function<void(int, LuaType::Value)> integerKeys) const
+{
+	PushToStack(state.get());
+	lua_pushnil(state.get());  /* first key */
+
+	while (lua_next(state.get(), -2) != 0) {
+
+		if ((LuaType::Value)lua_type(state.get(), -2) == LuaType::number)
+		{
+			int key = lua_tointeger(state.get(), -2);
+			auto valueType = (LuaType::Value)lua_type(state.get(), -1);
+			integerKeys(key, valueType);
+		}
+		lua_pop(state.get(), 1);
+	}
+}
