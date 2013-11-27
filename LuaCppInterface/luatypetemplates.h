@@ -1,7 +1,7 @@
 #ifndef LUATYPETEMPLATES_H
 #define LUATYPETEMPLATES_H
 
-#include <cstdint>
+#include <stdint.h>
 #include <lua.h>
 
 template<typename SIG>
