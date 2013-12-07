@@ -33,7 +33,8 @@ void LuaTable::ForAllStringKeys(std::tr1::function<void(std::string, LuaType::Va
 	PushToStack(state.get());
 	lua_pushnil(state.get());  /* first key */
 
-	while (lua_next(state.get(), -2) != 0) {
+	while (lua_next(state.get(), -2) != 0)
+    {
 
 		if ((LuaType::Value)lua_type(state.get(), -2) == LuaType::string)
 		{
@@ -43,6 +44,7 @@ void LuaTable::ForAllStringKeys(std::tr1::function<void(std::string, LuaType::Va
 		}
 		lua_pop(state.get(), 1);
 	}
+    lua_pop(state.get(), 1);
 }
 
 void LuaTable::ForAllIntegerKeys(std::tr1::function<void(int, LuaType::Value)> integerKeys) const
@@ -50,8 +52,8 @@ void LuaTable::ForAllIntegerKeys(std::tr1::function<void(int, LuaType::Value)> i
 	PushToStack(state.get());
 	lua_pushnil(state.get());  /* first key */
 
-	while (lua_next(state.get(), -2) != 0) {
-
+	while (lua_next(state.get(), -2) != 0)
+    {
 		if ((LuaType::Value)lua_type(state.get(), -2) == LuaType::number)
 		{
 			int key = lua_tointeger(state.get(), -2);
@@ -60,4 +62,5 @@ void LuaTable::ForAllIntegerKeys(std::tr1::function<void(int, LuaType::Value)> i
 		}
 		lua_pop(state.get(), 1);
 	}
+    lua_pop(state.get(), 1);
 }
