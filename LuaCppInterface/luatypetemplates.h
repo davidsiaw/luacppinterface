@@ -128,7 +128,7 @@ DEFINE_TYPE_TEMPLATE_FOR(LuaCoroutine,, param.PushToStack(state.get()), LuaCorou
 DEFINE_TYPE_TEMPLATE_FOR(std::string,, lua_pushlstring(state.get(), param.c_str(), param.length()), std::string res = lua_tostring(state.get(), -1))
 
 // pointers
-DEFINE_TYPE_TEMPLATE_FOR(TYPE*, typename TYPE, lua_pushlightuserdata(state.get(), param), TYPE* res = LuaLightUserdata<TYPE>(state,-1).GetPointer())
+DEFINE_TYPE_TEMPLATE_FOR(TYPE*, typename TYPE, lua_pushlightuserdata(state.get(), (void*)param), TYPE* res = LuaLightUserdata<TYPE>(state,-1).GetPointer())
 
 // primitive types
 DEFINE_TYPE_TEMPLATE_FOR(int8_t,, lua_pushinteger(state.get(), param), int8_t res = lua_tointeger(state.get(), -1))
