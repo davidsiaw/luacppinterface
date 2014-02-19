@@ -5,6 +5,8 @@ LuaCoroutine::LuaCoroutine(std::tr1::shared_ptr<lua_State> state, int index) : L
 	assert(GetType() == LuaType::thread);
 }
 
+extern std::string LuaGetLastError(lua_State* state);
+
 std::string LuaCoroutine::RunScript(std::string script)
 {
 	PushToStack(state.get());
@@ -14,8 +16,7 @@ std::string LuaCoroutine::RunScript(std::string script)
 	status = lua_resume(thread, NULL, 0);
 	if (status != LUA_OK && status != LUA_YIELD)
 	{
-		const char* r = lua_tostring(thread, -1);
-		return r;
+		return LuaGetLastError(thread);
 	}
 	return "No errors";
 }
@@ -28,8 +29,7 @@ std::string LuaCoroutine::Resume()
 	int status = lua_resume(thread, NULL, 0);
 	if (status != LUA_OK && status != LUA_YIELD)
 	{
-		const char* r = lua_tostring(thread, -1);
-		return r;
+		return LuaGetLastError(thread);
 	}
 	return "No errors";
 }

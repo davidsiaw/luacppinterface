@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <string>
+#include <boost/tr1/functional.hpp>
 #include <boost/tr1/memory.hpp>
 #include "luareference.h"
 
@@ -69,6 +70,11 @@ public:
 	// Get the type of value at a specified key
 	LuaType::Value GetTypeOfValueAt(std::string key) const;
 	LuaType::Value GetTypeOfValueAt(int key) const;
+
+	// Get all the keys in the LuaTable
+	void ForAllStringKeys(std::tr1::function<void(std::string, LuaType::Value)> stringKeys) const;
+	void ForAllIntegerKeys(std::tr1::function<void(int, LuaType::Value)> integerKeys) const;
+
 };
 
 #endif // LUATABLE_H
