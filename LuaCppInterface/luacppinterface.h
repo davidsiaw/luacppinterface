@@ -152,6 +152,11 @@ public:
 	{
 		return internalCreateFunction(std::tr1::shared_ptr<std::tr1::function<SIG>>(new std::tr1::function<SIG>(func)), lua_yieldingFunction<SIG>);
 	}
+    
+    void CollectGarbage()
+    {
+        lua_gc(state.get(), LUA_GCCOLLECT, 0);
+    }
 	
 };
 
