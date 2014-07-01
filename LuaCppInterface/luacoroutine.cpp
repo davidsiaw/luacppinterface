@@ -1,6 +1,6 @@
 #include "luacoroutine.h"
 
-LuaCoroutine::LuaCoroutine(std::tr1::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
+LuaCoroutine::LuaCoroutine(std::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
 	assert(GetType() == LuaType::thread);
 }

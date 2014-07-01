@@ -8,7 +8,7 @@
 class LuaFunctionBase : public LuaReference
 {
 public:
-	LuaFunctionBase(std::tr1::shared_ptr<lua_State> state, int index);
+	LuaFunctionBase(std::shared_ptr<lua_State> state, int index);
 };
 
 #endif // LUAFUNCTIONBASE_H

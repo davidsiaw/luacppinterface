@@ -1,8 +1,8 @@
 #ifndef LUACPPINTERFACE_H
 #define LUACPPINTERFACE_H
 
-#include <boost/tr1/memory.hpp>
-#include <boost/tr1/functional.hpp>
+#include <memory>
+#include <functional>
 
 #include "luacoroutine.h"
 #include "luatable.h"
@@ -13,17 +13,17 @@
 
 class Lua
 {
-	std::tr1::shared_ptr<lua_State> state;
+	std::shared_ptr<lua_State> state;
 	LuaTable registry;
 	LuaTable globals;
-	
+
 	template<typename SIG>
-	LuaFunction<SIG> internalCreateFunction( std::tr1::shared_ptr< std::tr1::function<SIG> > func, lua_CFunction cfunc)
+	LuaFunction<SIG> internalCreateFunction( std::shared_ptr< std::function<SIG> > func, lua_CFunction cfunc)
 	{
 		LuaFunction<SIG>** ptr = (LuaFunction<SIG>**)lua_newuserdata(state.get(), sizeof(LuaFunction<SIG>**));
 
 		lua_newtable(state.get());
-		
+
 		// make the finalizer
 		lua_pushstring(state.get(), "__gc");
 
@@ -31,10 +31,10 @@ class Lua
 		lua_pushcclosure(state.get(), lua_finalizer<SIG>, 1);
 
 		lua_rawset(state.get(), -3);
-		
+
 		// make the caller
 		lua_pushstring(state.get(), "__call");
-		
+
 		lua_pushlightuserdata(state.get(), (void*)func.get());
 		lua_pushcclosure(state.get(), cfunc, 1);
 
@@ -51,7 +51,7 @@ class Lua
 		lua_pop(state.get(), 1);
 		return function;
 	}
-	
+
 	template<typename SIG>
 	static int lua_finalizer(lua_State* state)
 	{
@@ -59,7 +59,7 @@ class Lua
 		delete *func;
 		return 0;
 	};
-	
+
 	template<typename SIG>
 	static int lua_yieldingFunction(lua_State* state)
 	{
@@ -79,8 +79,8 @@ public:
 	// create a new Lua state
 	Lua();
 
-	Lua(std::tr1::shared_ptr<lua_State> state);
-	
+	Lua(std::shared_ptr<lua_State> state);
+
 	~Lua();
 
 	// load standard lua libraries into this state
@@ -100,8 +100,8 @@ public:
 
 	// run a Lua script
 	std::string RunScript(std::string script);
-	
-	
+
+
 	// create a userdata using a default operator delete destructor
 	template<typename TYPE>
 	LuaUserdata<TYPE> CreateUserdata(TYPE* data)
@@ -111,7 +111,7 @@ public:
 
 	// create a userdata
 	template<typename TYPE>
-	LuaUserdata<TYPE> CreateUserdata(TYPE* data, std::tr1::function<void(TYPE*)> destructor)
+	LuaUserdata<TYPE> CreateUserdata(TYPE* data, std::function<void(TYPE*)> destructor)
 	{
 		typename LuaUserdata<TYPE>::UserdataWrapper* wrap = (typename LuaUserdata<TYPE>::UserdataWrapper*)lua_newuserdata(state.get(), sizeof(typename LuaUserdata<TYPE>::UserdataWrapper));
 		memset(wrap, 0, sizeof(typename LuaUserdata<TYPE>::UserdataWrapper));
@@ -121,7 +121,7 @@ public:
 		LuaUserdata<TYPE> user(state, -1);
 
 		lua_newtable(state.get());
-		
+
 		// make the finalizer
 		lua_pushstring(state.get(), "__gc");
 		lua_pushlightuserdata(state.get(), (void*)wrap);
@@ -141,23 +141,23 @@ public:
 
 	// create a lua-callable function
 	template<typename SIG>
-	LuaFunction<SIG> CreateFunction(std::tr1::function<SIG> func)
+	LuaFunction<SIG> CreateFunction(std::function<SIG> func)
 	{
-		return internalCreateFunction(std::tr1::shared_ptr<std::tr1::function<SIG>>(new std::tr1::function<SIG>(func)), lua_normalFunction<SIG>);
+		return internalCreateFunction(std::shared_ptr<std::function<SIG>>(new std::function<SIG>(func)), lua_normalFunction<SIG>);
 	}
 
 	// create a lua-callable function that pauses execution once complete
 	template<typename SIG>
-	LuaFunction<SIG> CreateYieldingFunction(std::tr1::function<SIG> func)
+	LuaFunction<SIG> CreateYieldingFunction(std::function<SIG> func)
 	{
-		return internalCreateFunction(std::tr1::shared_ptr<std::tr1::function<SIG>>(new std::tr1::function<SIG>(func)), lua_yieldingFunction<SIG>);
+		return internalCreateFunction(std::shared_ptr<std::function<SIG>>(new std::function<SIG>(func)), lua_yieldingFunction<SIG>);
 	}
-    
+
     void CollectGarbage()
     {
         lua_gc(state.get(), LUA_GCCOLLECT, 0);
     }
-	
+
 };
 
 #include "luauserdatabindtemplates.h"

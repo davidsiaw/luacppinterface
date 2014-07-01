@@ -7,7 +7,7 @@ class LuaGenericFunction<void()> : public LuaFunctionBase
 public:
 	static const int parameters = 0;
 
-	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
+	LuaGenericFunction(std::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
@@ -17,10 +17,10 @@ public:
 		lua_call(state.get(), 0, 1);
 		// return void
 	}
-	
+
 	static int staticFunction(lua_State* state)
 	{
-		std::tr1::function<void()>* func = (std::tr1::function<void()>*)lua_touserdata(state, lua_upvalueindex(1));
+		std::function<void()>* func = (std::function<void()>*)lua_touserdata(state, lua_upvalueindex(1));
 		func->operator()();
 
 		return 0;
@@ -31,11 +31,11 @@ template<typename T1>
 class LuaGenericFunction<void(T1)> : public LuaFunctionBase
 {
 public:
-	
+
 	typedef T1 arg1type;
 	static const int parameters = 1;
 
-	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
+	LuaGenericFunction(std::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
@@ -46,10 +46,10 @@ public:
 		lua_call(state.get(), 1, 1);
 		// return void
 	}
-	
+
 	static int staticFunction(lua_State* state)
 	{
-		std::tr1::function<void(T1)>* func = (std::tr1::function<void(T1)>*)lua_touserdata(state, lua_upvalueindex(1));
+		std::function<void(T1)>* func = (std::function<void(T1)>*)lua_touserdata(state, lua_upvalueindex(1));
 		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 		func->operator()(arg1);
 
@@ -61,12 +61,12 @@ template<typename T1, typename T2>
 class LuaGenericFunction<void(T1,T2)> : public LuaFunctionBase
 {
 public:
-	
+
 	typedef T1 arg1type;
 	typedef T2 arg2type;
 	static const int parameters = 2;
 
-	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
+	LuaGenericFunction(std::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
@@ -78,10 +78,10 @@ public:
 		lua_call(state.get(), 2, 1);
 		// return void
 	}
-	
+
 	static int staticFunction(lua_State* state)
 	{
-		std::tr1::function<void(T1,T2)>* func = (std::tr1::function<void(T1,T2)>*)lua_touserdata(state, lua_upvalueindex(1));
+		std::function<void(T1,T2)>* func = (std::function<void(T1,T2)>*)lua_touserdata(state, lua_upvalueindex(1));
 		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
 		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 		func->operator()(arg1, arg2);
@@ -94,13 +94,13 @@ template<typename T1, typename T2, typename T3>
 class LuaGenericFunction<void(T1,T2,T3)> : public LuaFunctionBase
 {
 public:
-	
+
 	typedef T1 arg1type;
 	typedef T2 arg2type;
 	typedef T3 arg3type;
 	static const int parameters = 3;
 
-	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
+	LuaGenericFunction(std::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
@@ -113,10 +113,10 @@ public:
 		lua_call(state.get(), 3, 1);
 		// return void
 	}
-	
+
 	static int staticFunction(lua_State* state)
 	{
-		std::tr1::function<void(T1,T2,T3)>* func = (std::tr1::function<void(T1,T2,T3)>*)lua_touserdata(state, lua_upvalueindex(1));
+		std::function<void(T1,T2,T3)>* func = (std::function<void(T1,T2,T3)>*)lua_touserdata(state, lua_upvalueindex(1));
 		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
 		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
 		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
@@ -130,14 +130,14 @@ template<typename T1, typename T2, typename T3, typename T4>
 class LuaGenericFunction<void(T1,T2,T3,T4)> : public LuaFunctionBase
 {
 public:
-	
+
 	typedef T1 arg1type;
 	typedef T2 arg2type;
 	typedef T3 arg3type;
 	typedef T4 arg4type;
 	static const int parameters = 4;
 
-	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
+	LuaGenericFunction(std::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
@@ -151,10 +151,10 @@ public:
 		lua_call(state.get(), 4, 1);
 		// return void
 	}
-	
+
 	static int staticFunction(lua_State* state)
 	{
-		std::tr1::function<void(T1,T2,T3,T4)>* func = (std::tr1::function<void(T1,T2,T3,T4)>*)lua_touserdata(state, lua_upvalueindex(1));
+		std::function<void(T1,T2,T3,T4)>* func = (std::function<void(T1,T2,T3,T4)>*)lua_touserdata(state, lua_upvalueindex(1));
 		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
 		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
 		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
@@ -169,7 +169,7 @@ template<typename T1, typename T2, typename T3, typename T4, typename T5>
 class LuaGenericFunction<void(T1,T2,T3,T4,T5)> : public LuaFunctionBase
 {
 public:
-	
+
 	typedef T1 arg1type;
 	typedef T2 arg2type;
 	typedef T3 arg3type;
@@ -177,7 +177,7 @@ public:
 	typedef T5 arg5type;
 	static const int parameters = 5;
 
-	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
+	LuaGenericFunction(std::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
@@ -192,10 +192,10 @@ public:
 		lua_call(state.get(), 5, 1);
 		// return void
 	}
-	
+
 	static int staticFunction(lua_State* state)
 	{
-		std::tr1::function<void(T1,T2,T3,T4,T5)>* func = (std::tr1::function<void(T1,T2,T3,T4,T5)>*)lua_touserdata(state, lua_upvalueindex(1));
+		std::function<void(T1,T2,T3,T4,T5)>* func = (std::function<void(T1,T2,T3,T4,T5)>*)lua_touserdata(state, lua_upvalueindex(1));
 		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
 		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
 		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
@@ -211,7 +211,7 @@ template<typename T1, typename T2, typename T3, typename T4, typename T5, typena
 class LuaGenericFunction<void(T1,T2,T3,T4,T5,T6)> : public LuaFunctionBase
 {
 public:
-	
+
 	typedef T1 arg1type;
 	typedef T2 arg2type;
 	typedef T3 arg3type;
@@ -220,7 +220,7 @@ public:
 	typedef T6 arg6type;
 	static const int parameters = 6;
 
-	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
+	LuaGenericFunction(std::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
@@ -236,10 +236,10 @@ public:
 		lua_call(state.get(), 6, 1);
 		// return void
 	}
-	
+
 	static int staticFunction(lua_State* state)
 	{
-		std::tr1::function<void(T1,T2,T3,T4,T5,T6)>* func = (std::tr1::function<void(T1,T2,T3,T4,T5,T6)>*)lua_touserdata(state, lua_upvalueindex(1));
+		std::function<void(T1,T2,T3,T4,T5,T6)>* func = (std::function<void(T1,T2,T3,T4,T5,T6)>*)lua_touserdata(state, lua_upvalueindex(1));
 		arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
 		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
 		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
@@ -256,7 +256,7 @@ template<typename T1, typename T2, typename T3, typename T4, typename T5, typena
 class LuaGenericFunction<void(T1,T2,T3,T4,T5,T6,T7)> : public LuaFunctionBase
 {
 public:
-	
+
 	typedef T1 arg1type;
 	typedef T2 arg2type;
 	typedef T3 arg3type;
@@ -266,7 +266,7 @@ public:
 	typedef T7 arg7type;
 	static const int parameters = 7;
 
-	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
+	LuaGenericFunction(std::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
@@ -283,10 +283,10 @@ public:
 		lua_call(state.get(), 7, 1);
 		// return void
 	}
-	
+
 	static int staticFunction(lua_State* state)
 	{
-		std::tr1::function<void(T1,T2,T3,T4,T5,T6,T7)>* func = (std::tr1::function<void(T1,T2,T3,T4,T5,T6,T7)>*)lua_touserdata(state, lua_upvalueindex(1));
+		std::function<void(T1,T2,T3,T4,T5,T6,T7)>* func = (std::function<void(T1,T2,T3,T4,T5,T6,T7)>*)lua_touserdata(state, lua_upvalueindex(1));
 		arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
 		arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
 		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
@@ -304,7 +304,7 @@ template<typename T1, typename T2, typename T3, typename T4, typename T5, typena
 class LuaGenericFunction<void(T1,T2,T3,T4,T5,T6,T7,T8)> : public LuaFunctionBase
 {
 public:
-	
+
 	typedef T1 arg1type;
 	typedef T2 arg2type;
 	typedef T3 arg3type;
@@ -315,7 +315,7 @@ public:
 	typedef T8 arg8type;
 	static const int parameters = 8;
 
-	LuaGenericFunction(std::tr1::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
+	LuaGenericFunction(std::shared_ptr<lua_State> state, int index) : LuaFunctionBase(state, index)
 	{
 	}
 
@@ -333,10 +333,10 @@ public:
 		lua_call(state.get(), 8, 1);
 		// return void
 	}
-	
+
 	static int staticFunction(lua_State* state)
 	{
-		std::tr1::function<void(T1,T2,T3,T4,T5,T6,T7,T8)>* func = (std::tr1::function<void(T1,T2,T3,T4,T5,T6,T7,T8)>*)lua_touserdata(state, lua_upvalueindex(1));
+		std::function<void(T1,T2,T3,T4,T5,T6,T7,T8)>* func = (std::function<void(T1,T2,T3,T4,T5,T6,T7,T8)>*)lua_touserdata(state, lua_upvalueindex(1));
 		arg8type arg8 = popper<arg8type>::pop(LuaNoDestructor(state));
 		arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
 		arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));

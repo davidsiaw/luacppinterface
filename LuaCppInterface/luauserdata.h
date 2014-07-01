@@ -2,7 +2,7 @@
 #define LUAUSERDATA_H
 
 #include <cassert>
-#include <boost/tr1/functional.hpp>
+#include <functional>
 #include "luatype.h"
 #include "luareference.h"
 
@@ -15,23 +15,23 @@ class LuaUserdata : public LuaReference
 	TYPE* pointer;
 
 public:
-	LuaUserdata(std::tr1::shared_ptr<lua_State> state, int index) : 
+	LuaUserdata(std::shared_ptr<lua_State> state, int index) :
 	  LuaReference(state, index)
 	{
 		assert(GetType() == LuaType::userdata);
 		assert(typeid(TYPE*) == typeid(RetrieveData()));
-		
+
 		auto wrap = (UserdataWrapper*)lua_touserdata(state.get(), index);
 		pointer = wrap->actualData;
 	}
-	
+
 	template<typename OBJ>
 	void Set(std::string key, const OBJ& value)
 	{
 		LuaTable table = GetMetaTable();
 		table.template Set<OBJ>(key, value);
 	}
-	
+
 	template<typename OBJ>
 	OBJ Get(std::string key) const
 	{
@@ -45,11 +45,11 @@ public:
 	}
 
 #include "luauserdataforwards.h"
-	
+
 	struct UserdataWrapper
 	{
 		TYPE* actualData;
-		std::tr1::function< void(TYPE*) > destructor;
+		std::function< void(TYPE*) > destructor;
 	};
 
 	static int lua_userdata_finalizer(lua_State* state)
@@ -58,14 +58,14 @@ public:
 		wrap->destructor(wrap->actualData);
 		return 0;
 	};
-	
+
 	TYPE* RetrieveData() const
 	{
 		PushToStack(state.get());
 		UserdataWrapper* wrap = (UserdataWrapper*)lua_touserdata(state.get(), -1);
 		lua_pop(state.get(), 1);
 		return wrap->actualData;
-	}	
+	}
 };
 
 

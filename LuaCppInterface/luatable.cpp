@@ -3,7 +3,7 @@
 #include "luatypetemplates.h"
 #include "luafunction.h"
 
-LuaTable::LuaTable(std::tr1::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
+LuaTable::LuaTable(std::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
 	assert(GetType() == LuaType::table);
 }
@@ -28,7 +28,7 @@ LuaType::Value LuaTable::GetTypeOfValueAt(int key) const
 	return res;
 }
 
-void LuaTable::ForAllStringKeys(std::tr1::function<void(std::string, LuaType::Value)> stringKeys) const
+void LuaTable::ForAllStringKeys(std::function<void(std::string, LuaType::Value)> stringKeys) const
 {
 	PushToStack(state.get());
 	lua_pushnil(state.get());  /* first key */
@@ -47,7 +47,7 @@ void LuaTable::ForAllStringKeys(std::tr1::function<void(std::string, LuaType::Va
     lua_pop(state.get(), 1);
 }
 
-void LuaTable::ForAllIntegerKeys(std::tr1::function<void(int, LuaType::Value)> integerKeys) const
+void LuaTable::ForAllIntegerKeys(std::function<void(int, LuaType::Value)> integerKeys) const
 {
 	PushToStack(state.get());
 	lua_pushnil(state.get());  /* first key */

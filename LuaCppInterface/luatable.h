@@ -3,8 +3,8 @@
 
 #include <cassert>
 #include <string>
-#include <boost/tr1/functional.hpp>
-#include <boost/tr1/memory.hpp>
+#include <functional>
+#include <memory>
 #include "luareference.h"
 
 template<typename SIG>
@@ -21,8 +21,8 @@ class LuaTable : public LuaReference
 {
 
 public:
-	LuaTable(std::tr1::shared_ptr<lua_State> state, int index);
-	
+	LuaTable(std::shared_ptr<lua_State> state, int index);
+
 	template<typename OBJ>
 	void Set(std::string key, const OBJ& value)
 	{
@@ -32,7 +32,7 @@ public:
 		lua_settable(state.get(), -3);
 		lua_pop(state.get(), 1);
 	}
-	
+
 	template<typename OBJ>
 	void Set(int key, const OBJ& value)
 	{
@@ -42,7 +42,7 @@ public:
 		lua_settable(state.get(), -3);
 		lua_pop(state.get(), 1);
 	}
-	
+
 	template<typename OBJ>
 	OBJ Get(std::string key) const
 	{
@@ -54,14 +54,14 @@ public:
 		lua_pop(state.get(), 1);
 		return res;
 	}
-	
+
 	template<typename OBJ>
 	OBJ Get(int key) const
 	{
 		PushToStack(state.get());
 		lua_pushinteger(state.get(), key);
 		lua_gettable(state.get(), -2);
-		
+
 		OBJ res = popper<OBJ>::pop(state);
 		lua_pop(state.get(), 1);
 		return res;
@@ -72,8 +72,8 @@ public:
 	LuaType::Value GetTypeOfValueAt(int key) const;
 
 	// Get all the keys in the LuaTable
-	void ForAllStringKeys(std::tr1::function<void(std::string, LuaType::Value)> stringKeys) const;
-	void ForAllIntegerKeys(std::tr1::function<void(int, LuaType::Value)> integerKeys) const;
+	void ForAllStringKeys(std::function<void(std::string, LuaType::Value)> stringKeys) const;
+	void ForAllIntegerKeys(std::function<void(int, LuaType::Value)> integerKeys) const;
 
 };
 

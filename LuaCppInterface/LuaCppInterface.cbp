@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="LuaCpp" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="LuaCppInterface" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="../lua/src/" />
+					<Add directory="../boost/" />
+				</Compiler>
+			</Target>
+			<Target title="Debug x64">
+				<Option output="LuaCppInterface" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="../lua/src/" />
+					<Add directory="../boost/" />
+				</Compiler>
+			</Target>
+			<Target title="Release x64">
+				<Option output="LuaCppInterface" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="../lua/src/" />
+				</Compiler>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="LuaCppInterface" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_CONSOLE" />
+					<Add directory="../lua/src/" />
+					<Add directory="../boost/" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+		</Compiler>
+		<Unit filename="luacoroutine.cpp" />
+		<Unit filename="luacoroutine.h" />
+		<Unit filename="luacppinterface.cpp" />
+		<Unit filename="luacppinterface.h" />
+		<Unit filename="luafunction.cpp" />
+		<Unit filename="luafunction.h" />
+		<Unit filename="luafunctionbase.h" />
+		<Unit filename="luageneralgenericfunctions.h" />
+		<Unit filename="luagenericfunction.h" />
+		<Unit filename="lualightuserdata.h" />
+		<Unit filename="luareference.cpp" />
+		<Unit filename="luareference.h" />
+		<Unit filename="luatable.cpp" />
+		<Unit filename="luatable.h" />
+		<Unit filename="luatype.h" />
+		<Unit filename="luatypetemplates.h" />
+		<Unit filename="luauserdata.h" />
+		<Unit filename="luauserdatabindtemplates.h" />
+		<Unit filename="luauserdataforwards.h" />
+		<Unit filename="luavoidgenericfunctions.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
