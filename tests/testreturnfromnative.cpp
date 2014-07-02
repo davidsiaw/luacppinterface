@@ -1,7 +1,7 @@
 // Simple example of a native function returning
 
 #include <iostream>
-#include <boost/tr1/memory.hpp>
+#include <memory>
 #include <luacppinterface.h>
 
 int main()

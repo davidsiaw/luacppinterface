@@ -1,6 +1,6 @@
 // Simple example of how to start using LuaCppInterface
 
-#include <boost/tr1/memory.hpp>
+#include <memory>
 #include <luacppinterface.h>
 
 int main()

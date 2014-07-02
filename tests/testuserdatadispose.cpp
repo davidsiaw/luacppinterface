@@ -1,7 +1,7 @@
 // Test that the userdata is destroyed when neccessary
 
-#include <boost/tr1/memory.hpp>
-#include <boost/tr1/functional.hpp>
+#include <memory>
+#include <functional>
 #include <luacppinterface.h>
 
 int x = 0;
@@ -39,8 +39,8 @@ int main()
 		auto sc = new SomeClass(num);
 		auto userData = lua.CreateUserdata<SomeClass>(sc);
 		
-		using namespace std::tr1::placeholders;
-		userData.Set("GetNumber", lua.CreateFunction< int() >( std::tr1::bind(&SomeClass::GetNumber, sc) ));
+		using namespace std::placeholders;
+		userData.Set("GetNumber", lua.CreateFunction< int() >( std::bind(&SomeClass::GetNumber, sc) ));
 	
 		return userData;
 	});
