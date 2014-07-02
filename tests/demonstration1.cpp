@@ -1,6 +1,7 @@
 #include <memory>
 #include <luacppinterface.h>
 #include <sstream>
+#include <iostream>
 
 int main()
 {
