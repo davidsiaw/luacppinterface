@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <functional>
+#include <cstring>
 
 #include "luacoroutine.h"
 #include "luatable.h"
