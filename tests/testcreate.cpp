@@ -13,7 +13,7 @@ int main()
 	delete luap;
 
 	// Or as a boost/c++11 shared_pointer
-	std::tr1::shared_ptr<Lua> luasp(new Lua());
+	std::shared_ptr<Lua> luasp(new Lua());
 
 	return 0;
 }
