@@ -41,7 +41,7 @@ public:
     {
         std::cout << name << " is born" << std::endl;
     }
- 
+
 	std::string Identify(Bar* bar)
 	{
         std::stringstream ss;
@@ -55,12 +55,12 @@ public:
         ss << name << ": " << a << " + " << b << " = " << (a+b);
         return ss.str();
     }
- 
+
     ~Foo()
     {
         std::cout << name << " is gone" << std::endl;
     }
- 
+
 private:
     std::string name;
 };
@@ -72,7 +72,7 @@ LuaUserdata<Foo> fooConstructor(Lua lua, std::string str)
 
 	userData.Bind("add", &Foo::Add);
 	userData.Bind("identify", &Foo::Identify);
-		
+
 	return userData;
 }
 
@@ -82,7 +82,7 @@ LuaUserdata<Bar> barConstructor(Lua lua, int number)
 	auto userData = lua.CreateUserdata<Bar>(bar);
 
 	userData.Bind("getNumber", &Bar::GetNumber);
-		
+
 	return userData;
 }
 
@@ -92,14 +92,14 @@ int main()
 	lua.LoadStandardLibraries();
 	auto global = lua.GetGlobalEnvironment();
 
-	
-	auto newFoo = lua.CreateFunction<LuaUserdata<Foo>(std::string)>(std::tr1::bind(&fooConstructor, lua, std::tr1::placeholders::_1));
+
+	auto newFoo = lua.CreateFunction<LuaUserdata<Foo>(std::string)>(std::bind(&fooConstructor, lua, std::placeholders::_1));
 	auto footable = lua.CreateTable();
 	footable.Set("new", newFoo);
 	global.Set("Foo", footable);
 
-	
-	auto newBar = lua.CreateFunction<LuaUserdata<Bar>(int)>(std::tr1::bind(&barConstructor, lua, std::tr1::placeholders::_1));
+
+	auto newBar = lua.CreateFunction<LuaUserdata<Bar>(int)>(std::bind(&barConstructor, lua, std::placeholders::_1));
 	auto bartable = lua.CreateTable();
 	bartable.Set("new", newBar);
 	global.Set("Bar", bartable);
@@ -119,7 +119,7 @@ int main()
 
 	auto params = lua.CreateTable();
 	params.Set("big", 15);
-	
+
 	global.Set("name", "astrobunny");
 
 	typedef void(*func_t)();
@@ -150,7 +150,7 @@ int main()
 	});
 
 	t.Invoke(5);
-	
+
 	auto t1 = lua.CreateFunction<void(std::string)>([&](std::string a)
 	{
 	});
@@ -171,11 +171,11 @@ int main()
 	t3.Invoke(5,"a");
 
 	auto thefunc = [&](LuaTable table) -> LuaTable
-	{ 
+	{
 		std::cout << "momo" << std::endl;
 		return table;
 	};
-	
+
 	auto add2 = lua.CreateFunction<int(int)>([&](int a) -> int
 	{
 		return a + 2;
@@ -185,7 +185,7 @@ int main()
 
 	auto frunc = lua.CreateFunction<LuaTable(LuaTable)>(thefunc);
 	global.Set("thefunc", frunc);
-		
+
 	global.Set("attack", lua.CreateFunction<int(int,int)>(
 		[&](int a, int b) -> int
 		{
@@ -214,7 +214,7 @@ int main()
 		"attack(1,2)"
 
 		);
-	
+
 	auto meow = global.Get< LuaFunction<LuaTable(LuaTable)> >("meow");
 
 	auto result = meow.Invoke(params);
@@ -222,7 +222,7 @@ int main()
 
 	auto onetwofour = global.Get< LuaFunction<int()> >("onetwofour");
 	int res = onetwofour.Invoke();
-	
+
 	auto getmeow = global.Get< LuaFunction<LuaFunction< LuaTable(LuaTable) >() > >("getmeow");
 	auto fmeow = getmeow.Invoke();
 	auto fres = fmeow.Invoke(params);
@@ -251,7 +251,7 @@ int main()
 		"	myownprint 'hello2'\n"
 		"	myownprint 'hello3'\n"
 		);
-	
+
 	while (cr.CanResume())
 	{
 		std::cout << "yield" << std::endl;
@@ -304,12 +304,12 @@ int main()
 				offset += n+2;
 			}
 			while (offset < format.length());
-			
+
 			// remaining
 			ss << format.substr(offset) << std::endl;
 		}
 	);
-	
+
 	glob3.Set("print", formattedPrint);
 	auto error = l3.RunScript("print('This is %s %s %s %s %d %d %d!', {'hello', 'kitty', 'island', 'adventure', 1, 2, 3});");
 	//l3.RunScript("a = {'ss', 'bb'}");

@@ -2,8 +2,8 @@
 // its similar to a table.
 
 #include <iostream>
-#include <boost/tr1/memory.hpp>
-#include <boost/tr1/functional.hpp>
+#include <memory>
+#include <functional>
 #include <luacppinterface.h>
 
 class SomeClass
@@ -29,8 +29,8 @@ int main()
 	SomeClass* sc = new SomeClass(1);
 	auto userdata1 = lua.CreateUserdata<SomeClass>(sc);
 	
-	using namespace std::tr1::placeholders;
-	userdata1.Set("GetNumber", lua.CreateFunction< int() >( std::tr1::bind(&SomeClass::GetNumber, sc) ));
+	using namespace std::placeholders;
+	userdata1.Set("GetNumber", lua.CreateFunction< int() >( std::bind(&SomeClass::GetNumber, sc) ));
 	
 	auto global = lua.GetGlobalEnvironment();
 	

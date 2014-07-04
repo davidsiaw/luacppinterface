@@ -20,7 +20,7 @@ class LuaLightUserdata;
 template<spec>																\
 struct pusher<type>															\
 {																			\
-	static void push(std::tr1::shared_ptr<lua_State> state, type param)		\
+	static void push(std::shared_ptr<lua_State> state, type param)		\
 	{																		\
 		pushcommand;														\
 	}																		\
@@ -29,7 +29,7 @@ struct pusher<type>															\
 template<spec>																\
 struct popper<type>															\
 {																			\
-	static type pop(std::tr1::shared_ptr<lua_State> state)					\
+	static type pop(std::shared_ptr<lua_State> state)					\
 	{																		\
 		popcommand;															\
 		lua_pop(state.get(), 1);											\
@@ -42,7 +42,7 @@ struct popper<type>															\
 template<typename T>
 struct pusher
 {
-	static void push(std::tr1::shared_ptr<lua_State> state, T param)
+	static void push(std::shared_ptr<lua_State> state, T param)
 	{
 		static_assert(sizeof(T) == 0, "parameter types other than signed or unsigned char, short, int, long, std::string, bool, pointers, LuaCoroutine, LuaUserdata, LuaTable or LuaFunction not available");
 	}
@@ -51,7 +51,7 @@ struct pusher
 template<typename T>
 struct popper
 {
-	static T pop(std::tr1::shared_ptr<lua_State> state)
+	static T pop(std::shared_ptr<lua_State> state)
 	{
 		static_assert(sizeof(T) == 0, "returns types other than signed or unsigned char, short, int, long, std::string, bool, pointers, LuaCoroutine, LuaUserdata, LuaTable or LuaFunction not available" );
 	}
@@ -73,44 +73,44 @@ DEFINE_TYPE_TEMPLATE_FOR(std::wstring,, 									\
 
 
 // Special type templates for string literals
-template<size_t N>																
-struct pusher<const char[N]>															
-{																			
-	static void push(std::tr1::shared_ptr<lua_State> state, const char* param)		
-	{																		
-		lua_pushstring(state.get(), param);														
-	}																		
-};																			
-																			
-template<size_t N>																
-struct popper<const char[N]>															
-{																			
-	static const char* pop(std::tr1::shared_ptr<lua_State> state)					
-	{					
-		const char* res = lua_tostring(state.get(), -1);
-		lua_pop(state.get(), 1);											
-		return res;															
-	}																		
+template<size_t N>
+struct pusher<const char[N]>
+{
+	static void push(std::shared_ptr<lua_State> state, const char* param)
+	{
+		lua_pushstring(state.get(), param);
+	}
 };
 
-template<size_t N>																
-struct pusher<char[N]>															
-{																			
-	static void push(std::tr1::shared_ptr<lua_State> state, const char* param)		
-	{																		
-		lua_pushstring(state.get(), param);														
-	}																		
-};																			
-																			
-template<size_t N>																
-struct popper<char[N]>															
-{																			
-	static char* pop(std::tr1::shared_ptr<lua_State> state)					
-	{					
+template<size_t N>
+struct popper<const char[N]>
+{
+	static const char* pop(std::shared_ptr<lua_State> state)
+	{
+		const char* res = lua_tostring(state.get(), -1);
+		lua_pop(state.get(), 1);
+		return res;
+	}
+};
+
+template<size_t N>
+struct pusher<char[N]>
+{
+	static void push(std::shared_ptr<lua_State> state, const char* param)
+	{
+		lua_pushstring(state.get(), param);
+	}
+};
+
+template<size_t N>
+struct popper<char[N]>
+{
+	static char* pop(std::shared_ptr<lua_State> state)
+	{
 		char* res = (char*)lua_tostring(state.get(), -1);
-		lua_pop(state.get(), 1);											
-		return res;															
-	}																		
+		lua_pop(state.get(), 1);
+		return res;
+	}
 };
 
 // strings!

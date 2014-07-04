@@ -1,6 +1,7 @@
-#include <boost/tr1/memory.hpp>
+#include <memory>
 #include <luacppinterface.h>
 #include <sstream>
+#include <iostream>
 
 int main()
 {

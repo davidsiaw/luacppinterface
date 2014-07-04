@@ -21,7 +21,7 @@ std::string LuaGetLastError(lua_State* state)
 		lua_getinfo(state, "nSlf", &debugInfo);
 		ss << "Line: " << debugInfo.currentline << std::endl;
 		ss << "Source: " << debugInfo.source << std::endl;
-		
+
 		const char* function = lua_tostring(state, -1);
 		if (function)
 		{
@@ -32,21 +32,21 @@ std::string LuaGetLastError(lua_State* state)
 	return ss.str();
 }
 
-Lua::Lua() : 
+Lua::Lua() :
 	state(luaL_newstate(), lua_close),
 	registry(LuaTable(state, LUA_REGISTRYINDEX)),
 	globals(registry.Get<LuaTable>(LUA_RIDX_GLOBALS))
 {
 }
 
-Lua::Lua(std::tr1::shared_ptr<lua_State> state) :
+Lua::Lua(std::shared_ptr<lua_State> state) :
 	state(state),
 	registry(LuaTable(state, LUA_REGISTRYINDEX)),
 	globals(registry.Get<LuaTable>(LUA_RIDX_GLOBALS))
 
 {
 }
-	
+
 void Lua::LoadStandardLibraries()
 {
 	luaL_openlibs(state.get());

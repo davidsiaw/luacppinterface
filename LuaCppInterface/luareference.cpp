@@ -1,7 +1,7 @@
 #include "luareference.h"
 #include "luatable.h"
 
-LuaReference::LuaReference(std::tr1::shared_ptr<lua_State> state, int index) : state(state)
+LuaReference::LuaReference(std::shared_ptr<lua_State> state, int index) : state(state)
 {
 	lua_pushvalue(state.get(), index);
 	ref = luaL_ref(state.get(), LUA_REGISTRYINDEX);;
@@ -13,7 +13,7 @@ LuaReference::LuaReference(const LuaReference& other)
 }
 
 LuaReference& LuaReference::operator=(const LuaReference& other)
-{ 
+{
 	state = other.state;
 	other.PushToStack(state.get());
 	ref = luaL_ref(state.get(), LUA_REGISTRYINDEX);
@@ -38,7 +38,7 @@ LuaType::Value LuaReference::GetType() const
 	return val;
 }
 
-std::tr1::shared_ptr<lua_State> LuaReference::GetState()
+std::shared_ptr<lua_State> LuaReference::GetState()
 {
 	return state;
 }

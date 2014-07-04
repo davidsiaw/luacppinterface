@@ -2,7 +2,7 @@
 #define LUALIGHTUSERDATA_H
 
 #include <cassert>
-#include <boost/tr1/memory.hpp>
+#include <memory>
 #include "luareference.h"
 #include "luatype.h"
 #include "luauserdata.h"
@@ -13,7 +13,7 @@ class LuaLightUserdata : public LuaReference
 	T* pointer;
 
 public:
-	LuaLightUserdata(std::tr1::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
+	LuaLightUserdata(std::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 	{
 		assert(GetType() == LuaType::userdata || GetType() == LuaType::lightuserdata);
 

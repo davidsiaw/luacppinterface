@@ -1,7 +1,7 @@
 // Simple example of how to use a lua function written in a script
 
 #include <iostream>
-#include <boost/tr1/memory.hpp>
+#include <memory>
 #include <luacppinterface.h>
 
 int main()

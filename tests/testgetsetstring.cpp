@@ -1,7 +1,7 @@
 // Simple example of getting and setting a global variable
 
 #include <iostream>
-#include <boost/tr1/memory.hpp>
+#include <memory>
 #include <luacppinterface.h>
 
 int main()

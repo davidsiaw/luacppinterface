@@ -4,7 +4,7 @@
 #include "luatypetemplates.h"
 #include "luafunction.h"
 
-LuaFunctionBase::LuaFunctionBase(std::tr1::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
+LuaFunctionBase::LuaFunctionBase(std::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
 	auto type = GetType();
 	if (type != LuaType::function)

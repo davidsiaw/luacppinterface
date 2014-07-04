@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <sstream>
-#include <boost/tr1/memory.hpp>
+#include <memory>
 #include <luacppinterface.h>
 
 int main()
