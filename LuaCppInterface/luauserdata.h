@@ -49,13 +49,14 @@ public:
 	struct UserdataWrapper
 	{
 		TYPE* actualData;
-		std::function< void(TYPE*) > destructor;
+		std::function< void(TYPE*) >* destructor;
 	};
 
 	static int lua_userdata_finalizer(lua_State* state)
 	{
 		UserdataWrapper* wrap = (UserdataWrapper*)lua_touserdata(state, lua_upvalueindex(1));
-		wrap->destructor(wrap->actualData);
+		(*wrap->destructor)(wrap->actualData);
+        delete(wrap->destructor);
 		return 0;
 	};
 

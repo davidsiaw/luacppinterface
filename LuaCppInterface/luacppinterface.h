@@ -101,9 +101,8 @@ public:
 
 	// run a Lua script
 	std::string RunScript(std::string script);
-
-
-	// create a userdata using a default operator delete destructor
+    
+    // create a userdata using a default operator delete destructor
 	template<typename TYPE>
 	LuaUserdata<TYPE> CreateUserdata(TYPE* data)
 	{
@@ -113,11 +112,13 @@ public:
 	// create a userdata
 	template<typename TYPE>
 	LuaUserdata<TYPE> CreateUserdata(TYPE* data, std::function<void(TYPE*)> destructor)
-	{
+    {
 		typename LuaUserdata<TYPE>::UserdataWrapper* wrap = (typename LuaUserdata<TYPE>::UserdataWrapper*)lua_newuserdata(state.get(), sizeof(typename LuaUserdata<TYPE>::UserdataWrapper));
+        
 		memset(wrap, 0, sizeof(typename LuaUserdata<TYPE>::UserdataWrapper));
+        
 		wrap->actualData = data;
-		wrap->destructor = destructor;
+		wrap->destructor = new std::function<void(TYPE*)> (destructor);
 
 		LuaUserdata<TYPE> user(state, -1);
 

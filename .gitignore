@@ -1,0 +1,8 @@
+.DS_Store
+*.log
+*.in
+*.in~
+configure
+Makefile
+config.h
+config.status

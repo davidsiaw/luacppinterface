@@ -15,7 +15,6 @@ AC_ARG_ENABLE([gcov],
 AM_CONDITIONAL([COND_GCOV],[test '!' "$enable_gcov" = no])
 
 
-AX_BOOST_BASE([1.46])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile LuaCppInterface/Makefile])
 AC_OUTPUT
