@@ -2,6 +2,8 @@
 *.log
 *.in
 *.in~
+*.o
+*.trs
 configure
 Makefile
 config.h

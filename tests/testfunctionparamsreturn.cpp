@@ -26,5 +26,5 @@ int main()
 	
 	int x = global.Get<int>("x");
 
-	return x != (strangeAdd.Invoke(5,6));
+	return x != (strangeAdd.Invoke(5,6)) || x != (5^5+6);
 }

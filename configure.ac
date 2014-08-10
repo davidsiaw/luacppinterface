@@ -16,5 +16,5 @@ AM_CONDITIONAL([COND_GCOV],[test '!' "$enable_gcov" = no])
 
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([Makefile LuaCppInterface/Makefile])
+AC_CONFIG_FILES([Makefile LuaCppInterface/Makefile tests/Makefile])
 AC_OUTPUT

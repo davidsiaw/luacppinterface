@@ -214,7 +214,20 @@ int main()
 		"attack(1,2)"
 
 		);
-
+    
+    LuaTable tbl = lua.CreateTable();
+    tbl.Set("name", "Chuck Norris");
+    tbl.Set("age", 1337);
+    tbl.Set("0", "divide by");
+    tbl.Set(1337, "leet");
+    
+    int keys = 3;
+    
+    tbl.ForAllStringKeys([&](std::string key, LuaType::Value value)
+    {
+        keys--;
+    });
+    
 	auto meow = global.Get< LuaFunction<LuaTable(LuaTable)> >("meow");
 
 	auto result = meow.Invoke(params);
