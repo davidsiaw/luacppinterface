@@ -472,9 +472,3 @@ local image = Image:new(800, 600)
 image.drawCircle(100,100,50)
 print(image.getWidth(), image.getHeight())
 ```
-
-
-TODO
-====
-- improve lua userdata to allow classes that take other objects to be independant of coupling with LuaUserdata or LuaTable
-- improve api docs (explain the LuaReference object and how to get the metatable to modify)
