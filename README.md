@@ -8,7 +8,7 @@ A Simple C++ Interface to Lua 5.2 and above.
 
 This small static library offers a very simple method of interfacing with Lua from C++ using conventions (only string and integer keys are allowed on LuaTable, a limited set of types available for functions callable from both Lua and C++) and general methods to reduce the number of surprises by as much as possible.
 
-In order to use the library, simply link in lua and luacppinterface statically. LuaCppInterface depends on Boost C++. Boost is provided as a submodule. You may also use a different version of Boost by adding the --with-boost=~/myownboost/ parameter to the configure script for building luacppinterface.
+** Visual Studio solution is broken at the moment **
 
 To build luacppinterface, use the included LuaCppInterface.sln if you are using Visual Studio 2010 and above, or type:
 
@@ -37,6 +37,9 @@ Contents
 
 API Changes
 ===========
+
+*API Changes on 10 August 2014*:
+Removed boost dependency. LuaCppInterface no longer requires boost on the expectation that most people will by now be using gcc 4.8, clang 3.4 and VS2012 and above
 
 *API Changes on 11 September 2013*:
 The following methods on LuaTable have been replaced by nicer template methods that allow you to specify more precisely the type you want to use. Here are some find/replace transformations that you will find helpful.
