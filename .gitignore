@@ -8,3 +8,5 @@ configure
 Makefile
 config.h
 config.status
+LuaCppInterface/.deps
+tests/.deps
