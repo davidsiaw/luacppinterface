@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="luacpp.cpp">
+    <ClCompile Include="..\tests\luacpp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
