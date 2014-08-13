@@ -15,13 +15,13 @@ Windows Build:
 [![Codeship Status for davidsiaw/luacppinterface](https://www.codeship.io/projects/31137300-050f-0132-6e2b-32730fef382b/status)](https://www.codeship.io/projects/30789)
 
 
-This small static library offers a very simple method of interfacing with Lua from C++ using conventions (only string and integer keys are allowed on LuaTable, a limited set of types available for functions callable from both Lua and C++) and general methods to reduce the number of surprises by as much as possible.
+This small static library offers a very simple method of interfacing with Lua from C++ by constraining (only string and integer keys are allowed on LuaTable, a limited set of types available for functions callable from both Lua and C++) and general methods to reduce the number of surprises by as much as possible.
+
+*feel free to open issues*
 
 ## Checking out
 
-You need to `git clone --recursive https://github.com/davidsiaw/luacppinterface`
-
-To pull the lua dependency.
+You need to `git clone --recursive https://github.com/davidsiaw/luacppinterface` To pull the lua dependency.
 
 ## Windows build on MSVC
 
@@ -29,7 +29,7 @@ To build luacppinterface, use the included LuaCppInterface.sln
 
 ## Linux || Mac OS X with autotools installed || Windows with Cygwin
 
-autoreconf --install && ./configure && make
+`autoreconf --install && ./configure && make`
 
 ## Mac OS X || iOS
 
@@ -45,7 +45,7 @@ You can use this library on Android as well. Simply pull this repository as a su
 
 LuaCppInterface comes with tests. To run them type
 
-make check
+`make check`
 
 For more information about building, please refer to .travis.yml
 
