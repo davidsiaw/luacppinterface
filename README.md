@@ -7,16 +7,41 @@ A Simple C++ Interface to Lua 5.2 and above.
 [![Coverage Status](https://img.shields.io/coveralls/davidsiaw/luacppinterface.svg)](https://coveralls.io/r/davidsiaw/luacppinterface?branch=master)
 [![Stories in Ready](https://badge.waffle.io/davidsiaw/luacppinterface.svg?label=ready&title=Ready)](http://waffle.io/davidsiaw/luacppinterface)
 [![License](http://img.shields.io/badge/license-MIT-red.svg)](https://github.com/davidsiaw/luacppinterface/blob/master/LICENSE)
+
+Windows Build:
+[![Build status](https://ci.appveyor.com/api/projects/status/yv80am8m6d9nhjvb)](https://ci.appveyor.com/project/davidsiaw/luacppinterface)
+
+
 [![Codeship Status for davidsiaw/luacppinterface](https://www.codeship.io/projects/31137300-050f-0132-6e2b-32730fef382b/status)](https://www.codeship.io/projects/30789)
 
 
 This small static library offers a very simple method of interfacing with Lua from C++ using conventions (only string and integer keys are allowed on LuaTable, a limited set of types available for functions callable from both Lua and C++) and general methods to reduce the number of surprises by as much as possible.
 
-** Visual Studio solution is broken at the moment **
+## Checking out
 
-To build luacppinterface, use the included LuaCppInterface.sln if you are using Visual Studio 2010 and above, or type:
+You need to `git clone --recursive https://github.com/davidsiaw/luacppinterface`
 
-./configure && make
+To pull the lua dependency.
+
+## Windows build on MSVC
+
+To build luacppinterface, use the included LuaCppInterface.sln
+
+## Linux || Mac OS X with autotools installed || Windows with Cygwin
+
+autoreconf --install && ./configure && make
+
+## Mac OS X || iOS
+
+You can use the included XCode projects:
+- Use the luacppinterface.xcodeproj for Mac OS X.
+- Use the luacppinterface-ios.xcodeproj for iOS.
+
+## Android 
+
+You can use this library on Android as well. Simply pull this repository as a submodule into `jni/luacppinterface`, and your `ndk-build` should pick it up.
+
+## Testing
 
 LuaCppInterface comes with tests. To run them type
 
