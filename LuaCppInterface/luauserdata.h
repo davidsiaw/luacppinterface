@@ -43,6 +43,8 @@ public:
 	{
 		return pointer;
 	}
+	
+    TYPE* operator->() const { return pointer; }
 
 #include "luauserdataforwards.h"
 
@@ -67,6 +69,7 @@ public:
 		lua_pop(state.get(), 1);
 		return wrap->actualData;
 	}
+
 };
 
 
