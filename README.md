@@ -9,7 +9,7 @@ A Simple C++ Interface to Lua 5.2 and above.
 [![License](http://img.shields.io/badge/license-MIT-red.svg)](https://github.com/davidsiaw/luacppinterface/blob/master/LICENSE)
 
 Windows Build:
-[![Build status](https://ci.appveyor.com/api/projects/status/yv80am8m6d9nhjvb)](https://ci.appveyor.com/project/davidsiaw/luacppinterface)
+[![Build status](http://img.shields.io/appveyor/ci/davidsiaw/luacppinterface.svg)](https://ci.appveyor.com/project/davidsiaw/luacppinterface)
 
 
 [![Codeship Status for davidsiaw/luacppinterface](https://www.codeship.io/projects/31137300-050f-0132-6e2b-32730fef382b/status)](https://www.codeship.io/projects/30789)
