@@ -19,6 +19,10 @@ This small static library offers a very simple method of interfacing with Lua fr
 
 *feel free to open issues*
 
+## Documentation
+
+You can find more information besides this readme on the [Wiki](https://github.com/davidsiaw/luacppinterface/wiki). The information on this readme is also important, and you should read it to get an overview of things.
+
 ## Checking out
 
 You need to `git clone --recursive https://github.com/davidsiaw/luacppinterface` To pull the lua dependency.
