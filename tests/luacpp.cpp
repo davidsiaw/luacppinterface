@@ -1,6 +1,5 @@
 #include <iostream>
 #include <sstream>
-#include <initializer_list>
 #include "luacppinterface.h"
 
 void m()
