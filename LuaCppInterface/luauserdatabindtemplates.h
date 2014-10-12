@@ -18,7 +18,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0)>(std::bind(func, t, std::__1::placeholders::_1));
+		auto luaFunc = lua.CreateFunction<RET(ARG0)>(std::bind(func, t, std::placeholders::_1));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -30,7 +30,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -42,7 +42,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -54,7 +54,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -66,7 +66,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -78,7 +78,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -90,7 +90,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6, std::__1::placeholders::_7));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -102,7 +102,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6, std::__1::placeholders::_7, std::__1::placeholders::_8));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7, std::placeholders::_8));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -126,7 +126,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0)>(std::bind(func, t, std::__1::placeholders::_1));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0)>(std::bind(func, t, std::placeholders::_1));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -138,7 +138,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -150,7 +150,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -162,7 +162,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -174,7 +174,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -186,7 +186,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -198,7 +198,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6, std::__1::placeholders::_7));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -210,7 +210,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6, std::__1::placeholders::_7, std::__1::placeholders::_8));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7, std::placeholders::_8));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -235,7 +235,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0)>(std::bind(func, t, std::__1::placeholders::_1));
+		auto luaFunc = lua.CreateFunction<RET(ARG0)>(std::bind(func, t, std::placeholders::_1));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -247,7 +247,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -259,7 +259,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -271,7 +271,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -283,7 +283,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -295,7 +295,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -307,7 +307,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6, std::__1::placeholders::_7));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -319,7 +319,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6, std::__1::placeholders::_7, std::__1::placeholders::_8));
+		auto luaFunc = lua.CreateFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7, std::placeholders::_8));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -343,7 +343,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0)>(std::bind(func, t, std::__1::placeholders::_1));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0)>(std::bind(func, t, std::placeholders::_1));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -355,7 +355,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -367,7 +367,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -379,7 +379,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -391,7 +391,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -403,7 +403,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -415,7 +415,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6, std::__1::placeholders::_7));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
@@ -427,7 +427,7 @@
 		using namespace std::placeholders;
 		TYPE* t = RetrieveData();
 		Lua lua(state);
-		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7)>(std::bind(func, t, std::__1::placeholders::_1, std::__1::placeholders::_2, std::__1::placeholders::_3, std::__1::placeholders::_4, std::__1::placeholders::_5, std::__1::placeholders::_6, std::__1::placeholders::_7, std::__1::placeholders::_8));
+		auto luaFunc = lua.CreateYieldingFunction<RET(ARG0,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7)>(std::bind(func, t, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7, std::placeholders::_8));
 		LuaTable table = GetMetaTable();
 		table.Set(name, luaFunc);
 	}
