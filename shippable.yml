@@ -4,7 +4,7 @@ before_script:
   - mkdir -p shippable/codecoverage
 
 before_install:
-  - sudo apt-get install gcovr
+  - sudo pip install gcovr
   - sudo pip install cpp-coveralls --use-mirrors
 
 script: ./build-travis.sh
