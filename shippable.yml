@@ -7,9 +7,8 @@ before_install:
   - sudo pip install gcovr
   - sudo pip install cpp-coveralls --use-mirrors
 
-script: ./build-travis.sh
-
-after_success:
+script: 
+  - ./build-travis.sh
   - ls
   - gcovr -r . --xml
   - cp *.xml shippable/codecoverage
