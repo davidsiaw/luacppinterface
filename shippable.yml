@@ -1,10 +1,15 @@
 language: python
 
+before_script:
+  - mkdir -p shippable/codecoverage
+
 before_install:
+  - sudo apt-get install gcovr
   - sudo pip install cpp-coveralls --use-mirrors
 
 script: ./build-travis.sh
 
 after_success:
-  - coveralls --exclude boost --exclude tests
-
+  - ls
+  - gcovr -r . --xml
+  - cp *.xml shippable/codecoverage
