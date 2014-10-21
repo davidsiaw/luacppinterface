@@ -9,7 +9,7 @@ A Simple C++ Interface to Lua 5.2 and above.
 [![License](http://img.shields.io/badge/license-MIT-red.svg)](https://github.com/davidsiaw/luacppinterface/blob/master/LICENSE)
 
 Windows Build:
-[![Build status](https://ci.appveyor.com/api/projects/status/yv80am8m6d9nhjvb)](https://ci.appveyor.com/project/davidsiaw/luacppinterface)
+[![Build status](http://img.shields.io/appveyor/ci/davidsiaw/luacppinterface.svg)](https://ci.appveyor.com/project/davidsiaw/luacppinterface)
 
 
 [![Codeship Status for davidsiaw/luacppinterface](https://www.codeship.io/projects/31137300-050f-0132-6e2b-32730fef382b/status)](https://www.codeship.io/projects/30789)
@@ -18,6 +18,10 @@ Windows Build:
 This small static library offers a very simple method of interfacing with Lua from C++ by constraining (only string and integer keys are allowed on LuaTable, a limited set of types available for functions callable from both Lua and C++) and general methods to reduce the number of surprises by as much as possible.
 
 *feel free to open issues*
+
+## Documentation
+
+You can find more information besides this readme on the [Wiki](https://github.com/davidsiaw/luacppinterface/wiki). The information on this readme is also important, and you should read it to get an overview of things.
 
 ## Checking out
 
