@@ -1,0 +1,10 @@
+language: python
+
+before_install:
+  - sudo pip install cpp-coveralls --use-mirrors
+
+script: ./build-travis.sh
+
+after_success:
+  - coveralls --exclude boost --exclude tests
+
