@@ -10,5 +10,4 @@ before_install:
 script: 
   - ./build-travis.sh
   - ls
-  - gcovr -r . --xml
-  - cp *.xml shippable/codecoverage
+  - cd LuaCppInterface && gcovr -r . --xml > ../shippable/codecoverage/coverage.xml
