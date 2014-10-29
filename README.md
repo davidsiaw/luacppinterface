@@ -487,7 +487,7 @@ auto imageConstructor = lua.CreateFunction< LuaUserdata<Image>(int, int) >(
 	image.Bind("getHeight", &Image::GetHeight);
 	
 	return image;
-}
+});
 
 // Create the "type" table in Lua
 auto imageType = lua.CreateTable();
