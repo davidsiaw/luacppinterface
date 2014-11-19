@@ -1,5 +1,6 @@
 luacppinterface
 ===============
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/davidsiaw/luacppinterface?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 A Simple C++ Interface to Lua 5.2 and above.
 
