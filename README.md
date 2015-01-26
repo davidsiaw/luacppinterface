@@ -8,7 +8,6 @@ A Simple C++ Interface to Lua 5.2 and above.
 [![Coverage Status](https://img.shields.io/coveralls/davidsiaw/luacppinterface.svg)](https://coveralls.io/r/davidsiaw/luacppinterface?branch=master)
 [![Issues](https://img.shields.io/github/issues/davidsiaw/luacppinterface.svg)](https://github.com/davidsiaw/luacppinterface/issues)
 [![Tag](https://img.shields.io/github/tag/davidsiaw/luacppinterface.svg)](https://github.com/davidsiaw/luacppinterface/releases)
-[![Codacy Badge](https://img.shields.io/codacy/f0b10d33f42e4cffad7ea25062660989.svg)](https://www.codacy.com/public/davidsiaw/luacppinterface)
 [![Stories in Ready](https://badge.waffle.io/davidsiaw/luacppinterface.svg?label=ready&title=Ready)](http://waffle.io/davidsiaw/luacppinterface)
 [![License](http://img.shields.io/badge/license-MIT-red.svg)](https://github.com/davidsiaw/luacppinterface/blob/master/LICENSE)
 [![Language](https://img.shields.io/badge/language-C++-blue.svg)](https://github.com/davidsiaw/luacppinterface/wiki)
