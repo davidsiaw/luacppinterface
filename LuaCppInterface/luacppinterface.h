@@ -65,8 +65,7 @@ class Lua
 	static int lua_yieldingFunction(lua_State* state)
 	{
 		int numVals = LuaFunction<SIG>::staticFunction(state);
-		lua_yield(state, numVals);
-		return numVals;
+		return lua_yield(state, numVals);
 	};
 
 	template<typename SIG>

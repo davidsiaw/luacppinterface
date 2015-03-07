@@ -14,6 +14,7 @@ std::string LuaCoroutine::RunScript(std::string script)
 	lua_pop(state.get(), 1);
 	int status = luaL_loadstring(thread, script.c_str());
 	status = lua_resume(thread, NULL, 0);
+
 	if (status != LUA_OK && status != LUA_YIELD)
 	{
 		return LuaGetLastError(thread);
@@ -26,7 +27,8 @@ std::string LuaCoroutine::Resume()
 	PushToStack(state.get());
 	lua_State* thread = lua_tothread(state.get(), -1);
 	lua_pop(state.get(), 1);
-	int status = lua_resume(thread, NULL, 0);
+	int status = lua_resume(thread, NULL, lua_gettop(thread));
+
 	if (status != LUA_OK && status != LUA_YIELD)
 	{
 		return LuaGetLastError(thread);

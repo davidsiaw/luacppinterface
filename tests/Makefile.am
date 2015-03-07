@@ -30,9 +30,11 @@ TESTS = crashtest \
 		testgettypeofvalueat \
 		testinvalidscript \
 		testregistry \
+		testreturnfromyieldingfunction \
 		demonstration1 \
 		demonstration2 \
-		demonstration3
+		demonstration3 \
+		demonstration4
 
 check_PROGRAMS = $(TESTS)
 		
@@ -123,6 +125,8 @@ testinvalidscript_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/lib
 testregistry_SOURCES = testregistry.cpp lua
 testregistry_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
 
+testreturnfromyieldingfunction_SOURCES = testreturnfromyieldingfunction.cpp lua
+testreturnfromyieldingfunction_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
 
 
 demonstration1_SOURCES = demonstration1.cpp lua
@@ -133,6 +137,9 @@ demonstration2_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua
 
 demonstration3_SOURCES = demonstration3.cpp lua
 demonstration3_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+
+demonstration4_SOURCES = demonstration4.cpp lua
+demonstration4_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
 
 
 BUILT_SOURCES = ../lua/src/liblua.a
