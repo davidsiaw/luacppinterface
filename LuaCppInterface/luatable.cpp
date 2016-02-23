@@ -47,7 +47,7 @@ void LuaTable::ForAllStringKeys(std::function<void(std::string, LuaType::Value)>
     lua_pop(state.get(), 1);
 }
 
-void LuaTable::ForAllIntegerKeys(std::function<void(int, LuaType::Value)> integerKeys) const
+void LuaTable::ForAllIntegerKeys(std::function<void(int64_t, LuaType::Value)> integerKeys) const
 {
 	PushToStack(state.get());
 	lua_pushnil(state.get());  /* first key */
@@ -56,7 +56,7 @@ void LuaTable::ForAllIntegerKeys(std::function<void(int, LuaType::Value)> intege
     {
 		if ((LuaType::Value)lua_type(state.get(), -2) == LuaType::number)
 		{
-			int key = lua_tointeger(state.get(), -2);
+			int64_t key = lua_tointeger(state.get(), -2);
 			auto valueType = (LuaType::Value)lua_type(state.get(), -1);
 			integerKeys(key, valueType);
 		}

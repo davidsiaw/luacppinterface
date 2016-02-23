@@ -2,8 +2,10 @@
 #define LUAREFERENCE_H
 
 #include <memory>
+#include "luacppinclude.h"
 #include "luatype.h"
-#include "lua.hpp"
+
+static const char* ExceptionFailedToGetMetaTable = "Failed to find requested table/function/object";
 
 class LuaTable;
 class LuaReference

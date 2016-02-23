@@ -21,8 +21,16 @@ public:
 	static int staticFunction(lua_State* state)
 	{
 		std::function<void()>* func = (std::function<void()>*)lua_touserdata(state, lua_upvalueindex(1));
-		func->operator()();
+		lua_remove(state, 1);
 
+		try
+		{
+			func->operator()();
+		}
+		catch (lua_nil& e)
+		{
+			UNREFERENCED_PARAMETER(e);
+		}
 		return 0;
 	}
 };
@@ -50,15 +58,26 @@ public:
 	static int staticFunction(lua_State* state)
 	{
 		std::function<void(T1)>* func = (std::function<void(T1)>*)lua_touserdata(state, lua_upvalueindex(1));
-		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-		func->operator()(arg1);
+		lua_remove(state, 1);
 
+		if (lua_gettop(state) < parameters)
+			return luaL_error(state, "expected parameters count: %d", parameters);
+
+		try
+		{
+			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+			func->operator()(arg1);
+		}
+		catch (lua_nil& e)
+		{
+			UNREFERENCED_PARAMETER(e);
+		}
 		return 0;
 	}
 };
 
 template<typename T1, typename T2>
-class LuaGenericFunction<void(T1,T2)> : public LuaFunctionBase
+class LuaGenericFunction<void(T1, T2)> : public LuaFunctionBase
 {
 public:
 
@@ -81,17 +100,28 @@ public:
 
 	static int staticFunction(lua_State* state)
 	{
-		std::function<void(T1,T2)>* func = (std::function<void(T1,T2)>*)lua_touserdata(state, lua_upvalueindex(1));
-		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-		func->operator()(arg1, arg2);
+		std::function<void(T1, T2)>* func = (std::function<void(T1, T2)>*)lua_touserdata(state, lua_upvalueindex(1));
+		lua_remove(state, 1);
 
+		if (lua_gettop(state) < parameters)
+			return luaL_error(state, "expected parameters count: %d", parameters);
+
+		try
+		{
+			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+			func->operator()(arg1, arg2);
+		}
+		catch (lua_nil& e)
+		{
+			UNREFERENCED_PARAMETER(e);
+		}
 		return 0;
 	}
 };
 
 template<typename T1, typename T2, typename T3>
-class LuaGenericFunction<void(T1,T2,T3)> : public LuaFunctionBase
+class LuaGenericFunction<void(T1, T2, T3)> : public LuaFunctionBase
 {
 public:
 
@@ -116,18 +146,29 @@ public:
 
 	static int staticFunction(lua_State* state)
 	{
-		std::function<void(T1,T2,T3)>* func = (std::function<void(T1,T2,T3)>*)lua_touserdata(state, lua_upvalueindex(1));
-		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-		func->operator()(arg1, arg2, arg3);
+		std::function<void(T1, T2, T3)>* func = (std::function<void(T1, T2, T3)>*)lua_touserdata(state, lua_upvalueindex(1));
+		lua_remove(state, 1);
 
+		if (lua_gettop(state) < parameters)
+			return luaL_error(state, "expected parameters count: %d", parameters);
+
+		try
+		{
+			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+			func->operator()(arg1, arg2, arg3);
+		}
+		catch (lua_nil& e)
+		{
+			UNREFERENCED_PARAMETER(e);
+		}
 		return 0;
 	}
 };
 
 template<typename T1, typename T2, typename T3, typename T4>
-class LuaGenericFunction<void(T1,T2,T3,T4)> : public LuaFunctionBase
+class LuaGenericFunction<void(T1, T2, T3, T4)> : public LuaFunctionBase
 {
 public:
 
@@ -154,19 +195,30 @@ public:
 
 	static int staticFunction(lua_State* state)
 	{
-		std::function<void(T1,T2,T3,T4)>* func = (std::function<void(T1,T2,T3,T4)>*)lua_touserdata(state, lua_upvalueindex(1));
-		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-		func->operator()(arg1, arg2, arg3, arg4);
+		std::function<void(T1, T2, T3, T4)>* func = (std::function<void(T1, T2, T3, T4)>*)lua_touserdata(state, lua_upvalueindex(1));
+		lua_remove(state, 1);
 
+		if (lua_gettop(state) < parameters)
+			return luaL_error(state, "expected parameters count: %d", parameters);
+
+		try
+		{
+			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+			func->operator()(arg1, arg2, arg3, arg4);
+		}
+		catch (lua_nil& e)
+		{
+			UNREFERENCED_PARAMETER(e);
+		}
 		return 0;
 	}
 };
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5>
-class LuaGenericFunction<void(T1,T2,T3,T4,T5)> : public LuaFunctionBase
+class LuaGenericFunction<void(T1, T2, T3, T4, T5)> : public LuaFunctionBase
 {
 public:
 
@@ -195,20 +247,31 @@ public:
 
 	static int staticFunction(lua_State* state)
 	{
-		std::function<void(T1,T2,T3,T4,T5)>* func = (std::function<void(T1,T2,T3,T4,T5)>*)lua_touserdata(state, lua_upvalueindex(1));
-		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
-		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-		func->operator()(arg1, arg2, arg3, arg4, arg5);
+		std::function<void(T1, T2, T3, T4, T5)>* func = (std::function<void(T1, T2, T3, T4, T5)>*)lua_touserdata(state, lua_upvalueindex(1));
+		lua_remove(state, 1);
 
+		if (lua_gettop(state) < parameters)
+			return luaL_error(state, "expected parameters count: %d", parameters);
+
+		try
+		{
+			arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
+			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+			func->operator()(arg1, arg2, arg3, arg4, arg5);
+		}
+		catch (lua_nil& e)
+		{
+			UNREFERENCED_PARAMETER(e);
+		}
 		return 0;
 	}
 };
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-class LuaGenericFunction<void(T1,T2,T3,T4,T5,T6)> : public LuaFunctionBase
+class LuaGenericFunction<void(T1, T2, T3, T4, T5, T6)> : public LuaFunctionBase
 {
 public:
 
@@ -239,21 +302,32 @@ public:
 
 	static int staticFunction(lua_State* state)
 	{
-		std::function<void(T1,T2,T3,T4,T5,T6)>* func = (std::function<void(T1,T2,T3,T4,T5,T6)>*)lua_touserdata(state, lua_upvalueindex(1));
-		arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
-		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
-		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-		func->operator()(arg1, arg2, arg3, arg4, arg5, arg6);
+		std::function<void(T1, T2, T3, T4, T5, T6)>* func = (std::function<void(T1, T2, T3, T4, T5, T6)>*)lua_touserdata(state, lua_upvalueindex(1));
+		lua_remove(state, 1);
 
+		if (lua_gettop(state) < parameters)
+			return luaL_error(state, "expected parameters count: %d", parameters);
+
+		try
+		{
+			arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
+			arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
+			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+			func->operator()(arg1, arg2, arg3, arg4, arg5, arg6);
+		}
+		catch (lua_nil& e)
+		{
+			UNREFERENCED_PARAMETER(e);
+		}
 		return 0;
 	}
 };
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
-class LuaGenericFunction<void(T1,T2,T3,T4,T5,T6,T7)> : public LuaFunctionBase
+class LuaGenericFunction<void(T1, T2, T3, T4, T5, T6, T7)> : public LuaFunctionBase
 {
 public:
 
@@ -286,22 +360,33 @@ public:
 
 	static int staticFunction(lua_State* state)
 	{
-		std::function<void(T1,T2,T3,T4,T5,T6,T7)>* func = (std::function<void(T1,T2,T3,T4,T5,T6,T7)>*)lua_touserdata(state, lua_upvalueindex(1));
-		arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
-		arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
-		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
-		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-		func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		std::function<void(T1, T2, T3, T4, T5, T6, T7)>* func = (std::function<void(T1, T2, T3, T4, T5, T6, T7)>*)lua_touserdata(state, lua_upvalueindex(1));
+		lua_remove(state, 1);
 
+		if (lua_gettop(state) < parameters)
+			return luaL_error(state, "expected parameters count: %d", parameters);
+
+		try
+		{
+			arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
+			arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
+			arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
+			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+			func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+		}
+		catch (lua_nil& e)
+		{
+			UNREFERENCED_PARAMETER(e);
+		}
 		return 0;
 	}
 };
 
 template<typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
-class LuaGenericFunction<void(T1,T2,T3,T4,T5,T6,T7,T8)> : public LuaFunctionBase
+class LuaGenericFunction<void(T1, T2, T3, T4, T5, T6, T7, T8)> : public LuaFunctionBase
 {
 public:
 
@@ -336,17 +421,28 @@ public:
 
 	static int staticFunction(lua_State* state)
 	{
-		std::function<void(T1,T2,T3,T4,T5,T6,T7,T8)>* func = (std::function<void(T1,T2,T3,T4,T5,T6,T7,T8)>*)lua_touserdata(state, lua_upvalueindex(1));
-		arg8type arg8 = popper<arg8type>::pop(LuaNoDestructor(state));
-		arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
-		arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
-		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
-		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-		func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+		std::function<void(T1, T2, T3, T4, T5, T6, T7, T8)>* func = (std::function<void(T1, T2, T3, T4, T5, T6, T7, T8)>*)lua_touserdata(state, lua_upvalueindex(1));
+		lua_remove(state, 1);
 
+		if (lua_gettop(state) < parameters)
+			return luaL_error(state, "expected parameters count: %d", parameters);
+
+		try
+		{
+			arg8type arg8 = popper<arg8type>::pop(LuaNoDestructor(state));
+			arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
+			arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
+			arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
+			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+			func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+		}
+		catch (lua_nil& e)
+		{
+			UNREFERENCED_PARAMETER(e);
+		}
 		return 0;
 	}
 };

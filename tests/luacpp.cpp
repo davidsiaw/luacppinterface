@@ -336,6 +336,27 @@ int main()
 	//auto atable = glob3.GetTable("a");
 	//auto str = atable.GetString(1);
 
+	Lua l4;
+	auto glob4 = l4.GetGlobalEnvironment();
+
+	auto typeSafeFunc = l4.CreateFunction<void(uint32_t, std::string, std::wstring)>
+		([&](uint32_t intVal, std::string stringVal, std::wstring wstringVal) -> void
+		{
+			std::cout << "intVal:       " << intVal << std::endl;
+			std::cout << "stringVal:    " << stringVal << std::endl;
+			std::wcout << L"wstringVal: " << wstringVal << std::endl;
+		}
+	);
+
+	glob4.Set("typeSafeFunc", typeSafeFunc);
+
+	auto error4 = l4.RunScript("typeSafeFunc(1, 'hello4', 'kitty4')");
+
+	std::cout << error4 << std::endl;
+
+	error4 = l4.RunScript("typeSafeFunc(\"it\'s kitty, not a number\", 3, 3.3)");
+
+	std::cout << "expected error: " << error4 << std::endl;
 
 	return 0;
 }

@@ -30,6 +30,9 @@
     <ClCompile Include="luacoroutine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="luastringconversion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="luacppinterface.h">
@@ -75,6 +78,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lualightuserdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinclude.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luastringconversion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

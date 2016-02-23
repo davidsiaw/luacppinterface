@@ -73,7 +73,7 @@ public:
 
 	// Get all the keys in the LuaTable
 	void ForAllStringKeys(std::function<void(std::string, LuaType::Value)> stringKeys) const;
-	void ForAllIntegerKeys(std::function<void(int, LuaType::Value)> integerKeys) const;
+	void ForAllIntegerKeys(std::function<void(int64_t, LuaType::Value)> integerKeys) const;
 
 };
 
