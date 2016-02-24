@@ -5,8 +5,6 @@
 #include <string>
 #include <functional>
 #include <memory>
-#include <stdint.h>
-
 #include "luareference.h"
 
 template<typename SIG>
@@ -75,7 +73,7 @@ public:
 
 	// Get all the keys in the LuaTable
 	void ForAllStringKeys(std::function<void(std::string, LuaType::Value)> stringKeys) const;
-	void ForAllIntegerKeys(std::function<void(size_t, LuaType::Value)> integerKeys) const;
+	void ForAllIntegerKeys(std::function<void(int64_t, LuaType::Value)> integerKeys) const;
 
 };
 
