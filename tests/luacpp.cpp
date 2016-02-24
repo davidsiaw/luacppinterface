@@ -339,7 +339,7 @@ int main()
 	Lua l4;
 	auto glob4 = l4.GetGlobalEnvironment();
 
-	auto typeSafeFunc = l4.CreateFunction<void(uint32_t, std::string, std::wstring)>
+	auto strictlyTypedFunc = l4.CreateFunction<void(uint32_t, std::string, std::wstring)>
 		([&](uint32_t intVal, std::string stringVal, std::wstring wstringVal) -> void
 		{
 			std::cout << "intVal:       " << intVal << std::endl;
@@ -348,13 +348,13 @@ int main()
 		}
 	);
 
-	glob4.Set("typeSafeFunc", typeSafeFunc);
+	glob4.Set("strictlyTypedFunc", strictlyTypedFunc);
 
-	auto error4 = l4.RunScript("typeSafeFunc(1, 'hello4', 'kitty4')");
+	auto error4 = l4.RunScript("strictlyTypedFunc(1, 'hello4', 'kitty4')");
 
 	std::cout << error4 << std::endl;
 
-	error4 = l4.RunScript("typeSafeFunc(\"it\'s kitty, not a number\", 3, 3.3)");
+	error4 = l4.RunScript("strictlyTypedFunc(\"it\'s kitty, not a number\", 3, 3.3)");
 
 	std::cout << "expected error: " << error4 << std::endl;
 
