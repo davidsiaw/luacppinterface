@@ -6,14 +6,14 @@ std::wstring utf8str_to_wstr(const std::string& utf8str)
 		return L"";
 
 	std::wstring wstr;
-	int wlen = MultiByteToWideChar(CP_UTF8, NULL, utf8str.c_str(), utf8str.size(), NULL, NULL);
+	int wlen = MultiByteToWideChar(CP_UTF8, NULL, utf8str.c_str(), (int) utf8str.size(), NULL, NULL);
 	
 	if (wlen == 0)
 		return L"String conversion error";
 
 	wstr.resize(wlen);
 
-	wlen = MultiByteToWideChar(CP_UTF8, NULL, utf8str.c_str(), utf8str.size(), (wchar_t*)wstr.data(), wlen);
+	wlen = MultiByteToWideChar(CP_UTF8, NULL, utf8str.c_str(), (int) utf8str.size(), (wchar_t*)wstr.data(), wlen);
 	
 	if (wlen == 0)
 		return L"String conversion error";
@@ -27,13 +27,13 @@ std::string wstr_to_utf8str(const std::wstring& wstr)
 		return "";
 
 	std::string utf8str;
-	int len = WideCharToMultiByte(CP_UTF8, NULL, wstr.c_str(), wstr.size(), NULL, NULL, NULL, NULL);
+	int len = WideCharToMultiByte(CP_UTF8, NULL, wstr.c_str(), (int) wstr.size(), NULL, NULL, NULL, NULL);
 	
 	if (len == 0)
 		return "String conversion error";
 
 	utf8str.resize(len);
-	len = WideCharToMultiByte(CP_UTF8, NULL, wstr.c_str(), wstr.size(), (char*)utf8str.data(), len, NULL, NULL);
+	len = WideCharToMultiByte(CP_UTF8, NULL, wstr.c_str(), (int) wstr.size(), (char*)utf8str.data(), len, NULL, NULL);
 	
 	if (len == 0)
 		return "String conversion error";

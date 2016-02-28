@@ -1,6 +1,10 @@
 #ifndef LUAVOIDGENERICFUNCTIONS_H
 #define LUAVOIDGENERICFUNCTIONS_H
 
+#ifndef UNREFERENCED_PARAMETER
+	#define UNREFERENCED_PARAMETER( x ) x
+#endif
+
 template<>
 class LuaGenericFunction<void()> : public LuaFunctionBase
 {

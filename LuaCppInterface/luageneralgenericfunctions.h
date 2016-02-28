@@ -3,6 +3,10 @@
 
 #include "luatypetemplates.h"
 
+#ifndef UNREFERENCED_PARAMETER
+	#define UNREFERENCED_PARAMETER( x ) x
+#endif
+
 template<typename SIG> class LuaGenericFunction;
 
 template<typename R>
