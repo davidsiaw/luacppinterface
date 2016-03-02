@@ -1,6 +1,7 @@
 #include "luastringconversion.h"
+#include <Windows.h>
 
-std::wstring utf8str_to_wstr(const std::string& utf8str)
+std::wstring UTF8ToWStr(const std::string& utf8str)
 {
 	if (utf8str.empty())
 		return L"";
@@ -21,7 +22,7 @@ std::wstring utf8str_to_wstr(const std::string& utf8str)
 	return wstr;
 }
 
-std::string wstr_to_utf8str(const std::wstring& wstr)
+std::string WStrToUTF8(const std::wstring& wstr)
 {
 	if (wstr.empty())
 		return "";

@@ -2,9 +2,10 @@
 #define LUAGENERALGENERICFUNCTION_H
 
 #include "luatypetemplates.h"
+#include "luaerror.h"
 
 #ifndef UNREFERENCED_PARAMETER
-	#define UNREFERENCED_PARAMETER( x ) x
+#define UNREFERENCED_PARAMETER( x ) x
 #endif
 
 template<typename SIG> class LuaGenericFunction;
@@ -41,7 +42,7 @@ public:
 			R result = func->operator()();
 			pusher<rettype>::push(LuaNoDestructor(state), result);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 			return 0;
@@ -88,7 +89,7 @@ public:
 			R result = func->operator()(arg1);
 			pusher<rettype>::push(LuaNoDestructor(state), result);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 			return 0;
@@ -138,7 +139,7 @@ public:
 			R result = func->operator()(arg1, arg2);
 			pusher<rettype>::push(LuaNoDestructor(state), result);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 			return 0;
@@ -191,7 +192,7 @@ public:
 			R result = func->operator()(arg1, arg2, arg3);
 			pusher<rettype>::push(LuaNoDestructor(state), result);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 			return 0;
@@ -247,7 +248,7 @@ public:
 			R result = func->operator()(arg1, arg2, arg3, arg4);
 			pusher<rettype>::push(LuaNoDestructor(state), result);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 			return 0;
@@ -306,7 +307,7 @@ public:
 			R result = func->operator()(arg1, arg2, arg3, arg4, arg5);
 			pusher<rettype>::push(LuaNoDestructor(state), result);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 			return 0;
@@ -368,7 +369,7 @@ public:
 			R result = func->operator()(arg1, arg2, arg3, arg4, arg5, arg6);
 			pusher<rettype>::push(LuaNoDestructor(state), result);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 			return 0;
@@ -433,7 +434,7 @@ public:
 			R result = func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 			pusher<rettype>::push(LuaNoDestructor(state), result);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 			return 0;
@@ -501,7 +502,7 @@ public:
 			R result = func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 			pusher<rettype>::push(LuaNoDestructor(state), result);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 			return 0;

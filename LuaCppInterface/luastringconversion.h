@@ -1,7 +1,11 @@
 #pragma once
+#ifndef LUASTRINGCONVERSION
+#define LUASTRINGCONVERSION
 
 #include <string>
 #include <Windows.h>
 
-std::wstring utf8str_to_wstr(const std::string& utf8str);
-std::string wstr_to_utf8str(const std::wstring& wstr);
+std::wstring UTF8ToWStr(const std::string& utf8str);
+std::string WStrToUTF8(const std::wstring& wstr);
+
+#endif // LUASTRINGCONVERSION

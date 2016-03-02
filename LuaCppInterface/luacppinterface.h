@@ -12,7 +12,6 @@
 #include "luauserdata.h"
 #include "lualightuserdata.h"
 
-std::string LuaGetLastError(lua_State* state);
 class Lua
 {
 	std::shared_ptr<lua_State> state;

@@ -14,4 +14,6 @@ add_library(luacppinterface STATIC
 	LuaCppInterface/luacppinterface.cpp
 	LuaCppInterface/luatable.cpp
 	LuaCppInterface/luafunction.cpp
+	LuaCppInterface/luaerror.cpp
+	LuaCppInterface/luastringconversion.cpp
 )

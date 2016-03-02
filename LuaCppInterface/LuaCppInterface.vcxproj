@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="luacoroutine.cpp" />
     <ClCompile Include="luacppinterface.cpp" />
+    <ClCompile Include="luaerror.cpp" />
     <ClCompile Include="luafunction.cpp" />
     <ClCompile Include="luareference.cpp" />
     <ClCompile Include="luastringconversion.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="luacoroutine.h" />
     <ClInclude Include="luacppinclude.h" />
     <ClInclude Include="luacppinterface.h" />
+    <ClInclude Include="luaerror.h" />
     <ClInclude Include="luafunction.h" />
     <ClInclude Include="luafunctionbase.h" />
     <ClInclude Include="luageneralgenericfunctions.h" />

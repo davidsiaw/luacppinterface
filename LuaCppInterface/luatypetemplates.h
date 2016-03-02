@@ -13,18 +13,6 @@ class LuaUserdata;
 template<typename TYPE>
 class LuaLightUserdata;
 
-struct lua_error_exception : public std::logic_error
-{
-	lua_error_exception::lua_error_exception(const char* e = "lua_error") : std::logic_error(e)
-	{};
-};
-
-struct lua_nil : public lua_error_exception
-{
-	lua_nil::lua_nil() : lua_error_exception("lua_nil")
-	{};
-};
-
 // Refer to this define to make a type template for new things. This is used
 // in the Set<>, Get<> and marshalling for functions
 #define DEFINE_TYPE_TEMPLATE_FOR(type,spec,pushcommand,popcommand,luatype)	\
@@ -76,12 +64,12 @@ struct popper
 
 DEFINE_TYPE_TEMPLATE_FOR(std::wstring, ,								\
 																		\
-	std::string s = wstr_to_utf8str(param);								\
+	std::string s = WStrToUTF8(param);								\
 	lua_pushlstring(state.get(), s.c_str(), param.length());			\
 	,																	\
 																		\
 	std::string ss = lua_tostring(state.get(), -1);						\
-	std::wstring res = utf8str_to_wstr(ss);								\
+	std::wstring res = UTF8ToWStr(ss);								\
 	,																	\
 	LUA_TSTRING															\
 	)

@@ -1,8 +1,11 @@
 #ifndef LUAVOIDGENERICFUNCTIONS_H
 #define LUAVOIDGENERICFUNCTIONS_H
 
+#include "luatypetemplates.h"
+#include "luaerror.h"
+
 #ifndef UNREFERENCED_PARAMETER
-	#define UNREFERENCED_PARAMETER( x ) x
+#define UNREFERENCED_PARAMETER( x ) x
 #endif
 
 template<>
@@ -31,7 +34,7 @@ public:
 		{
 			func->operator()();
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 		}
@@ -72,7 +75,7 @@ public:
 			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 			func->operator()(arg1);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 		}
@@ -116,7 +119,7 @@ public:
 			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 			func->operator()(arg1, arg2);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 		}
@@ -163,7 +166,7 @@ public:
 			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 			func->operator()(arg1, arg2, arg3);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 		}
@@ -213,7 +216,7 @@ public:
 			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 			func->operator()(arg1, arg2, arg3, arg4);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 		}
@@ -266,7 +269,7 @@ public:
 			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 			func->operator()(arg1, arg2, arg3, arg4, arg5);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 		}
@@ -322,7 +325,7 @@ public:
 			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 			func->operator()(arg1, arg2, arg3, arg4, arg5, arg6);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 		}
@@ -381,7 +384,7 @@ public:
 			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 			func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 		}
@@ -443,7 +446,7 @@ public:
 			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
 			func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 		}
-		catch (lua_nil& e)
+		catch (LuaNil& e)
 		{
 			UNREFERENCED_PARAMETER(e);
 		}
