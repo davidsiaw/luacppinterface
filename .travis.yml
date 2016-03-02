@@ -4,7 +4,7 @@ compiler:
   - clang
 
 before_install:
-  - sudo pip install cpp-coveralls --use-mirrors
+  - sudo pip install cpp-coveralls
 
 script: ./build-travis.sh
 
