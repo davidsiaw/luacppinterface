@@ -1,11 +1,10 @@
 #include "luacoroutine.h"
+#include "luaerror.h"
 
 LuaCoroutine::LuaCoroutine(std::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
 	assert(GetType() == LuaType::thread);
 }
-
-extern std::string LuaGetLastError(lua_State* state);
 
 std::string LuaCoroutine::RunScript(std::string script)
 {

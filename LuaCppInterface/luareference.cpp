@@ -47,7 +47,10 @@ LuaTable LuaReference::GetMetaTable() const
 {
 	PushToStack(state.get());
 	int res = lua_getmetatable(state.get(), -1);
-	assert(res != 0);
+
+	if (res == 0)
+		throw std::exception(ExceptionFailedToGetMetaTable);
+
 	LuaTable table = LuaTable(state, -1);
 	lua_pop(state.get(), 2);
 	return table;
