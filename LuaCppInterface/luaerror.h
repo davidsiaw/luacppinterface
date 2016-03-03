@@ -2,18 +2,14 @@
 #ifndef LUACPPERROR
 #define LUACPPERROR
 
-#include <stdexcept>
 #include "luacppinclude.h"
 
-struct LuaException : public std::logic_error
-{
-	LuaException::LuaException(const char* e = "UnknownLuaException") : std::logic_error(e)
-	{};
-};
+#include <exception>
+#include <string>
 
-struct LuaNil : public LuaException
+struct LuaNil : public std::exception
 {
-	LuaNil::LuaNil() : LuaException("LuaNil")
+	LuaNil::LuaNil() : std::exception("LuaNil")
 	{};
 };
 

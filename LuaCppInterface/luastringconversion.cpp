@@ -1,4 +1,6 @@
 #include "luastringconversion.h"
+
+#if defined(_WIN32) || defined(WIN32)
 #include <Windows.h>
 
 std::wstring UTF8ToWStr(const std::string& utf8str)
@@ -42,3 +44,23 @@ std::string WStrToUTF8(const std::wstring& wstr)
 	return utf8str;
 }
 
+#else
+#include <iconv.h>
+// TODO: write an implimentation for Linux/MacOS
+#endif
+
+// perhaps this implementation? Should be portable, but may have problems with VS2010
+
+/*
+std::wstring UTF8ToWStr(const std::string& str)
+{
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+	return conv.from_bytes(str);
+}
+
+std::string WStrToUTF8(const std::wstring& str)
+{
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+	return conv.to_bytes(str);
+}
+*/

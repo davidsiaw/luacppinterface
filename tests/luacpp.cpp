@@ -358,5 +358,18 @@ int main()
 
 	std::cout << "expected error: " << error4 << std::endl;
 
+	char* utf8str = "\xCE\x99\xCE\xBF\xCF\x8D\xCE\xBD\xCE\xB9\xCE\xBA\xCE\xBF\xCE\xBD\xCF\x84\x00";
+	wchar_t* wstr = L"\u0399\u03BF\u03CD\u03BD\u03B9\u03BA\u03BF\u03BD\u03C4";
+
+	if (UTF8ToWStr(utf8str) == wstr)
+		std::cout << "UTF8ToWStr test: OK" << std::endl;
+	else
+		std::cout << "UTF8ToWStr test: FAILED" << std::endl;
+
+	if (WStrToUTF8(wstr) == utf8str)
+		std::cout << "WStrToUTF8 test: OK" << std::endl;
+	else
+		std::cout << "WStrToUTF8 test: FAILED" << std::endl;
+	 
 	return 0;
 }
