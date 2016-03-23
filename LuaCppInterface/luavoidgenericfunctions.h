@@ -68,7 +68,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -111,7 +113,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -157,7 +161,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -206,7 +212,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -258,7 +266,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -313,7 +323,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -371,7 +383,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -432,7 +446,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{

@@ -1,4 +1,3 @@
-#pragma once
 #include "luaerror.h"
 
 #include <sstream>
