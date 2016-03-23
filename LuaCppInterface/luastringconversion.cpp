@@ -61,6 +61,7 @@ std::string WStrToUTF8(const std::wstring& wstr)
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 std::wstring UTF8ToWStr(const std::string& str)
 {
 	size_t c_wide_len = str.size();
