@@ -43,7 +43,7 @@ TESTS = crashtest \
 check_PROGRAMS = $(TESTS)
 		
 AM_CXXFLAGS = -I../LuaCppInterface -I../lua/src $(BOOST_CPPFLAGS)
-AM_LDFLAGS = $(MAYBE_COVERAGE) ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a -liconv
+AM_LDFLAGS = $(MAYBE_COVERAGE) ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
 
 crashtest_SOURCES = luacpp.cpp lua
 
