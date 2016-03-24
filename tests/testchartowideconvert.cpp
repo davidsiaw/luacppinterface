@@ -15,10 +15,11 @@ int main()
 		return 0;
 	}
 
+
 	std::cout << "Expect: ";
 	for (int i=0;i<wstr.size();i++)
 	{
-		std::cout << (unsigned short)wstr[i] << " ";
+		std::cout << (unsigned int)wstr[i] << " ";
 	}
 	std::cout << " " << wstr.size();
 	std::cout << std::endl;
@@ -26,7 +27,7 @@ int main()
 	std::cout << "Result: ";
 	for (int i=0;i<conv.size();i++)
 	{
-		std::cout << (unsigned short)conv[i] << " ";
+		std::cout << (unsigned int)conv[i] << " ";
 	}
 	std::cout << " " << conv.size();
 	std::cout << std::endl;
