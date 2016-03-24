@@ -8,10 +8,16 @@
 
 class LuaError : public std::exception
 {
+	std::string message;
 public:
-	LuaError(const char* message) : std::exception()
+	LuaError(std::string message) : message(message), std::exception()
 	{
 	};
+
+	std::string GetMessage() const
+	{
+		return message;
+	}
 };
 
 class LuaNil : public LuaError

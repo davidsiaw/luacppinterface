@@ -35,6 +35,10 @@ TESTS = crashtest \
 		testwidetocharconvert \
 		teststricttypingerror \
 		teststricttyping \
+		testresumenoscript \
+		testcoroutineexception \
+		testexceptioninluafunction \
+		testgetmetatableonclosedstate \
 		demonstration1 \
 		demonstration2 \
 		demonstration3 \
@@ -143,6 +147,18 @@ teststricttypingerror_LDADD = $(REQUIRED_LIBS)
 
 teststricttyping_SOURCES = teststricttyping.cpp lua
 teststricttyping_LDADD = $(REQUIRED_LIBS)
+
+testresumenoscript_SOURCES = testresumenoscript.cpp lua
+testresumenoscript_LDADD = $(REQUIRED_LIBS)
+
+testcoroutineexception_SOURCES = testcoroutineexception.cpp lua
+testcoroutineexception_LDADD = $(REQUIRED_LIBS)
+
+testexceptioninluafunction_SOURCES = testexceptioninluafunction.cpp lua
+testexceptioninluafunction_LDADD = $(REQUIRED_LIBS)
+
+testgetmetatableonclosedstate_SOURCES = testgetmetatableonclosedstate.cpp lua
+testgetmetatableonclosedstate_LDADD = $(REQUIRED_LIBS)
 
 
 demonstration1_SOURCES = demonstration1.cpp lua

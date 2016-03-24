@@ -9,9 +9,9 @@
 class ExceptionFailedToGetMetaTable : public LuaError
 {
 public:
-	ExceptionFailedToGetMetaTable() : LuaError("Failed to find requested table/function/object")
+	ExceptionFailedToGetMetaTable(std::string issue) : LuaError("Failed To Get Metatable of Object: " + issue)
 	{
-		
+
 	}
 }; //;
 
