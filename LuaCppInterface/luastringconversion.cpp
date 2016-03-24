@@ -1,66 +1,34 @@
 #include "luastringconversion.h"
 
-#if defined(_WIN32) || defined(WIN32)
-#include <Windows.h>
+#include <clocale>
+#include <cstdlib>
+#include <iostream>
 
 std::wstring UTF8ToWStr(const std::string& utf8str)
 {
-	if (utf8str.empty())
-		return L"";
+	auto original_locale = setlocale(LC_ALL, NULL);
+	auto loc = setlocale(LC_ALL, "en_US.UTF-8");
+	wchar_t* wstr_buf = new wchar_t[utf8str.size()];
+	size_t converted = mbstowcs(wstr_buf, utf8str.c_str(), utf8str.size());
+	std::wstring result(wstr_buf);
+	delete[] wstr_buf;
+	setlocale(LC_ALL, original_locale);
 
-	std::wstring wstr;
-	int wlen = MultiByteToWideChar(CP_UTF8, NULL, utf8str.c_str(), (int) utf8str.size(), NULL, NULL);
-	
-	if (wlen == 0)
-		return L"String conversion error";
-
-	wstr.resize(wlen);
-
-	wlen = MultiByteToWideChar(CP_UTF8, NULL, utf8str.c_str(), (int) utf8str.size(), (wchar_t*)wstr.data(), wlen);
-	
-	if (wlen == 0)
-		return L"String conversion error";
-
-	return wstr;
+	return result;
 }
+
+#define MAX_UTF8_CHAR_CHAIN 5
 
 std::string WStrToUTF8(const std::wstring& wstr)
 {
-	if (wstr.empty())
-		return "";
+	auto original_locale = setlocale(LC_ALL, NULL);
+	auto loc = setlocale(LC_ALL, "en_US.UTF-8");
+	size_t max_size = wstr.size() * MAX_UTF8_CHAR_CHAIN;
+	char* str_buf = new char[max_size];
+	size_t converted = wcstombs(str_buf, wstr.c_str(), max_size);
+	std::string result(str_buf);
+	delete[] str_buf;
+	setlocale(LC_ALL, original_locale);
 
-	std::string utf8str;
-	int len = WideCharToMultiByte(CP_UTF8, NULL, wstr.c_str(), (int) wstr.size(), NULL, NULL, NULL, NULL);
-	
-	if (len == 0)
-		return "String conversion error";
-
-	utf8str.resize(len);
-	len = WideCharToMultiByte(CP_UTF8, NULL, wstr.c_str(), (int) wstr.size(), (char*)utf8str.data(), len, NULL, NULL);
-	
-	if (len == 0)
-		return "String conversion error";
-
-	return utf8str;
+	return result;
 }
-
-#else
-#include <iconv.h>
-// TODO: write an implimentation for Linux/MacOS
-#endif
-
-// perhaps this implementation? Should be portable, but may have problems with VS2010
-
-/*
-std::wstring UTF8ToWStr(const std::string& str)
-{
-	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
-	return conv.from_bytes(str);
-}
-
-std::string WStrToUTF8(const std::wstring& str)
-{
-	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
-	return conv.to_bytes(str);
-}
-*/

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef LUACPPERROR
 #define LUACPPERROR
 
@@ -7,10 +6,30 @@
 #include <exception>
 #include <string>
 
-struct LuaNil : public std::exception
+class LuaError : public std::exception
 {
-	LuaNil::LuaNil() : std::exception("LuaNil")
-	{};
+	std::string message;
+public:
+	LuaError(std::string message) : message(message), std::exception()
+	{
+	}
+
+	~LuaError() throw()
+	{
+	}
+
+	std::string GetMessage() const
+	{
+		return message;
+	}
+};
+
+class LuaNil : public LuaError
+{
+public:
+	LuaNil() : LuaError("Nil Value")
+	{
+	};
 };
 
 std::string LuaGetLastError(lua_State* state);

@@ -5,7 +5,7 @@
 #include "luaerror.h"
 
 #ifndef UNREFERENCED_PARAMETER
-#define UNREFERENCED_PARAMETER( x ) x
+#define UNREFERENCED_PARAMETER( x ) do { (void)(x); } while (0)
 #endif
 
 template<typename SIG> class LuaGenericFunction;
@@ -27,7 +27,9 @@ public:
 		auto ret = lua_pcall(state.get(), 0, 1, 0);
 
 		if (ret != 0)
-			throw std::exception(LuaGetLastError(state.get()).c_str());
+		{
+			throw LuaError(LuaGetLastError(state.get()).c_str());
+		}
 
 		return popper<rettype>::pop(state);
 	}
@@ -70,7 +72,9 @@ public:
 		auto ret = lua_pcall(state.get(), 1, 1, 0);
 
 		if (ret != 0)
-			throw std::exception(LuaGetLastError(state.get()).c_str());
+		{
+			throw LuaError(LuaGetLastError(state.get()).c_str());
+		}
 
 		return popper<rettype>::pop(state);
 	}
@@ -81,7 +85,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -119,7 +125,9 @@ public:
 		auto ret = lua_pcall(state.get(), 2, 1, 0);
 
 		if (ret != 0)
-			throw std::exception(LuaGetLastError(state.get()).c_str());
+		{
+			throw LuaError(LuaGetLastError(state.get()).c_str());
+		}
 
 		return popper<rettype>::pop(state);
 	}
@@ -130,7 +138,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -171,7 +181,9 @@ public:
 		auto ret = lua_pcall(state.get(), 3, 1, 0);
 
 		if (ret != 0)
-			throw std::exception(LuaGetLastError(state.get()).c_str());
+		{
+			throw LuaError(LuaGetLastError(state.get()).c_str());
+		}
 
 		return popper<rettype>::pop(state);
 	}
@@ -182,7 +194,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -226,7 +240,9 @@ public:
 		auto ret = lua_pcall(state.get(), 4, 1, 0);
 
 		if (ret != 0)
-			throw std::exception(LuaGetLastError(state.get()).c_str());
+		{
+			throw LuaError(LuaGetLastError(state.get()).c_str());
+		}
 
 		return popper<rettype>::pop(state);
 	}
@@ -237,7 +253,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -284,7 +302,9 @@ public:
 		auto ret = lua_pcall(state.get(), 5, 1, 0);
 
 		if (ret != 0)
-			throw std::exception(LuaGetLastError(state.get()).c_str());
+		{
+			throw LuaError(LuaGetLastError(state.get()).c_str());
+		}
 
 		return popper<rettype>::pop(state);
 	}
@@ -295,7 +315,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -345,7 +367,9 @@ public:
 		auto ret = lua_pcall(state.get(), 6, 1, 0);
 
 		if (ret != 0)
-			throw std::exception(LuaGetLastError(state.get()).c_str());
+		{
+			throw LuaError(LuaGetLastError(state.get()).c_str());
+		}
 
 		return popper<rettype>::pop(state);
 	}
@@ -356,7 +380,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -409,7 +435,9 @@ public:
 		auto ret = lua_pcall(state.get(), 7, 1, 0);
 
 		if (ret != 0)
-			throw std::exception(LuaGetLastError(state.get()).c_str());
+		{
+			throw LuaError(LuaGetLastError(state.get()).c_str());
+		}
 
 		return popper<rettype>::pop(state);
 	}
@@ -420,7 +448,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{
@@ -476,7 +506,9 @@ public:
 		auto ret = lua_pcall(state.get(), 8, 1, 0);
 
 		if (ret != 0)
-			throw std::exception(LuaGetLastError(state.get()).c_str());
+		{
+			throw LuaError(LuaGetLastError(state.get()).c_str());
+		}
 
 		return popper<rettype>::pop(state);
 	}
@@ -487,7 +519,9 @@ public:
 		lua_remove(state, 1);
 
 		if (lua_gettop(state) < parameters)
+		{
 			return luaL_error(state, "expected parameters count: %d", parameters);
+		}
 
 		try
 		{

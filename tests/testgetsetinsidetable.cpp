@@ -12,7 +12,7 @@ int main()
 	const char* thething = "something";
 	table.Set("thething", thething);
 	
-	char* thething2 = "something2";
+	const char* thething2 = "something2";
 	table.Set("thething2", thething2);
 	
 	table.Set("name", "astrobunny");

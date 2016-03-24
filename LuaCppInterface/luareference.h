@@ -4,8 +4,16 @@
 #include <memory>
 #include "luacppinclude.h"
 #include "luatype.h"
+#include "luaerror.h"
 
-static const char* ExceptionFailedToGetMetaTable = "Failed to find requested table/function/object";
+class ExceptionFailedToGetMetaTable : public LuaError
+{
+public:
+	ExceptionFailedToGetMetaTable(std::string issue) : LuaError("Failed To Get Metatable of Object: " + issue)
+	{
+
+	}
+}; //;
 
 class LuaTable;
 class LuaReference

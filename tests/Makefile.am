@@ -31,6 +31,14 @@ TESTS = crashtest \
 		testinvalidscript \
 		testregistry \
 		testreturnfromyieldingfunction \
+		testchartowideconvert \
+		testwidetocharconvert \
+		teststricttypingerror \
+		teststricttyping \
+		testresumenoscript \
+		testcoroutineexception \
+		testexceptioninluafunction \
+		testgetmetatableonclosedstate \
 		demonstration1 \
 		demonstration2 \
 		demonstration3 \
@@ -40,106 +48,130 @@ check_PROGRAMS = $(TESTS)
 		
 AM_CXXFLAGS = -I../LuaCppInterface -I../lua/src $(BOOST_CPPFLAGS)
 AM_LDFLAGS = $(MAYBE_COVERAGE)
+REQUIRED_LIBS = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
 
 crashtest_SOURCES = luacpp.cpp lua
-crashtest_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
-
+crashtest_LDADD = $(REQUIRED_LIBS)
 
 testcreate_SOURCES = testcreate.cpp lua
-testcreate_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testcreate_LDADD = $(REQUIRED_LIBS)
 
 testfunction_SOURCES = testfunction.cpp lua
-testfunction_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testfunction_LDADD = $(REQUIRED_LIBS)
 
 testfunctionparams_SOURCES = testfunctionparams.cpp lua
-testfunctionparams_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testfunctionparams_LDADD = $(REQUIRED_LIBS)
 
 testfunctionparamsreturn_SOURCES = testfunctionparamsreturn.cpp lua
-testfunctionparamsreturn_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testfunctionparamsreturn_LDADD = $(REQUIRED_LIBS)
 
 testfunctionreturn_SOURCES = testfunctionreturn.cpp lua
-testfunctionreturn_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testfunctionreturn_LDADD = $(REQUIRED_LIBS)
 
 testgetsetfunction_SOURCES = testgetsetfunction.cpp lua
-testgetsetfunction_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testgetsetfunction_LDADD = $(REQUIRED_LIBS)
 
 testgetsetinsidetable_SOURCES = testgetsetinsidetable.cpp lua
-testgetsetinsidetable_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testgetsetinsidetable_LDADD = $(REQUIRED_LIBS)
 
 testgetsetinteger_SOURCES = testgetsetinteger.cpp lua
-testgetsetinteger_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testgetsetinteger_LDADD = $(REQUIRED_LIBS)
 
 testgetsetstring_SOURCES = testgetsetstring.cpp lua
-testgetsetstring_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testgetsetstring_LDADD = $(REQUIRED_LIBS)
 
 testgetsettable_SOURCES = testgetsettable.cpp lua
-testgetsettable_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testgetsettable_LDADD = $(REQUIRED_LIBS)
 
 testpassingfunction_SOURCES = testpassingfunction.cpp lua
-testpassingfunction_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testpassingfunction_LDADD = $(REQUIRED_LIBS)
 
 testreturnfromnative_SOURCES = testreturnfromnative.cpp lua
-testreturnfromnative_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testreturnfromnative_LDADD = $(REQUIRED_LIBS)
 
 testreturnfromscript_SOURCES = testreturnfromscript.cpp lua
-testreturnfromscript_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testreturnfromscript_LDADD = $(REQUIRED_LIBS)
 
 testreturntablefromlua_SOURCES = testreturntablefromlua.cpp lua
-testreturntablefromlua_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testreturntablefromlua_LDADD = $(REQUIRED_LIBS)
 
 testreturntablefromnative_SOURCES = testreturntablefromnative.cpp lua
-testreturntablefromnative_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testreturntablefromnative_LDADD = $(REQUIRED_LIBS)
 
 testuserdata_SOURCES = testuserdata.cpp lua
-testuserdata_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testuserdata_LDADD = $(REQUIRED_LIBS)
 
 testuserdataconstructor_SOURCES = testuserdataconstructor.cpp lua
-testuserdataconstructor_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testuserdataconstructor_LDADD = $(REQUIRED_LIBS)
 
 testuserdatamethod_SOURCES = testuserdatamethod.cpp lua
-testuserdatamethod_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testuserdatamethod_LDADD = $(REQUIRED_LIBS)
 
 testuserdatadispose_SOURCES = testuserdatadispose.cpp lua
-testuserdatadispose_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testuserdatadispose_LDADD = $(REQUIRED_LIBS)
 
 testtable_SOURCES = testtable.cpp lua
-testtable_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
-
+testtable_LDADD = $(REQUIRED_LIBS)
 
 
 testscriptexception_SOURCES = testscriptexception.cpp lua
-testscriptexception_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testscriptexception_LDADD = $(REQUIRED_LIBS)
 
 testtableforeachintegerkey_SOURCES = testtableforeachintegerkey.cpp lua
-testtableforeachintegerkey_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testtableforeachintegerkey_LDADD = $(REQUIRED_LIBS)
 
 testtableforeachstringkey_SOURCES = testtableforeachstringkey.cpp lua
-testtableforeachstringkey_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testtableforeachstringkey_LDADD = $(REQUIRED_LIBS)
 
 testgettypeofvalueat_SOURCES = testgettypeofvalueat.cpp lua
-testgettypeofvalueat_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testgettypeofvalueat_LDADD = $(REQUIRED_LIBS)
 
 testinvalidscript_SOURCES = testinvalidscript.cpp lua
-testinvalidscript_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testinvalidscript_LDADD = $(REQUIRED_LIBS)
 
 testregistry_SOURCES = testregistry.cpp lua
-testregistry_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testregistry_LDADD = $(REQUIRED_LIBS)
 
 testreturnfromyieldingfunction_SOURCES = testreturnfromyieldingfunction.cpp lua
-testreturnfromyieldingfunction_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+testreturnfromyieldingfunction_LDADD = $(REQUIRED_LIBS)
+
+testchartowideconvert_SOURCES = testchartowideconvert.cpp lua
+testchartowideconvert_LDADD = $(REQUIRED_LIBS)
+
+testwidetocharconvert_SOURCES = testwidetocharconvert.cpp lua
+testwidetocharconvert_LDADD = $(REQUIRED_LIBS)
+
+
+teststricttypingerror_SOURCES = teststricttypingerror.cpp lua
+teststricttypingerror_LDADD = $(REQUIRED_LIBS)
+
+teststricttyping_SOURCES = teststricttyping.cpp lua
+teststricttyping_LDADD = $(REQUIRED_LIBS)
+
+testresumenoscript_SOURCES = testresumenoscript.cpp lua
+testresumenoscript_LDADD = $(REQUIRED_LIBS)
+
+testcoroutineexception_SOURCES = testcoroutineexception.cpp lua
+testcoroutineexception_LDADD = $(REQUIRED_LIBS)
+
+testexceptioninluafunction_SOURCES = testexceptioninluafunction.cpp lua
+testexceptioninluafunction_LDADD = $(REQUIRED_LIBS)
+
+testgetmetatableonclosedstate_SOURCES = testgetmetatableonclosedstate.cpp lua
+testgetmetatableonclosedstate_LDADD = $(REQUIRED_LIBS)
 
 
 demonstration1_SOURCES = demonstration1.cpp lua
-demonstration1_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+demonstration1_LDADD = $(REQUIRED_LIBS)
 
 demonstration2_SOURCES = demonstration2.cpp lua
-demonstration2_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+demonstration2_LDADD = $(REQUIRED_LIBS)
 
 demonstration3_SOURCES = demonstration3.cpp lua
-demonstration3_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+demonstration3_LDADD = $(REQUIRED_LIBS)
 
 demonstration4_SOURCES = demonstration4.cpp lua
-demonstration4_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+demonstration4_LDADD = $(REQUIRED_LIBS)
 
 
 BUILT_SOURCES = ../lua/src/liblua.a

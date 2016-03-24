@@ -1,4 +1,3 @@
-#pragma once
 #ifndef LUASTRINGCONVERSION
 #define LUASTRINGCONVERSION
 
