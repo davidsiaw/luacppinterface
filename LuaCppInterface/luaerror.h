@@ -12,7 +12,11 @@ class LuaError : public std::exception
 public:
 	LuaError(std::string message) : message(message), std::exception()
 	{
-	};
+	}
+
+	~LuaError() throw()
+	{
+	}
 
 	std::string GetMessage() const
 	{
