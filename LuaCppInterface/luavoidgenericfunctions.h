@@ -5,7 +5,7 @@
 #include "luaerror.h"
 
 #ifndef UNREFERENCED_PARAMETER
-#define UNREFERENCED_PARAMETER( x ) x
+#define UNREFERENCED_PARAMETER( x ) do { (void)(x); } while (0)
 #endif
 
 template<>
