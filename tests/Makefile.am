@@ -10,6 +10,7 @@ TESTS = crashtest \
 		testfunctionparamsreturn \
 		testfunctionreturn \
 		testgetsetfunction \
+		testgetsetfunction2 \
 		testgetsetinsidetable \
 		testgetsetinteger \
 		testgetsetstring \
@@ -62,6 +63,9 @@ testfunctionreturn_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/li
 
 testgetsetfunction_SOURCES = testgetsetfunction.cpp lua
 testgetsetfunction_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+
+testgetsetfunction2_SOURCES = testgetsetfunction2.cpp lua
+testgetsetfunction2_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
 
 testgetsetinsidetable_SOURCES = testgetsetinsidetable.cpp lua
 testgetsetinsidetable_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
