@@ -5,6 +5,7 @@ endif
 
 TESTS = crashtest \
 		testcreate \
+		testctoluafunction \
 		testfunction \
 		testfunctionparams \
 		testfunctionparamsreturn \
@@ -45,9 +46,11 @@ AM_LDFLAGS = $(MAYBE_COVERAGE)
 crashtest_SOURCES = luacpp.cpp lua
 crashtest_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
 
-
 testcreate_SOURCES = testcreate.cpp lua
 testcreate_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
+
+testctoluafunction_SOURCES = testctoluafunction.cpp lua
+testctoluafunction_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a
 
 testfunction_SOURCES = testfunction.cpp lua
 testfunction_LDADD = ../LuaCppInterface/libluacppinterface.a ../lua/src/liblua.a

@@ -11,23 +11,29 @@ int main()
 	
 	// Write a function in Lua
 	lua.RunScript(
-		"function addTwo(a)\n"
+		"function compute(a)\n"
 		"  return a*2\n"
 		"end\n"
 	);
 
-	auto addTwo = global.Get< LuaFunction<int(int)> >("addTwo");
+	auto originalCompute = global.Get< LuaFunction<int(int)> >("compute");
 	
 	// Write an alternative implementation
 	
-	auto myAddTwo = lua.CreateFunction< int(int) >(
+	auto alternativeCompute = lua.CreateFunction< int(int) >(
 		[](int a) -> int
 		{
 			return a + 2;
 		}
 	);
 	
-	global.Set("addTwo", myAddTwo);
-	
-	return myAddTwo.Invoke(5) != 7;
+	global.Set("compute", alternativeCompute);
+
+	auto originalResult = originalCompute.Invoke(15);
+	auto alternativeResult = alternativeCompute.Invoke(5);
+
+	std::cout << "originalResult=" << originalResult << std::endl;
+	std::cout << "alternativeResult=" << alternativeResult << std::endl;
+
+	return originalResult != 30 || alternativeResult != 7;
 }
