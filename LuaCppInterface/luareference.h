@@ -6,15 +6,6 @@
 #include "luatype.h"
 #include "luaerror.h"
 
-class ExceptionFailedToGetMetaTable : public LuaError
-{
-public:
-	ExceptionFailedToGetMetaTable(std::string issue) : LuaError("Failed To Get Metatable of Object: " + issue)
-	{
-
-	}
-}; //;
-
 class LuaTable;
 class LuaReference
 {

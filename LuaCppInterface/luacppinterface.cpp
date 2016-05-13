@@ -3,19 +3,26 @@
 
 #include <sstream>
 
+static int panic_function(lua_State *state)
+{
+	throw LuaError(LuaGetLastError(state));
+}
+
 Lua::Lua() :
 	state(luaL_newstate(), lua_close),
 	registry(LuaTable(state, LUA_REGISTRYINDEX)),
 	globals(registry.Get<LuaTable>(LUA_RIDX_GLOBALS))
 {
+	lua_atpanic(state.get(), panic_function);
 }
 
 Lua::Lua(std::shared_ptr<lua_State> state) :
 	state(state),
 	registry(LuaTable(state, LUA_REGISTRYINDEX)),
 	globals(registry.Get<LuaTable>(LUA_RIDX_GLOBALS))
-
 {
+	// In this case the state was made somewhere else. This lua object does not own it
+	// So we do not assign a panic function to it.
 }
 
 void Lua::LoadStandardLibraries()

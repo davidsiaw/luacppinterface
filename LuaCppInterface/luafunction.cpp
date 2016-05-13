@@ -15,5 +15,10 @@ LuaFunctionBase::LuaFunctionBase(std::shared_ptr<lua_State> state, int index) : 
 	else
 	{
 		assert(type == LuaType::function);
+		if (type != LuaType::function)
+		{
+			const char *msg = lua_pushfstring(state.get(), "function or callable object expected, got %s", luaL_typename(state.get(), index));
+			luaL_argerror(state.get(), index, msg);
+		}
 	}
 }

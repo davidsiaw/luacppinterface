@@ -34,6 +34,8 @@
 		634A133419977DB5002CF5AE /* luatable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53978A841851327A00A9CACA /* luatable.cpp */; };
 		634A134119977E8D002CF5AE /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 634A134019977E19002CF5AE /* liblua.a */; };
 		634A134519978BD0002CF5AE /* luacpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 634A134419978BD0002CF5AE /* luacpp.cpp */; };
+		63A321581CE5C654009EA054 /* luaerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63A321571CE5C654009EA054 /* luaerror.cpp */; };
+		63A321591CE5C667009EA054 /* luaerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63A321571CE5C654009EA054 /* luaerror.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,7 @@
 		634A132519977D23002CF5AE /* luacppinterfacetest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = luacppinterfacetest; sourceTree = BUILT_PRODUCTS_DIR; };
 		634A133B19977E19002CF5AE /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = lua/lua.xcodeproj; sourceTree = "<group>"; };
 		634A134419978BD0002CF5AE /* luacpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = luacpp.cpp; path = tests/luacpp.cpp; sourceTree = SOURCE_ROOT; };
+		63A321571CE5C654009EA054 /* luaerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = luaerror.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,7 @@
 		53978A741851327A00A9CACA /* LuaCppInterface */ = {
 			isa = PBXGroup;
 			children = (
+				63A321571CE5C654009EA054 /* luaerror.cpp */,
 				53978A761851327A00A9CACA /* luacoroutine.cpp */,
 				53978A771851327A00A9CACA /* luacoroutine.h */,
 				53978A781851327A00A9CACA /* luacppinterface.cpp */,
@@ -234,7 +238,7 @@
 		53978A5F185131DB00A9CACA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = bunnybusiness;
 				TargetAttributes = {
 					634A132419977D23002CF5AE = {
@@ -282,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53978A911851327A00A9CACA /* luafunction.cpp in Sources */,
+				63A321581CE5C654009EA054 /* luaerror.cpp in Sources */,
 				53978A8F1851327A00A9CACA /* luacppinterface.cpp in Sources */,
 				53978A971851327A00A9CACA /* luareference.cpp in Sources */,
 				53978A8D1851327A00A9CACA /* luacoroutine.cpp in Sources */,
@@ -295,6 +300,7 @@
 			files = (
 				634A134519978BD0002CF5AE /* luacpp.cpp in Sources */,
 				634A133219977DAB002CF5AE /* luafunction.cpp in Sources */,
+				63A321591CE5C667009EA054 /* luaerror.cpp in Sources */,
 				634A133319977DAE002CF5AE /* luareference.cpp in Sources */,
 				634A133419977DB5002CF5AE /* luatable.cpp in Sources */,
 				634A133019977DA3002CF5AE /* luacoroutine.cpp in Sources */,
@@ -321,6 +327,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -388,6 +395,7 @@
 		53978A6C185131DB00A9CACA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -396,6 +404,7 @@
 		53978A6D185131DB00A9CACA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -458,6 +467,7 @@
 				634A132A19977D23002CF5AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

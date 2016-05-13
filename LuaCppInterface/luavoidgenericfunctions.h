@@ -30,14 +30,7 @@ public:
 		std::function<void()>* func = (std::function<void()>*)lua_touserdata(state, lua_upvalueindex(1));
 		lua_remove(state, 1);
 
-		try
-		{
-			func->operator()();
-		}
-		catch (LuaNil& e)
-		{
-			UNREFERENCED_PARAMETER(e);
-		}
+		func->operator()();
 		return 0;
 	}
 };
@@ -72,15 +65,8 @@ public:
 			return luaL_error(state, "expected parameters count: %d", parameters);
 		}
 
-		try
-		{
-			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-			func->operator()(arg1);
-		}
-		catch (LuaNil& e)
-		{
-			UNREFERENCED_PARAMETER(e);
-		}
+		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+		func->operator()(arg1);
 		return 0;
 	}
 };
@@ -117,16 +103,9 @@ public:
 			return luaL_error(state, "expected parameters count: %d", parameters);
 		}
 
-		try
-		{
-			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-			func->operator()(arg1, arg2);
-		}
-		catch (LuaNil& e)
-		{
-			UNREFERENCED_PARAMETER(e);
-		}
+		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+		func->operator()(arg1, arg2);
 		return 0;
 	}
 };
@@ -165,17 +144,10 @@ public:
 			return luaL_error(state, "expected parameters count: %d", parameters);
 		}
 
-		try
-		{
-			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-			func->operator()(arg1, arg2, arg3);
-		}
-		catch (LuaNil& e)
-		{
-			UNREFERENCED_PARAMETER(e);
-		}
+		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+		func->operator()(arg1, arg2, arg3);
 		return 0;
 	}
 };
@@ -216,18 +188,11 @@ public:
 			return luaL_error(state, "expected parameters count: %d", parameters);
 		}
 
-		try
-		{
-			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-			func->operator()(arg1, arg2, arg3, arg4);
-		}
-		catch (LuaNil& e)
-		{
-			UNREFERENCED_PARAMETER(e);
-		}
+		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+		func->operator()(arg1, arg2, arg3, arg4);
 		return 0;
 	}
 };
@@ -270,19 +235,12 @@ public:
 			return luaL_error(state, "expected parameters count: %d", parameters);
 		}
 
-		try
-		{
-			arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
-			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-			func->operator()(arg1, arg2, arg3, arg4, arg5);
-		}
-		catch (LuaNil& e)
-		{
-			UNREFERENCED_PARAMETER(e);
-		}
+		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
+		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+		func->operator()(arg1, arg2, arg3, arg4, arg5);
 		return 0;
 	}
 };
@@ -327,20 +285,13 @@ public:
 			return luaL_error(state, "expected parameters count: %d", parameters);
 		}
 
-		try
-		{
-			arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
-			arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
-			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-			func->operator()(arg1, arg2, arg3, arg4, arg5, arg6);
-		}
-		catch (LuaNil& e)
-		{
-			UNREFERENCED_PARAMETER(e);
-		}
+		arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
+		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
+		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+		func->operator()(arg1, arg2, arg3, arg4, arg5, arg6);
 		return 0;
 	}
 };
@@ -387,21 +338,14 @@ public:
 			return luaL_error(state, "expected parameters count: %d", parameters);
 		}
 
-		try
-		{
-			arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
-			arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
-			arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
-			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-			func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
-		}
-		catch (LuaNil& e)
-		{
-			UNREFERENCED_PARAMETER(e);
-		}
+		arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
+		arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
+		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
+		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+		func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7);
 		return 0;
 	}
 };
@@ -450,22 +394,15 @@ public:
 			return luaL_error(state, "expected parameters count: %d", parameters);
 		}
 
-		try
-		{
-			arg8type arg8 = popper<arg8type>::pop(LuaNoDestructor(state));
-			arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
-			arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
-			arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
-			arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
-			arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
-			arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
-			arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
-			func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
-		}
-		catch (LuaNil& e)
-		{
-			UNREFERENCED_PARAMETER(e);
-		}
+		arg8type arg8 = popper<arg8type>::pop(LuaNoDestructor(state));
+		arg7type arg7 = popper<arg7type>::pop(LuaNoDestructor(state));
+		arg6type arg6 = popper<arg6type>::pop(LuaNoDestructor(state));
+		arg5type arg5 = popper<arg5type>::pop(LuaNoDestructor(state));
+		arg4type arg4 = popper<arg4type>::pop(LuaNoDestructor(state));
+		arg3type arg3 = popper<arg3type>::pop(LuaNoDestructor(state));
+		arg2type arg2 = popper<arg2type>::pop(LuaNoDestructor(state));
+		arg1type arg1 = popper<arg1type>::pop(LuaNoDestructor(state));
+		func->operator()(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 		return 0;
 	}
 };

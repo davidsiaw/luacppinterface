@@ -26,12 +26,19 @@ public:
 			auto wrap = (typename LuaUserdata<T>::UserdataWrapper*)lua_touserdata(state.get(), index);
 			pointer = wrap->actualData;
 		}
+		else
+		{
+			const char *msg = lua_pushfstring(state.get(), "userdata or lightuserdata expected, got %s", luaL_typename(state.get(), index));
+			luaL_argerror(state.get(), index, msg);
+		}
 	}
 
 	T* GetPointer() const
 	{
 		return pointer;
 	}
+
+    T* operator->() const { return pointer; }
 };
 
 

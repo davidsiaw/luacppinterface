@@ -8,28 +8,17 @@
 
 class LuaError : public std::exception
 {
-	std::string message;
+	std::string msg;
 public:
-	LuaError(std::string message) : message(message), std::exception()
+	LuaError(std::string msg) : msg(msg)
 	{
+
 	}
 
-	~LuaError() throw()
+	const std::string& GetMessage() const
 	{
-	}
-
-	std::string GetMessage() const
-	{
-		return message;
-	}
-};
-
-class LuaNil : public LuaError
-{
-public:
-	LuaNil() : LuaError("Nil Value")
-	{
-	};
+		return msg;
+	} 
 };
 
 std::string LuaGetLastError(lua_State* state);

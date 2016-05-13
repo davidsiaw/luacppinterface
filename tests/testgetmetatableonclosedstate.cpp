@@ -21,10 +21,10 @@ int main()
 	{
 		auto metatable = table.GetMetaTable();
 	}
-	catch(ExceptionFailedToGetMetaTable e)
+	catch(LuaError e)
 	{
 		std::cout << e.GetMessage() << std::endl;
-		return 0;
+		return e.GetMessage() != "Error: failed to get metatable\n";
 	}
 
 	return 1;

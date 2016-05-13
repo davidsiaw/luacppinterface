@@ -12,6 +12,7 @@
 #include "luauserdata.h"
 #include "lualightuserdata.h"
 #include "luastringconversion.h"
+#include "luaerror.h"
 
 class Lua
 {

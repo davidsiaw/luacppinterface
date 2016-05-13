@@ -19,6 +19,13 @@ public:
 	  LuaReference(state, index)
 	{
 		assert(GetType() == LuaType::userdata);
+
+		if (GetType() != LuaType::userdata)
+		{
+			const char *msg = lua_pushfstring(state.get(), "userdata expected, got %s", luaL_typename(state.get(), index));
+			luaL_argerror(state.get(), index, msg);
+		}
+
 		assert(typeid(TYPE*) == typeid(RetrieveData()));
 
 		auto wrap = (UserdataWrapper*)lua_touserdata(state.get(), index);

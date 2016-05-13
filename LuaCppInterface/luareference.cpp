@@ -50,7 +50,7 @@ LuaTable LuaReference::GetMetaTable() const
 
 	if (res == 0)
 	{
-		throw ExceptionFailedToGetMetaTable(LuaGetLastError(state.get()));
+		luaL_error(state.get(), "failed to get metatable");
 	}
 
 	LuaTable table = LuaTable(state, -1);

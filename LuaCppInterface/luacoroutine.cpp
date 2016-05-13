@@ -4,6 +4,12 @@
 LuaCoroutine::LuaCoroutine(std::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
 	assert(GetType() == LuaType::thread);
+
+	if (GetType() != LuaType::thread)
+	{
+		const char *msg = lua_pushfstring(state.get(), "thread expected, got %s", luaL_typename(state.get(), index));
+		luaL_argerror(state.get(), index, msg);
+	}
 }
 
 std::string LuaCoroutine::RunScript(std::string script)

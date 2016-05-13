@@ -115,6 +115,8 @@ int main()
 		"foo1 = nil\n"
 		"collectgarbage()\n"
 		);
+    
+    std::cout << ress << std::endl;
 
 	auto params = lua.CreateTable();
 	params.Set("big", 15);
