@@ -15,10 +15,15 @@ public:
 
 	}
 
+	~LuaError() throw()
+	{
+
+	}
+
 	const std::string& GetMessage() const
 	{
 		return msg;
-	} 
+	}
 };
 
 std::string LuaGetLastError(lua_State* state);
