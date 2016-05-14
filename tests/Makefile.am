@@ -3,7 +3,7 @@ if COND_GCOV
    MAYBE_COVERAGE=-fprofile-arcs
 endif
 
-TESTS = demonstration1 demonstration2 demonstration3 demonstration4 luacpp testcallabletable testchartowideconvert testcoroutineexception testcreate testctoluafunction testexceptioninluafunction testextractingasfunctionbutistable testfunction testfunctionparams testfunctionparamsreturn testfunctionreturn testgetmetatableonclosedstate testgetsetfunction testgetsetfunction2 testgetsetinsidetable testgetsetinteger testgetsetstring testgetsettable testgettypeofvalueat testinvalidscript testpassingfunction testreadinglightuserdatafromuserdata testregistry testresumenoscript testreturnfromnative testreturnfromscript testreturnfromyieldingfunction testreturntablefromlua testreturntablefromnative testscriptexception testsetstring testsetwstring testtable testtableforeachintegerkey testtableforeachstringkey testtypeintstringmorph testtypemorphintwstring testtypestringintmorph testuserdata testuserdataconstructor testuserdatadispose testuserdatamethod testwidetocharconvert
+TESTS = demonstration1 demonstration2 demonstration3 demonstration4 luacpp testcallabletable testchartowideconvert testcoroutineexception testcoroutineexpectedbutnot testcreate testctoluafunction testexceptioninluafunction testextractingasfunctionbutistable testfunction testfunctionexpectedbutnotcallable testfunctionparams testfunctionparamsreturn testfunctionreturn testgetmetatableonclosedstate testgetsetfunction testgetsetfunction2 testgetsetinsidetable testgetsetinteger testgetsetstring testgetsettable testgetstate testgettypeofvalueat testinvalidscript testpassingfunction testreadinglightuserdatafromuserdata testregistry testresumenoscript testreturnfromnative testreturnfromscript testreturnfromyieldingfunction testreturntablefromlua testreturntablefromnative testscriptexception testsetstring testsetwstring testtable testtableexpectedbutnotable testtableforeachintegerkey testtableforeachstringkey testtypeintstringmorph testtypemorphintwstring testtypestringintmorph testuserdata testuserdataconstructor testuserdatadispose testuserdatamethod testwidetocharconvert
 
 check_PROGRAMS = $(TESTS)
 		
@@ -35,6 +35,9 @@ testchartowideconvert_LDADD = $(REQUIRED_LIBS)
 testcoroutineexception_SOURCES = testcoroutineexception.cpp lua
 testcoroutineexception_LDADD = $(REQUIRED_LIBS)
 
+testcoroutineexpectedbutnot_SOURCES = testcoroutineexpectedbutnot.cpp lua
+testcoroutineexpectedbutnot_LDADD = $(REQUIRED_LIBS)
+
 testcreate_SOURCES = testcreate.cpp lua
 testcreate_LDADD = $(REQUIRED_LIBS)
 
@@ -49,6 +52,9 @@ testextractingasfunctionbutistable_LDADD = $(REQUIRED_LIBS)
 
 testfunction_SOURCES = testfunction.cpp lua
 testfunction_LDADD = $(REQUIRED_LIBS)
+
+testfunctionexpectedbutnotcallable_SOURCES = testfunctionexpectedbutnotcallable.cpp lua
+testfunctionexpectedbutnotcallable_LDADD = $(REQUIRED_LIBS)
 
 testfunctionparams_SOURCES = testfunctionparams.cpp lua
 testfunctionparams_LDADD = $(REQUIRED_LIBS)
@@ -79,6 +85,9 @@ testgetsetstring_LDADD = $(REQUIRED_LIBS)
 
 testgetsettable_SOURCES = testgetsettable.cpp lua
 testgetsettable_LDADD = $(REQUIRED_LIBS)
+
+testgetstate_SOURCES = testgetstate.cpp lua
+testgetstate_LDADD = $(REQUIRED_LIBS)
 
 testgettypeofvalueat_SOURCES = testgettypeofvalueat.cpp lua
 testgettypeofvalueat_LDADD = $(REQUIRED_LIBS)
@@ -124,6 +133,9 @@ testsetwstring_LDADD = $(REQUIRED_LIBS)
 
 testtable_SOURCES = testtable.cpp lua
 testtable_LDADD = $(REQUIRED_LIBS)
+
+testtableexpectedbutnotable_SOURCES = testtableexpectedbutnotable.cpp lua
+testtableexpectedbutnotable_LDADD = $(REQUIRED_LIBS)
 
 testtableforeachintegerkey_SOURCES = testtableforeachintegerkey.cpp lua
 testtableforeachintegerkey_LDADD = $(REQUIRED_LIBS)

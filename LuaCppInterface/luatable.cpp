@@ -5,8 +5,6 @@
 
 LuaTable::LuaTable(std::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
-	assert(GetType() == LuaType::table);
-
 	if (GetType() != LuaType::table)
 	{
 		const char *msg = lua_pushfstring(state.get(), "table expected, got %s", luaL_typename(state.get(), index));
