@@ -14,6 +14,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaLib", "LuaLib\LuaLib.vcxproj", "{DEDB4F55-9217-4013-9076-AC31D593AA24}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaCppInterfaceTests", "LuaCppInterfaceTests\LuaCppInterfaceTests.vcxproj", "{CD9A90B7-822B-4057-A867-916DC3EE8168}"
+	ProjectSection(ProjectDependencies) = postProject
+		{45975324-0A0E-4989-8E08-B235E4F893CA} = {45975324-0A0E-4989-8E08-B235E4F893CA}
+		{DEDB4F55-9217-4013-9076-AC31D593AA24} = {DEDB4F55-9217-4013-9076-AC31D593AA24}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
