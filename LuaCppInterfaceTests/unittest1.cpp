@@ -1132,6 +1132,70 @@ namespace section_testgetmetatableonclosedstate
 
 }
 
+namespace section_testgetnullstring
+{
+	// Simple test showing getting a null string gives you an empty string
+	
+	int main()
+	{
+		Lua lua;
+		auto global = lua.GetGlobalEnvironment();
+	
+		lua.RunScript("\
+			nullString = nil\
+		");
+	
+		return global.Get<std::string>("nullString") != "";
+	}
+
+}
+
+namespace section_testgetnulltable
+{
+	// Simple test showing getting a null table throws a lua error
+	
+	int main()
+	{
+		Lua lua;
+		auto global = lua.GetGlobalEnvironment();
+	
+		lua.RunScript("\
+			nullTable = nil\
+		");
+	
+		try
+		{
+			global.Get<LuaTable>("nullTable");
+			return 1;
+		}
+		catch(LuaError e)
+		{
+			std::cout << e.GetMessage() << std::endl;
+			return 0;
+		}
+		return 1;
+	}
+
+}
+
+namespace section_testgetnullwstring
+{
+	// Simple test showing getting a null string gives you an empty string
+	
+	int main()
+	{
+		Lua lua;
+		auto global = lua.GetGlobalEnvironment();
+	
+		lua.RunScript("\
+			nullString = nil\
+		");
+	
+		return global.Get<std::wstring>("nullString") != L"";
+	}
+
+}
+
 namespace section_testgetsetfunction
 {
 	// Simple example of getting and setting a function
@@ -2228,6 +2292,21 @@ namespace LuaCppInterfaceTests
 		TEST_METHOD(testgetmetatableonclosedstate)
 		{
 			Assert::IsTrue(section_testgetmetatableonclosedstate::main() == 0);
+		}
+
+		TEST_METHOD(testgetnullstring)
+		{
+			Assert::IsTrue(section_testgetnullstring::main() == 0);
+		}
+
+		TEST_METHOD(testgetnulltable)
+		{
+			Assert::IsTrue(section_testgetnulltable::main() == 0);
+		}
+
+		TEST_METHOD(testgetnullwstring)
+		{
+			Assert::IsTrue(section_testgetnullwstring::main() == 0);
 		}
 
 		TEST_METHOD(testgetsetfunction)

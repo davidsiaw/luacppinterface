@@ -9,6 +9,7 @@
 class LuaError : public std::exception
 {
 	std::string msg;
+	
 public:
 	LuaError(std::string msg) : msg(msg)
 	{
