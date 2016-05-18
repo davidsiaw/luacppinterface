@@ -40,3 +40,62 @@ clean-local:
 MAKEFILE_AM
 
 File.write("tests/Makefile.am", makefile_am)
+
+include_list = {}
+
+test_sections = ""
+
+test_items = items.map do |item|
+
+	include_regex = /^\#include <[a-zA-Z0-9.]+>\s*/
+	file_content = File.read("tests/#{item}.cpp")
+
+	file_content.scan(include_regex) {|x| include_list[x.to_s] = true }
+
+	contents = file_content
+	contents.gsub!(include_regex, "")
+	contents.gsub!(/^/, "\t")
+
+	test_sections += <<-TEST_SECTION
+
+namespace section_#{item}
+{
+#{contents}
+}
+	TEST_SECTION
+
+	<<-TEST_CONTENT
+
+		TEST_METHOD(#{item})
+		{
+			Assert::IsTrue(section_#{item}::main() == 0);
+		}
+	TEST_CONTENT
+end.join ""
+
+msvc_test = <<-MSVC_TEST
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+#define FAIL_IF(x) return Assert::IsFalse(x);
+
+// ============================================================================
+// WARNING: THIS FILE IS GENERATED FROM THE TEST SOURCES IN THE tests FOLDER. 
+// Run generate.rb to update
+// ============================================================================
+
+#{include_list.keys.join("\r\n")}
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+#{test_sections}
+
+namespace LuaCppInterfaceTests
+{		
+	TEST_CLASS(UnitTests)
+	{
+	public:
+#{test_items}
+	};
+}
+MSVC_TEST

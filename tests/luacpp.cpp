@@ -18,7 +18,7 @@ class Bar
 public:
 	Bar(int number)
 	{
-        std::cout << "Bar" << number << " is created" << std::endl;
+		std::cout << "Bar" << number << " is created" << std::endl;
 		this->number = number;
 	}
 
@@ -29,36 +29,36 @@ public:
 
 	~Bar()
 	{
-        std::cout << "Bar" << number << " is destroyed" << std::endl;
+		std::cout << "Bar" << number << " is destroyed" << std::endl;
 	}
 };
 
 class Foo
 {
 public:
-    Foo(const std::string & name) : name(name)
-    {
-        std::cout << name << " is born" << std::endl;
-    }
+	Foo(const std::string & name) : name(name)
+	{
+		std::cout << name << " is born" << std::endl;
+	}
 
 	std::string Identify(Bar* bar)
 	{
-        std::stringstream ss;
+		std::stringstream ss;
 		ss << name << " number is: " << bar->GetNumber();
-        return ss.str();
+		return ss.str();
 	}
 
-    std::string Add(int a, int b)
-    {
-        std::stringstream ss;
-        ss << name << ": " << a << " + " << b << " = " << (a+b);
-        return ss.str();
-    }
+	std::string Add(int a, int b)
+	{
+		std::stringstream ss;
+		ss << name << ": " << a << " + " << b << " = " << (a+b);
+		return ss.str();
+	}
 
-    ~Foo()
-    {
-        std::cout << name << " is gone" << std::endl;
-    }
+	~Foo()
+	{
+		std::cout << name << " is gone" << std::endl;
+	}
 
 private:
     std::string name;
@@ -115,8 +115,8 @@ int main()
 		"foo1 = nil\n"
 		"collectgarbage()\n"
 		);
-    
-    std::cout << ress << std::endl;
+
+	std::cout << ress << std::endl;
 
 	auto params = lua.CreateTable();
 	params.Set("big", 15);
@@ -215,20 +215,20 @@ int main()
 		"attack(1,2)"
 
 		);
-    
-    LuaTable tbl = lua.CreateTable();
-    tbl.Set("name", "Chuck Norris");
-    tbl.Set("age", 1337);
-    tbl.Set("0", "divide by");
-    tbl.Set(1337, "leet");
-    
-    int keys = 3;
-    
-    tbl.ForAllStringKeys([&](std::string key, LuaType::Value value)
-    {
-        keys--;
-    });
-    
+
+	LuaTable tbl = lua.CreateTable();
+	tbl.Set("name", "Chuck Norris");
+	tbl.Set("age", 1337);
+	tbl.Set("0", "divide by");
+	tbl.Set(1337, "leet");
+
+	int keys = 3;
+
+	tbl.ForAllStringKeys([&](std::string key, LuaType::Value value)
+	{
+	    keys--;
+	});
+
 	auto meow = global.Get< LuaFunction<LuaTable(LuaTable)> >("meow");
 
 	auto result = meow.Invoke(params);
