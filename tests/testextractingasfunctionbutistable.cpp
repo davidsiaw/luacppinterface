@@ -10,9 +10,9 @@ int main()
 	auto global = lua.GetGlobalEnvironment();
 	
 	// Write a function in Lua
-	lua.RunScript(R"(
-		myTable = {}
-	)");
+	lua.RunScript("\
+		myTable = {}\
+	");
 
 	try
 	{

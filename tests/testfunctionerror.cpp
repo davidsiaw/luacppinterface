@@ -26,16 +26,16 @@ int main()
 	global.Set("func", function);
 	global.Set("func2", function2);
 
-	lua.RunScript(R"(
-
-		woof = function ()
-			func2()
-		end
-
-		function meow()
-			func()
-		end
-	)");
+	lua.RunScript("\
+		\
+		woof = function ()\
+			func2()\
+		end\
+		\
+		function meow()\
+			func()\
+		end\
+	");
 
 	try
 	{

@@ -19,10 +19,10 @@ int main()
 	lua.LoadStandardLibraries();
 	auto global = lua.GetGlobalEnvironment();
 
-	lua.RunScript(R"(
-		x = {}
-		setmetatable(x, {})
-	)");
+	lua.RunScript("\
+		x = {}\
+		setmetatable(x, {})\
+	");
 
 	try
 	{

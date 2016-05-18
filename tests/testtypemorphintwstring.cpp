@@ -11,9 +11,9 @@ int main()
 	auto global = lua.GetGlobalEnvironment();
 	
 	// Write a function in Lua
-	lua.RunScript(R"(
-		variable = 765
-	)");
+	lua.RunScript("\
+		variable = 765\
+	");
 
 	auto variable = global.Get< std::wstring >("variable");
 	return variable != L"765";

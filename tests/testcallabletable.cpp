@@ -11,16 +11,16 @@ int main()
 	auto global = lua.GetGlobalEnvironment();
 	
 	// Write a function in Lua
-	lua.RunScript(R"(
-		mt = {
-			__call = function ()
-				return 4;
-			end
-		}
-
-		myTable = {}
-		setmetatable(myTable, mt)
-	)");
+	lua.RunScript("\
+		mt = {\
+			__call = function ()\
+				return 4;\
+			end\
+		}\
+		\
+		myTable = {}\
+		setmetatable(myTable, mt)\
+	");
 
 	auto myFunction = global.Get< LuaFunction<int()> >("myTable");
 	return myFunction.Invoke() != 4;

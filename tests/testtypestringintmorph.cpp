@@ -11,9 +11,9 @@ int main()
 	auto global = lua.GetGlobalEnvironment();
 	
 	// Write a function in Lua
-	lua.RunScript(R"(
-		variable = '400'
-	)");
+	lua.RunScript("\
+		variable = '400'\
+	");
 
 	auto variable = global.Get< int >("variable");
 	return variable != 400;

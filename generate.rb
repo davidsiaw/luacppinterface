@@ -99,3 +99,5 @@ namespace LuaCppInterfaceTests
 	};
 }
 MSVC_TEST
+
+File.write("LuaCppInterfaceTests/unittest1.cpp", msvc_test)

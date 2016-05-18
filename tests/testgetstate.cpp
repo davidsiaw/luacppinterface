@@ -17,11 +17,11 @@ int main()
 {
 	Lua lua;
 
-	lua.RunScript(R"(
-		function retfive()
-			return 123
-		end
-	)");
+	lua.RunScript("\
+		function retfive()\
+			return 123\
+		end\
+	");
 
 	auto table = lua.CreateTable();
 

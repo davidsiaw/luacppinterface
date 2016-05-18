@@ -18,11 +18,11 @@ int main()
 	lua.LoadStandardLibraries();
 	auto global = lua.GetGlobalEnvironment();
 
-	lua.RunScript(R"(
-		function x()
-			return "meow"
-		end
-	)");
+	lua.RunScript("\
+		function x()\
+			return \"meow\"\
+		end\
+	");
 
 	try
 	{
