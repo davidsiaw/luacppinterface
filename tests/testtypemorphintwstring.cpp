@@ -16,5 +16,6 @@ int main()
 	");
 
 	auto variable = global.Get< std::wstring >("variable");
+	std::wcout << variable << std::endl;
 	return variable != L"765";
 }

@@ -14,5 +14,12 @@ int main()
 
 	auto variable = global.Get< std::wstring >("variable");
 
+	for (size_t i=0;i<variable.size();i++)
+	{
+		std::wcout << (int)variable[i] << L" ";
+	}
+	std::wcout << std::endl;
+	std::wcout << variable << std::endl;
+
 	return variable != L"876";
 }

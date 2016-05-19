@@ -40,7 +40,7 @@ std::wstring UTF8ToWStr(const std::string& utf8str)
 	}
 	size_t wstr_buf_size = utf8str.size() + 1;  // +1 because there is a null-terminator
 	wchar_t* wstr_buf = new wchar_t[wstr_buf_size];
-	size_t converted = mbstowcs(wstr_buf, utf8str.c_str(), utf8str.size());
+	size_t converted = mbstowcs(wstr_buf, utf8str.c_str(), wstr_buf_size);
 	std::wstring result(wstr_buf);
 	delete[] wstr_buf;
 	setlocale(LC_ALL, original_locale);

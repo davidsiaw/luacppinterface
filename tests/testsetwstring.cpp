@@ -14,5 +14,7 @@ int main()
 
 	auto variable = global.Get< std::string >("variable");
 
+	std::cout << variable << std::endl;
+
 	return variable != "346";
 }

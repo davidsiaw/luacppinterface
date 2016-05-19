@@ -59,42 +59,6 @@ struct popper
 };
 
 
-#ifdef WIN32
-#include "luastringconversion.h"
-
-DEFINE_TYPE_TEMPLATE_FOR(std::wstring, ,								\
-																		\
-	std::string s = WStrToUTF8(param);									\
-	lua_pushlstring(state.get(), s.c_str(), param.length());			\
-	,																	\
-																		\
-	std::string ss = lua_tostring(state.get(), -1);						\
-	std::wstring res = UTF8ToWStr(ss);									\
-	)
-
-#else
-
-
-// This unusually complicated define is just for the benefit of wstring
-DEFINE_TYPE_TEMPLATE_FOR(std::wstring, ,								\
-																		\
-	std::string s;														\
-	s.assign(param.begin(), param.end());								\
-	lua_pushlstring(state.get(), s.c_str(), param.length());			\
-	,																	\
-	const char* str = lua_tostring(state.get(), -1);					\
-	if (str == NULL)													\
-	{																	\
-		return L"";														\
-	}																	\
-	std::string ss = str;												\
-	std::wstring res;													\
-	res.assign(ss.begin(), ss.end());									\
-	)
-
-#endif
-
-
 // Special type templates for char string literals
 template<size_t N>
 struct pusher<const char[N]>
@@ -159,6 +123,20 @@ DEFINE_TYPE_TEMPLATE_FOR(std::string,,
 	}																\
 	std::string res = lua_tostring(state.get(), -1);				\
 )
+
+DEFINE_TYPE_TEMPLATE_FOR(std::wstring,,								\
+																	\
+	std::string s = WStrToUTF8(param);								\
+	lua_pushlstring(state.get(), s.c_str(), param.length());		\
+	,																\
+	const char* str = lua_tostring(state.get(), -1);				\
+	if (str == NULL)												\
+	{																\
+		return L"";													\
+	}																\
+	std::string ss = str;											\
+	std::wstring res = UTF8ToWStr(ss);								\
+	)
 
 // pointers
 DEFINE_TYPE_TEMPLATE_FOR(TYPE*, typename TYPE, lua_pushlightuserdata(state.get(), (void*)param), TYPE* res = LuaLightUserdata<TYPE>(state,-1).GetPointer())
