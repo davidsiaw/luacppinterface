@@ -14,7 +14,45 @@ class LuaUserdata : public LuaReference
 {
 	TYPE* pointer;
 
+	int pushUserdata(std::shared_ptr<lua_State> state, TYPE* data, std::function<void(TYPE*)> destructor)
+	{
+		UserdataWrapper* wrap = (UserdataWrapper*)lua_newuserdata(state.get(), sizeof(UserdataWrapper));
+        
+		memset(wrap, 0, sizeof(typename LuaUserdata<TYPE>::UserdataWrapper));
+        
+		wrap->actualData = data;
+		wrap->destructor = new std::function<void(TYPE*)> (destructor);
+
+		return -1;
+	}
+
 public:
+	LuaUserdata(std::shared_ptr<lua_State> state, TYPE* data) : LuaUserdata(state, data, [](TYPE* data){ delete data; })
+	{ }
+	
+	LuaUserdata(std::shared_ptr<lua_State> state, TYPE* data, std::function<void(TYPE*)> destructor) : LuaUserdata(state, pushUserdata(state, data, destructor))
+	{
+		// The wrapper pointer is on the top of the stack
+		UserdataWrapper* wrap = (UserdataWrapper*)lua_touserdata(state.get(), -1);
+
+		lua_newtable(state.get());
+
+		// make the finalizer
+		lua_pushstring(state.get(), "__gc");
+		lua_pushlightuserdata(state.get(), (void*)wrap);
+		lua_pushcclosure(state.get(), lua_userdata_finalizer, 1);
+		lua_rawset(state.get(), -3);
+
+		// assign table to self
+		lua_pushstring(state.get(), "__index");
+		lua_pushvalue(state.get(), -2);
+		lua_rawset(state.get(), -3);
+
+		lua_setmetatable(state.get(), -2);
+
+		lua_pop(state.get(), 1);
+	}
+
 	LuaUserdata(std::shared_ptr<lua_State> state, int index) :
 	  LuaReference(state, index)
 	{

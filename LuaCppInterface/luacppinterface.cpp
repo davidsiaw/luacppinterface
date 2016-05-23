@@ -42,18 +42,12 @@ LuaTable Lua::GetGlobalEnvironment() const
 
 LuaTable Lua::CreateTable()
 {
-	lua_newtable(state.get());
-	LuaTable table = LuaTable(state, -1);
-	lua_pop(state.get(), 1);
-	return table;
+	return LuaTable(state);
 }
 
 LuaCoroutine Lua::CreateCoroutine()
 {
-	lua_newthread(state.get());
-	LuaCoroutine thread(state, -1);
-	lua_pop(state.get(), 1);
-	return thread;
+	return LuaCoroutine(state);
 }
 
 std::string Lua::RunScript(std::string script)
@@ -64,6 +58,11 @@ std::string Lua::RunScript(std::string script)
 		return LuaGetLastError(state.get());
 	}
 	return "No errors";
+}
+
+Lua::operator std::shared_ptr<lua_State>() const
+{
+	return state;
 }
 
 Lua::~Lua()

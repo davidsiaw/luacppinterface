@@ -23,6 +23,7 @@ class LuaTable : public LuaReference
 {
 
 public:
+	LuaTable(std::shared_ptr<lua_State> state);
 	LuaTable(std::shared_ptr<lua_State> state, int index);
 
 	template<typename OBJ>

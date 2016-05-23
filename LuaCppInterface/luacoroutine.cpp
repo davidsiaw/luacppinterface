@@ -1,6 +1,17 @@
 #include "luacoroutine.h"
 #include "luaerror.h"
 
+static int PushNewCoroutine(std::shared_ptr<lua_State> state)
+{
+	lua_newthread(state.get());
+	return -1;
+}
+
+LuaCoroutine::LuaCoroutine(std::shared_ptr<lua_State> state) : LuaCoroutine(state, PushNewCoroutine(state))
+{
+	lua_pop(state.get(), 1);
+}
+
 LuaCoroutine::LuaCoroutine(std::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
 	if (GetType() != LuaType::thread)

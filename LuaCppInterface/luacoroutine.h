@@ -8,6 +8,8 @@
 class LuaCoroutine : public LuaReference
 {
 public:
+	LuaCoroutine(std::shared_ptr<lua_State> state);
+	
 	LuaCoroutine(std::shared_ptr<lua_State> state, int index);
 
 	// run a script

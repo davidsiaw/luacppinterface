@@ -1475,6 +1475,82 @@ namespace section_testinvalidscript
 
 }
 
+namespace section_testluacoroutineconstructor
+{
+	// This is how you construct a coroutine
+	
+	int main()
+	{
+		Lua lua;
+	
+		LuaCoroutine thread(lua);
+	
+		return 0;
+	}
+
+}
+
+namespace section_testluafunctionconstructor
+{
+	// This is how you construct a function
+	
+	int returnsFive()
+	{
+		return 5;
+	}
+	
+	int main()
+	{
+		Lua lua;
+	
+		LuaFunction<int()> fun(lua, returnsFive);
+	
+		return fun.Invoke() != 5;
+	}
+
+}
+
+namespace section_testluatableconstructor
+{
+	// This is how you construct a table
+	
+	int main()
+	{
+		Lua lua;
+	
+		LuaTable table(lua);
+	
+		table.Set("cat", "55");
+	
+		return table.Get<int>("cat") != 55;
+	}
+
+}
+
+namespace section_testluauserdataconstructor
+{
+	// This is how you construct a userdata
+	
+	class Cat
+	{
+	public:
+		Cat()
+		{
+	
+		}
+	};
+	
+	int main()
+	{
+		Lua lua;
+	
+		LuaUserdata<Cat> cat(lua, new Cat());
+	
+		return 0;
+	}
+
+}
+
 namespace section_testpassingfunction
 {
 	// Simple example of passing functions around
@@ -1781,6 +1857,13 @@ namespace section_testsetstring
 	
 		auto variable = global.Get< std::wstring >("variable");
 	
+		for (size_t i=0;i<variable.size();i++)
+		{
+			std::wcout << (int)variable[i] << L" ";
+		}
+		std::wcout << std::endl;
+		std::wcout << variable << std::endl;
+	
 		return variable != L"876";
 	}
 
@@ -1799,6 +1882,8 @@ namespace section_testsetwstring
 		global.Set("variable", L"346");
 	
 		auto variable = global.Get< std::string >("variable");
+	
+		std::cout << variable << std::endl;
 	
 		return variable != "346";
 	}
@@ -1950,6 +2035,7 @@ namespace section_testtypemorphintwstring
 		");
 	
 		auto variable = global.Get< std::wstring >("variable");
+		std::wcout << variable << std::endl;
 		return variable != L"765";
 	}
 
@@ -2352,6 +2438,26 @@ namespace LuaCppInterfaceTests
 		TEST_METHOD(testinvalidscript)
 		{
 			Assert::IsTrue(section_testinvalidscript::main() == 0);
+		}
+
+		TEST_METHOD(testluacoroutineconstructor)
+		{
+			Assert::IsTrue(section_testluacoroutineconstructor::main() == 0);
+		}
+
+		TEST_METHOD(testluafunctionconstructor)
+		{
+			Assert::IsTrue(section_testluafunctionconstructor::main() == 0);
+		}
+
+		TEST_METHOD(testluatableconstructor)
+		{
+			Assert::IsTrue(section_testluatableconstructor::main() == 0);
+		}
+
+		TEST_METHOD(testluauserdataconstructor)
+		{
+			Assert::IsTrue(section_testluauserdataconstructor::main() == 0);
 		}
 
 		TEST_METHOD(testpassingfunction)

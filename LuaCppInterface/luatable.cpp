@@ -3,6 +3,17 @@
 #include "luatypetemplates.h"
 #include "luafunction.h"
 
+static int PushNewTable(std::shared_ptr<lua_State> state)
+{
+	lua_newtable(state.get());
+	return -1;
+}
+
+LuaTable::LuaTable(std::shared_ptr<lua_State> state) : LuaTable(state, PushNewTable(state))
+{
+	lua_pop(state.get(), 1);
+}
+
 LuaTable::LuaTable(std::shared_ptr<lua_State> state, int index) : LuaReference(state, index)
 {
 	if (GetType() != LuaType::table)
