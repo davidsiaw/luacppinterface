@@ -23,7 +23,10 @@ class Lua
 	template<typename SIG>
 	LuaFunction<SIG> internalCreateFunction( std::shared_ptr< std::function<SIG> > func, lua_CFunction cfunc)
 	{
-		LuaFunction<SIG>** ptr = (LuaFunction<SIG>**)lua_newuserdata(state.get(), sizeof(LuaFunction<SIG>**));
+		auto* ptr = (std::shared_ptr< std::function<SIG> >*)
+			lua_newuserdata(state.get(), sizeof(std::shared_ptr< std::function<SIG> >*));
+
+		ptr = new std::shared_ptr< std::function<SIG> >(func);
 
 		lua_newtable(state.get());
 
@@ -45,11 +48,8 @@ class Lua
 
 		// set the metatable
 		lua_setmetatable(state.get(), -2);
-		LuaFunction<SIG> function = LuaFunction<SIG>(state, -1, func);
 
-		// instantiate a luafunction that has a weak reference to the state
-		// that the lua garbage collector will collect.
-		*ptr = new LuaFunction<SIG>(LuaFunction<SIG>(LuaNoDestructor(state.get()), -1, func));
+		LuaFunction<SIG> function(LuaNoDestructor(state.get()), -1, func);
 
 		lua_pop(state.get(), 1);
 		return function;
@@ -58,8 +58,8 @@ class Lua
 	template<typename SIG>
 	static int lua_finalizer(lua_State* state)
 	{
-		LuaFunction<SIG>** func = (LuaFunction<SIG>**)lua_touserdata(state, lua_upvalueindex(1));
-		delete *func;
+		auto* func = (std::shared_ptr< std::function<SIG> >*)lua_touserdata(state, lua_upvalueindex(1));
+		delete func;
 		return 0;
 	};
 
